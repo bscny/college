@@ -1,0 +1,128 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.9~svn20110310	//
+AnsiPrint	AnsiPrint.cc	/^AnsiPrint(const char *str, bool hi, bool blinking) {$/;"	f
+AnsiPrint	AnsiPrint.cc	/^AnsiPrint(const char *str, color fg, color bg, bool hi, bool blinking) {$/;"	f
+BASEDIR	Makefile	/^BASEDIR  = .$/;"	m
+CLASSDIR	Makefile	/^CLASSDIR = $(SYSDIR)\/class\/oop$/;"	m
+CXX	Makefile	/^CXX      = g++$/;"	m
+CXXFLAGS	Makefile	/^CXXFLAGS = -g -Wno-deprecated -Wall -I$(INCDIR) #-D__STDC__ $/;"	m
+Creature	Creature.cc	/^Creature::Creature(){$/;"	f	class:Creature
+Creature	Creature.cc	/^Creature::Creature(const Creature &in){$/;"	f	class:Creature
+Creature	Creature.h	/^class Creature{$/;"	c
+DELAY_MIN_SEC	World.cc	11;"	d	file:
+DOWN	Env_def.h	10;"	d
+Goat	Goat.cc	/^Goat::Goat() : age_start_reproduce(50), age_stop_reproduce(55), age_limit(70), distance_from_baby(2), distance_moving(1) {$/;"	f	class:Goat
+Goat	Goat.cc	/^Goat::Goat(const Goat &in) : Creature(in), age_start_reproduce(50), age_stop_reproduce(55), age_limit(70), distance_from_baby(2), distance_moving(1) {$/;"	f	class:Goat
+Goat	Goat.h	/^class Goat : public Creature{$/;"	c
+Grass	Grass.cc	/^Grass::Grass() : age_start_reproduce(3), age_stop_reproduce(5), age_limit(6), distance_from_baby(1){$/;"	f	class:Grass
+Grass	Grass.cc	/^Grass::Grass(const Grass &in) : Creature(in), age_start_reproduce(3), age_stop_reproduce(5), age_limit(6), distance_from_baby(1){$/;"	f	class:Grass
+Grass	Grass.h	/^class Grass : public Creature{$/;"	c
+HEADERS	Makefile	/^HEADERS  = ${SRCS:%.cc=%.h} $/;"	m
+HOSTTYPE	Makefile	/^HOSTTYPE = $(shell arch)$/;"	m
+INCDIR	Makefile	/^INCDIR   = $(BASEDIR)\/include #-I$(SYSDIR)\/lib\/g++-include $/;"	m
+LEFT	Env_def.h	11;"	d
+LIB	Makefile	/^LIB      = lib$(PACKAGE)_$(HOSTTYPE).a$/;"	m
+LIBDIR	Makefile	/^LIBDIR   = -L$(BASEDIR)\/lib #-L\/usr\/openwin\/lib -L\/usr\/ucblib$/;"	m
+LIBS	Makefile	/^LIBS     = $(LIBDIR) -lm $/;"	m
+MAKEDEP	Makefile	/^MAKEDEP  = $(CLASSDIR)\/bin\/makedepend$/;"	m
+OBJS	Makefile	/^OBJS     = ${SRCS:%.cc=$(O_DIR)\/%.o}$/;"	m
+O_DIR	Makefile	/^O_DIR    = O_$(HOSTTYPE)$/;"	m
+PACKAGE	Makefile	/^PACKAGE  = ALife$/;"	m
+PrintMyID	ALifeTest.cc	/^PrintMyID(const char *studId) {$/;"	f
+PrintUsage	ALifeTest.cc	/^PrintUsage(const char *progName) {$/;"	f
+RIGHT	Env_def.h	12;"	d
+RandomNum	RandomNum.cc	/^RandomNum::RandomNum() {$/;"	f	class:RandomNum
+RandomNum	RandomNum.cc	/^RandomNum::RandomNum(int seed) {$/;"	f	class:RandomNum
+RandomNum	RandomNum.h	/^class RandomNum {$/;"	c
+SOURCES	Makefile	/^SOURCES  = AnsiPrint RandomNum World Creature Goat Grass$/;"	m
+SRCS	Makefile	/^SRCS     = ${SOURCES:%=%.cc}$/;"	m
+SYSDIR	Makefile	/^SYSDIR   = \/usr\/local$/;"	m
+TARG	Makefile	/^TARG     = $(TARGET)_$(HOSTTYPE)$/;"	m
+TARGET	Makefile	/^TARGET   = ALifeTest$/;"	m
+TEST	Makefile	/^TEST     = ALifeTest$/;"	m
+TESTOBJ	Makefile	/^TESTOBJ  = ${TESTSRC:%.cc=$(O_DIR)\/%.o}$/;"	m
+TESTSRC	Makefile	/^TESTSRC  = ${TEST:%=%.cc}$/;"	m
+UP	Env_def.h	9;"	d
+WORLD_LENTH	Env_def.h	7;"	d
+WORLD_WIDTH	Env_def.h	6;"	d
+World	World.cc	/^World::World(int n_p, int r_s) : rand_obj(r_s) {$/;"	f	class:World
+World	World.h	/^class World{$/;"	c
+_ANSIPRINT_H	AnsiPrint.h	22;"	d
+_CREATURE_H	Creature.h	2;"	d
+_ENV_DEF_H	Env_def.h	2;"	d
+_GOAT_H	Goat.h	2;"	d
+_GRASS_H	Grass.h	2;"	d
+_RANDOMNUM_H	RandomNum.h	22;"	d
+_WORLD_H	World.h	2;"	d
+action	Goat.cc	/^void Goat::action(Creature *map[WORLD_LENTH][WORLD_WIDTH], bool current_acted_differ, int current_x, int current_y){$/;"	f	class:Goat
+action	Grass.cc	/^void Grass::action(Creature *map[WORLD_LENTH][WORLD_WIDTH], bool current_acted_differ, int current_x, int current_y){$/;"	f	class:Grass
+age	Creature.h	/^		int age;$/;"	m	class:Creature
+age_limit	Goat.h	/^		const int age_limit;$/;"	m	class:Goat
+age_limit	Grass.h	/^		const int age_limit;$/;"	m	class:Grass
+age_start_reproduce	Goat.h	/^		const int age_start_reproduce;$/;"	m	class:Goat
+age_start_reproduce	Grass.h	/^		const int age_start_reproduce;$/;"	m	class:Grass
+age_stop_reproduce	Goat.h	/^		const int age_stop_reproduce;$/;"	m	class:Goat
+age_stop_reproduce	Grass.h	/^		const int age_stop_reproduce;$/;"	m	class:Grass
+become_hungry	Goat.cc	/^void Goat::become_hungry(){$/;"	f	class:Goat
+bgBase	AnsiPrint.cc	/^const char *bgBase="40;";$/;"	v
+black	AnsiPrint.h	/^enum color {black=0, red, green, yellow, blue, pink, cyan, white, nochange};$/;"	e	enum:color
+blink	AnsiPrint.cc	/^const char *blink="5;";$/;"	v
+blue	AnsiPrint.h	/^enum color {black=0, red, green, yellow, blue, pink, cyan, white, nochange};$/;"	e	enum:color
+color	AnsiPrint.h	/^enum color {black=0, red, green, yellow, blue, pink, cyan, white, nochange};$/;"	g
+current_acted_differ	World.h	/^		bool current_acted_differ;$/;"	m	class:World
+current_pass	World.h	/^		int current_pass;$/;"	m	class:World
+current_x	World.h	/^		int current_x;$/;"	m	class:World
+current_y	World.h	/^		int current_y;$/;"	m	class:World
+cyan	AnsiPrint.h	/^enum color {black=0, red, green, yellow, blue, pink, cyan, white, nochange};$/;"	e	enum:color
+display_interval	World.h	/^		int display_interval;$/;"	m	class:World
+distance_from_baby	Goat.h	/^		const int distance_from_baby;$/;"	m	class:Goat
+distance_from_baby	Grass.h	/^		const int distance_from_baby;$/;"	m	class:Grass
+distance_moving	Goat.h	/^		const int distance_moving;$/;"	m	class:Goat
+eating	Goat.cc	/^void Goat::eating(){$/;"	f	class:Goat
+endc	AnsiPrint.cc	/^const char *endc="m";$/;"	v
+fgBase	AnsiPrint.cc	/^const char *fgBase="30;";$/;"	v
+food_point	Goat.h	/^		int food_point;$/;"	m	class:Goat
+getRandomNum	RandomNum.cc	/^RandomNum::getRandomNum(int low, int high) const {$/;"	f	class:RandomNum
+get_ID	Goat.cc	/^char Goat::get_ID() const {$/;"	f	class:Goat
+get_ID	Grass.cc	/^char Grass::get_ID() const {$/;"	f	class:Grass
+give_birth	Goat.cc	/^Goat Goat::give_birth(){$/;"	f	class:Goat
+give_birth	Grass.cc	/^Grass Grass::give_birth() const {$/;"	f	class:Grass
+green	AnsiPrint.h	/^enum color {black=0, red, green, yellow, blue, pink, cyan, white, nochange};$/;"	e	enum:color
+grow_older	Creature.cc	/^void Creature::grow_older(){$/;"	f	class:Creature
+has_acted	Creature.h	/^		bool has_acted;$/;"	m	class:Creature
+hilit	AnsiPrint.cc	/^const char *hilit="1;";$/;"	v
+init	AnsiPrint.cc	/^const char *init="\\x1b[";$/;"	v
+kFormatStrSize	AnsiPrint.cc	/^const int kFormatStrSize=20;$/;"	v
+main	ALifeTest.cc	/^main(int argc, char **argv) {$/;"	f
+main	ani.cpp	/^int main() {$/;"	f
+mainLoop	World.cc	/^void World::mainLoop(int d_i){$/;"	f	class:World
+map	World.h	/^		Creature *map[WORLD_LENTH][WORLD_WIDTH];$/;"	m	class:World
+nochange	AnsiPrint.h	/^enum color {black=0, red, green, yellow, blue, pink, cyan, white, nochange};$/;"	e	enum:color
+num_pass	World.h	/^		int num_pass;$/;"	m	class:World
+operator =	Creature.cc	/^void Creature::operator= (const Creature &in){$/;"	f	class:Creature
+operator =	Goat.cc	/^Goat Goat::operator= (const Goat &in){$/;"	f	class:Goat
+operator =	Grass.cc	/^Grass Grass::operator= (const Grass &in){$/;"	f	class:Grass
+pink	AnsiPrint.h	/^enum color {black=0, red, green, yellow, blue, pink, cyan, white, nochange};$/;"	e	enum:color
+rand_obj	Goat.h	/^		RandomNum rand_obj;$/;"	m	class:Goat
+rand_obj	Grass.h	/^		RandomNum rand_obj;$/;"	m	class:Grass
+rand_obj	World.h	/^		RandomNum rand_obj;$/;"	m	class:World
+recover	AnsiPrint.cc	/^const char *recover="\\x1b[0m";$/;"	v
+red	AnsiPrint.h	/^enum color {black=0, red, green, yellow, blue, pink, cyan, white, nochange};$/;"	e	enum:color
+show_ID	Goat.cc	/^void Goat::show_ID(){$/;"	f	class:Goat
+show_ID	Grass.cc	/^void Grass::show_ID(){$/;"	f	class:Grass
+show_map	World.cc	/^void World::show_map() const{$/;"	f	class:World
+wanted_baby_coordinate	Goat.cc	/^void Goat::wanted_baby_coordinate(int current_x, int current_y){$/;"	f	class:Goat
+wanted_baby_coordinate	Grass.cc	/^void Grass::wanted_baby_coordinate(int current_x, int current_y){$/;"	f	class:Grass
+wanted_future_coordinate	Goat.cc	/^void Goat::wanted_future_coordinate(int current_x, int current_y){$/;"	f	class:Goat
+white	AnsiPrint.h	/^enum color {black=0, red, green, yellow, blue, pink, cyan, white, nochange};$/;"	e	enum:color
+x_baby	Goat.h	/^		int x_baby;$/;"	m	class:Goat
+x_baby	Grass.h	/^		int x_baby;$/;"	m	class:Grass
+x_future	Goat.h	/^		int x_future;$/;"	m	class:Goat
+y_baby	Goat.h	/^		int y_baby;$/;"	m	class:Goat
+y_baby	Grass.h	/^		int y_baby;$/;"	m	class:Grass
+y_future	Goat.h	/^		int y_future;$/;"	m	class:Goat
+yellow	AnsiPrint.h	/^enum color {black=0, red, green, yellow, blue, pink, cyan, white, nochange};$/;"	e	enum:color

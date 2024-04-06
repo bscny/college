@@ -1,0 +1,138 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.9~svn20110310	//
+AnsiPrint	AnsiPrint.cc	/^AnsiPrint(const char *str, bool hi, bool blinking) {$/;"	f
+AnsiPrint	AnsiPrint.cc	/^AnsiPrint(const char *str, color fg, color bg, bool hi, bool blinking) {$/;"	f
+BASEDIR	Makefile	/^BASEDIR  = .$/;"	m
+BJackDealer	BJackDealer.cc	/^BJackDealer::BJackDealer(int nSet) : BJackPlayer("Dealer"){$/;"	f	class:BJackDealer
+BJackDealer	BJackDealer.h	/^class BJackDealer : public BJackPlayer{$/;"	c
+BJackGame	BJackGame.cc	/^BJackGame::BJackGame(BJackPlayer &bjp, BJackDealer &bjd) : menu(sizeof(menuItems)\/sizeof(char *),menuItems), bjplayer(bjp), bjdealer(bjd){$/;"	f	class:BJackGame
+BJackGame	BJackGame.h	/^class BJackGame {$/;"	c
+BJackPlayer	BJackPlayer.cc	/^BJackPlayer::BJackPlayer(const char *player_name) {$/;"	f	class:BJackPlayer
+BJackPlayer	BJackPlayer.h	/^class BJackPlayer {$/;"	c
+CLASSDIR	Makefile	/^CLASSDIR = $(SYSDIR)\/class\/oop$/;"	m
+CXX	Makefile	/^CXX      = g++$/;"	m
+CXXFLAGS	Makefile	/^CXXFLAGS = -Wall -Wno-deprecated -I$(INCDIR) #-D__STDC__ $/;"	m
+Card	Card.cc	/^Card::Card(int newId) {$/;"	f	class:Card
+Card	Card.h	/^class Card {$/;"	c
+ConsoleMenu	ConsoleMenu.cc	/^ConsoleMenu::ConsoleMenu(int numItem, const char * const * menuItems) {$/;"	f	class:ConsoleMenu
+ConsoleMenu	ConsoleMenu.h	/^class ConsoleMenu {$/;"	c
+HEADERS	Makefile	/^HEADERS  = ${SRCS:%.cc=%.h} Cards.h$/;"	m
+HOSTTYPE	Makefile	/^HOSTTYPE = $(shell arch)$/;"	m
+INCDIR	Makefile	/^INCDIR   = $(BASEDIR)\/include #-I$(SYSDIR)\/lib\/g++-include $/;"	m
+LIB	Makefile	/^LIB      = lib$(PACKAGE)_$(HOSTTYPE).a$/;"	m
+LIBDIR	Makefile	/^LIBDIR   = -L$(BASEDIR)\/lib -L\/usr\/openwin\/lib -L\/usr\/ucblib$/;"	m
+LIBS	Makefile	/^LIBS     = $(LIBDIR) -lm -lc$/;"	m
+MAKEDEP	Makefile	/^MAKEDEP  = makedepend$/;"	m
+Min	BJackPlayer.cc	/^Min(int i, int j) {$/;"	f
+OBJS	Makefile	/^OBJS     = ${SRCS:%.cc=$(O_DIR)\/%.o}$/;"	m
+O_DIR	Makefile	/^O_DIR    = O_$(HOSTTYPE)$/;"	m
+PACKAGE	Makefile	/^PACKAGE  = BJackTest$/;"	m
+PrintMyID	BJackTest.cc	/^PrintMyID(const char *studId) {$/;"	f
+PrintUsage	BJackTest.cc	/^PrintUsage(const char *progName) {$/;"	f
+SOURCES	Makefile	/^SOURCES  = AnsiPrint Card  BJackPlayer BJackDealer ConsoleMenu BJackGame$/;"	m
+SRCS	Makefile	/^SRCS     = ${SOURCES:%=%.cc}$/;"	m
+SYSDIR	Makefile	/^SYSDIR   = \/usr\/local$/;"	m
+TARG	Makefile	/^TARG     = $(TARGET)_$(HOSTTYPE)$/;"	m
+TARGET	Makefile	/^TARGET   = BJackTest$/;"	m
+TEST	Makefile	/^TEST     = BJackTest$/;"	m
+TESTOBJ	Makefile	/^TESTOBJ  = ${TESTSRC:%.cc=$(O_DIR)\/%.o}$/;"	m
+TESTSRC	Makefile	/^TESTSRC  = ${TEST:%=%.cc}$/;"	m
+_ANSIPRINT_H	AnsiPrint.h	22;"	d
+_BJACKDEALER_H	BJackDealer.h	19;"	d
+_BJACKGAME_H	BJackGame.h	19;"	d
+_BJACKPLAYER_H	BJackPlayer.h	23;"	d
+_CARD_H	Card.h	24;"	d
+_CONSOLE_MENU_H	ConsoleMenu.h	20;"	d
+addCard	BJackPlayer.cc	/^BJackPlayer::addCard(Card newCard) {$/;"	f	class:BJackPlayer
+addCards	BJackDealer.cc	/^BJackDealer::addCards(int oppTotal) {$/;"	f	class:BJackDealer
+all_cards	BJackDealer.h	/^  int *all_cards;  \/\/ will allocate in shuffle function$/;"	m	class:BJackDealer
+betCredit	BJackGame.h	/^    static const int betCredit = 1;$/;"	m	class:BJackGame
+bgBase	AnsiPrint.cc	/^const char *bgBase="40;";$/;"	v
+bjdealer	BJackGame.h	/^    BJackDealer &bjdealer;$/;"	m	class:BJackGame
+bjplayer	BJackGame.h	/^    BJackPlayer &bjplayer;$/;"	m	class:BJackGame
+black	AnsiPrint.h	/^enum color {black=0, red, green, yellow, blue, pink, cyan, white, nochange};$/;"	e	enum:color
+blink	AnsiPrint.cc	/^const char *blink="5;";$/;"	v
+blue	AnsiPrint.h	/^enum color {black=0, red, green, yellow, blue, pink, cyan, white, nochange};$/;"	e	enum:color
+card	CardPat.h	/^const char card[14][kCardHeight][kCardWidth+1]={{$/;"	v
+cardAbbrev	Card.h	/^const char cardAbbrev[]="SHDC";$/;"	v
+cardColor	Card.h	/^const color cardColor[]={black,red,red,black};$/;"	v
+cards	BJackPlayer.h	/^    Card cards[kMaxCards]; \/\/ the current hand$/;"	m	class:BJackPlayer
+chip_of_dealer	BJackGame.h	/^	int chip_of_dealer;$/;"	m	class:BJackGame
+chip_of_player	BJackGame.h	/^	int chip_of_player;$/;"	m	class:BJackGame
+club	Card.h	/^enum suit {spare, heart, diamond, club};$/;"	e	enum:suit
+color	AnsiPrint.h	/^enum color {black=0, red, green, yellow, blue, pink, cyan, white, nochange};$/;"	g
+cyan	AnsiPrint.h	/^enum color {black=0, red, green, yellow, blue, pink, cyan, white, nochange};$/;"	e	enum:color
+diamond	Card.h	/^enum suit {spare, heart, diamond, club};$/;"	e	enum:suit
+endc	AnsiPrint.cc	/^const char *endc="m";$/;"	v
+enough	BJackGame.cc	/^BJackGame::enough() {$/;"	f	class:BJackGame
+fgBase	AnsiPrint.cc	/^const char *fgBase="30;";$/;"	v
+first_time_playing	BJackDealer.h	/^  int first_time_playing;$/;"	m	class:BJackDealer
+game_started	BJackGame.h	/^	bool game_started;$/;"	m	class:BJackGame
+getAnswer	ConsoleMenu.cc	/^ConsoleMenu::getAnswer() const {$/;"	f	class:ConsoleMenu
+getID	Card.cc	/^Card::getID() const {$/;"	f	class:Card
+getPip	Card.cc	/^Card::getPip() const {$/;"	f	class:Card
+getSuit	Card.cc	/^Card::getSuit() const {$/;"	f	class:Card
+giveCard	BJackDealer.cc	/^BJackDealer::giveCard() {$/;"	f	class:BJackDealer
+green	AnsiPrint.h	/^enum color {black=0, red, green, yellow, blue, pink, cyan, white, nochange};$/;"	e	enum:color
+heart	Card.h	/^enum suit {spare, heart, diamond, club};$/;"	e	enum:suit
+hilit	AnsiPrint.cc	/^const char *hilit="1;";$/;"	v
+id	Card.h	/^    int id;$/;"	m	class:Card
+init	AnsiPrint.cc	/^const char *init="\\x1b[";$/;"	v
+initCredit	BJackGame.h	/^    static const int initCredit = 3;$/;"	m	class:BJackGame
+items	ConsoleMenu.h	/^  char **items; \/\/ the content of these menu items$/;"	m	class:ConsoleMenu
+judge	BJackDealer.cc	/^BJackDealer::judge(int oppTotal) const {$/;"	f	class:BJackDealer
+kCardHeight	CardPat.h	/^const int kCardHeight=11;$/;"	v
+kCardWidth	CardPat.h	/^const int kCardWidth=11;$/;"	v
+kFormatStrSize	AnsiPrint.cc	/^const int kFormatStrSize=20;$/;"	v
+kMaxCards	BJackPlayer.h	/^    static const int kMaxCards=10; \/\/ maximal number of cards I can hold$/;"	m	class:BJackPlayer
+kMaxNCards	BJackDealer.h	/^const int kMaxNCards=52;$/;"	v
+kNCardPerRow	Card.h	/^const int kNCardPerRow = 5;$/;"	v
+kNCards	Card.h	/^const int kNCards=52;$/;"	v
+kNPip	Card.h	/^const int kNPip=13;$/;"	v
+kNSuit	Card.h	/^const int kNSuit=4;$/;"	v
+lose	BJackDealer.h	/^enum result {tie, win, lose};$/;"	e	enum:result
+main	BJackTest.cc	/^main(int argc, char **argv) {$/;"	f
+menu	BJackGame.h	/^    ConsoleMenu menu;$/;"	m	class:BJackGame
+menuItems	BJackGame.h	/^const char * const menuItems[]={$/;"	v
+moreCard	BJackGame.cc	/^BJackGame::moreCard() {$/;"	f	class:BJackGame
+nCards	BJackPlayer.h	/^    int nCards; \/\/ current number of cards at hand$/;"	m	class:BJackPlayer
+nItems	ConsoleMenu.h	/^  int nItems; \/\/ number of menu items$/;"	m	class:ConsoleMenu
+name	BJackPlayer.h	/^    char *name;$/;"	m	class:BJackPlayer
+nochange	AnsiPrint.h	/^enum color {black=0, red, green, yellow, blue, pink, cyan, white, nochange};$/;"	e	enum:color
+num_decks	BJackDealer.h	/^  int num_decks;$/;"	m	class:BJackDealer
+o_enough	BJackGame.h	/^enum option {o_more=1,o_enough,o_restart,o_quit};$/;"	e	enum:option
+o_more	BJackGame.h	/^enum option {o_more=1,o_enough,o_restart,o_quit};$/;"	e	enum:option
+o_quit	BJackGame.h	/^enum option {o_more=1,o_enough,o_restart,o_quit};$/;"	e	enum:option
+o_restart	BJackGame.h	/^enum option {o_more=1,o_enough,o_restart,o_quit};$/;"	e	enum:option
+oneRun	BJackGame.cc	/^BJackGame::oneRun() {$/;"	f	class:BJackGame
+openFirstCard	BJackPlayer.cc	/^BJackPlayer::openFirstCard() {$/;"	f	class:BJackPlayer
+option	BJackGame.h	/^enum option {o_more=1,o_enough,o_restart,o_quit};$/;"	g
+pink	AnsiPrint.h	/^enum color {black=0, red, green, yellow, blue, pink, cyan, white, nochange};$/;"	e	enum:color
+print	Card.cc	/^Card::print(void) const {$/;"	f	class:Card
+print	ConsoleMenu.cc	/^ConsoleMenu::print() const {$/;"	f	class:ConsoleMenu
+rand_seed	BJackDealer.h	/^  long rand_seed;$/;"	m	class:BJackDealer
+recover	AnsiPrint.cc	/^const char *recover="\\x1b[0m";$/;"	v
+red	AnsiPrint.h	/^enum color {black=0, red, green, yellow, blue, pink, cyan, white, nochange};$/;"	e	enum:color
+restart	BJackGame.cc	/^BJackGame::restart() {$/;"	f	class:BJackGame
+result	BJackDealer.h	/^enum result {tie, win, lose};$/;"	g
+setID	Card.cc	/^Card::setID(int newId) {$/;"	f	class:Card
+setMenuItem	ConsoleMenu.cc	/^ConsoleMenu::setMenuItem(int whichItem, const char *menuItem) {$/;"	f	class:ConsoleMenu
+showAll	BJackPlayer.h	/^    int showAll; \/\/ a flag indicating the first card is facing up or down  $/;"	m	class:BJackPlayer
+showCards	BJackPlayer.cc	/^BJackPlayer::showCards() const {$/;"	f	class:BJackPlayer
+shuffle	BJackDealer.cc	/^BJackDealer::shuffle(long seed) {$/;"	f	class:BJackDealer
+shuffle	BJackDealer.cc	/^BJackDealer::shuffle(void) {$/;"	f	class:BJackDealer
+spare	Card.h	/^enum suit {spare, heart, diamond, club};$/;"	e	enum:suit
+start	BJackDealer.cc	/^BJackDealer::start(void) {$/;"	f	class:BJackDealer
+start	BJackPlayer.cc	/^BJackPlayer::start(void) {$/;"	f	class:BJackPlayer
+suit	Card.h	/^enum suit {spare, heart, diamond, club};$/;"	g
+suitName	Card.h	/^const char * const suitName[] = { "spade", "heart", "diamond", "club" };$/;"	v
+tie	BJackDealer.h	/^enum result {tie, win, lose};$/;"	e	enum:result
+top_of_the_mixed_decks_index	BJackDealer.h	/^  int top_of_the_mixed_decks_index;$/;"	m	class:BJackDealer
+totalPoints	BJackPlayer.cc	/^BJackPlayer::totalPoints(void) const {$/;"	f	class:BJackPlayer
+white	AnsiPrint.h	/^enum color {black=0, red, green, yellow, blue, pink, cyan, white, nochange};$/;"	e	enum:color
+win	BJackDealer.h	/^enum result {tie, win, lose};$/;"	e	enum:result
+yellow	AnsiPrint.h	/^enum color {black=0, red, green, yellow, blue, pink, cyan, white, nochange};$/;"	e	enum:color
