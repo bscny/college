@@ -1,0 +1,119 @@
+set t_Co=256   "maximum the number of colors
+set background=dark   "bg affect words
+syntax on   " show parts of the text in another font or color
+set cursorline   "show the row where the cursor's at and its color
+hi CursorLine cterm=none ctermbg=235 ctermfg=none
+set nocompatible   "shut down the mutual mode with vi
+set ruler    " show the cursor position all the time
+set ignorecase    "ignore the case when searching
+set smartcase    "ignore the case when searching
+set hlsearch    " When there is a previous search pattern
+hi Search cterm=none ctermbg=245 ctermfg=232
+set incsearch   " While typing a search pattern, show the backline immediately
+set cindent    "autolly indent
+set noexpandtab    "dont expand tabs to spaces.
+set tabstop=4   "tab lenth
+set softtabstop=4   "tab lenth
+set shiftwidth=4   "tab lenth
+set smarttab   "auto determine to tab
+set scrolloff=5   "spare the roll space
+set confirm   "vim will ask u if something goes wrong
+set backspace=2     " allow backspacing over everything in insert mode
+set history=100     " keep 100 lines of command line history
+set laststatus=2    "display what files r editing
+set showcmd   " show command
+set showmode   " show current mode
+set nowrap    "deosnt goes to the next line when words are overflow
+set autowrite   "auto save while something wrong
+set mouse=a    "enable mouse
+set formatoptions-=r   "turn off auto //
+set fileencodings=utf-8,utf-16,big5,gb2312,gbk,gb18030,euc-jp,euc-kr,latin1
+set encoding=utf-8
+map <C-m> :call SwitchMouseMode()<CR>
+function SwitchMouseMode()
+        if (&mouse == "a")
+                let &mouse = ""
+                echo "Mouse is disabled."
+        else
+                let &mouse = "a"
+                echo "Mouse is enabled."
+        endif
+endfunction
+highlight Comment    ctermfg=DarkCyan
+highlight SpecialKey ctermfg=Yellow
+
+"the autofill with tap
+function InsertTabWrapper()
+    let col = col('.') - 1
+    if !col || getline('.')[col - 1] !~ '\k'
+        return "\<tab>"
+    else
+        return "\<c-p>"
+    endif
+endfunction
+inoremap <TAB> <C-R>=InsertTabWrapper()<CR>
+set dictionary="/usr/dict/words"
+set completeopt=menuone
+" -----------------------------------------------------------------------------------------------------------------------------------------
+
+"set secure
+
+"filetype indent on
+"set foldmethod=indent
+"set foldlevel=99
+"exec "nohlsearch"
+"set wildmenu
+"map spl :set splitright<CR>:vsplit<CR>
+"map sph :set nosplitright<CR>:vsplit<CR>
+"map spj :set splitbelow<CR>:split<CR>
+"map spk :set nosplitbelow<CR>:split<CR>
+"set ai
+
+"set viminfo='20,\"50    " read/write a .viminfo file, don't store more
+                        " than 50 lines of registers
+"set dictionary=~/.dict  " my dictionary :p
+
+"set expandtab           " expand tabs to spaces.
+"set wildchar=<TAB>      " such as <TAB> in shell
+
+"set t_Sf=1%dm   " set foreground color
+"set t_Sb=1%dm   " set background color
+
+"autocmd FileType c,cpp,cc,java call PROG()
+"autocmd FileType make setlocal noexpandtab
+
+"colorscheme default
+"colorscheme github
+"colorscheme moria
+"colorscheme molokai
+"colorscheme solarized
+"colorscheme iceburg
+
+"function PROG()
+ "   set showmatch
+ "   set nosmartindent
+ "   set cinoptions=t0
+ "   imap <C-a>f <END><CR>for(;;) {<CR>}<LEFT>
+ "               \<CR><UP><UP><UP><RIGHT><RIGHT><RIGHT><RIGHT><RIGHT>
+ "   imap <C-a>w <END><CR>while( ) {<CR>}<LEFT>
+ "               \<CR><UP><UP><UP><END><LEFT><LEFT>
+ "   set formatoptions=tcq
+"endfunction
+
+"map <F2> :update<CR>                    " using :update to replace :w
+"map <F3> :update<CR>:q<CR>
+"map <F4> :q!<CR>
+"map <F5> :bp<CR>
+"map <F6> :bn<CR>
+" map <F8> :set hls!<BAR>set hls?<CR>     " toggle on/off highlightsearch
+"map <F8> :set paste!<BAR>set paste?<CR> " toggle on/off paste mode
+"set pastetoggle=<F8>
+"map <F9> :!make %:r <CR>
+"
+"map <F7> :if exists("syntax_on") <BAR>  " press <F7> syntax on/off
+"        \   syntax off <bar><cr>
+"        \ else <BAR>
+"        \   syntax on <BAR>
+"        \ endif <CR>
+"
+"map <F10> <ESC>:read !date<CR>

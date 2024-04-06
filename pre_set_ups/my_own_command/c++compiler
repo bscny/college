@@ -1,0 +1,4 @@
+#!/bin/sh
+
+g++ -Wall -o out $1
+./out

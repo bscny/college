@@ -1,0 +1,4 @@
+#!/bin/sh
+
+gcc -Wall -o out $1
+./out
