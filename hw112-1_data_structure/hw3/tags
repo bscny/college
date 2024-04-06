@@ -1,0 +1,135 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.9~svn20110310	//
+ARR_S_ARR	chart_gen.py	/^ARR_S_ARR = 0$/;"	v
+Array_Sorted_Arrays	arr_of_sorted_arrs.cpp	/^Array_Sorted_Arrays::Array_Sorted_Arrays(){$/;"	f	class:Array_Sorted_Arrays
+Array_Sorted_Arrays	arr_of_sorted_arrs.h	/^class Array_Sorted_Arrays{$/;"	c
+CC	Makefile	/^CC = g++$/;"	m
+CFLAGS	Makefile	/^CFLAGS = -Wall -g -I. -O2$/;"	m
+COMPARE_LL_OBJS	Makefile	/^COMPARE_LL_OBJS = $(O_DIR)\/compare_linked_list.o $(O_DIR)\/skip_list.o $(O_DIR)\/arr_of_sorted_arrs.o$/;"	m
+COMPARE_SL_OBJS	Makefile	/^COMPARE_SL_OBJS = $(O_DIR)\/compare_skip_list.o $(O_DIR)\/skip_list.o$/;"	m
+DATA_OBJS	Makefile	/^DATA_OBJS = $(O_DIR)\/data_generator.o$/;"	m
+EXEC_CMP_LL	Makefile	/^EXEC_CMP_LL = Compare_linked_list$/;"	m
+EXEC_CMP_SL	Makefile	/^EXEC_CMP_SL = Compare_skip_list$/;"	m
+EXEC_DATA	Makefile	/^EXEC_DATA = Get_Data$/;"	m
+EXEC_EX	Makefile	/^EXEC_EX = Experiment$/;"	m
+EXEC_TEST	Makefile	/^EXEC_TEST = My_test$/;"	m
+EXPERIMENT_OBJS	Makefile	/^EXPERIMENT_OBJS = $(O_DIR)\/experiment.o $(O_DIR)\/sorted_arr.o $(O_DIR)\/arr_of_sorted_arrs.o $(O_DIR)\/skip_list.o$/;"	m
+LINE_NUM	chart_gen.py	/^LINE_NUM = 3$/;"	v
+LINE_NUM	chart_gen_compare.py	/^LINE_NUM = 3$/;"	v
+MAX_POWER_K	chart_gen.py	/^MAX_POWER_K = 23$/;"	v
+MAX_POWER_K	chart_gen_compare.py	/^MAX_POWER_K = 20$/;"	v
+MAX_POW_K	compare_skip_list.cpp	13;"	d	file:
+MAX_POW_K	experiment.cpp	15;"	d	file:
+MAX_STACK_FRAMES	backtrace.cpp	17;"	d	file:
+My_list	compare_linked_list.cpp	/^		My_list(){$/;"	f	class:My_list
+My_list	compare_linked_list.cpp	/^class My_list{$/;"	c	file:
+Node	compare_linked_list.cpp	/^		Node(int v = -1){$/;"	f	class:Node
+Node	compare_linked_list.cpp	/^class Node{$/;"	c	file:
+Node_c_v	skip_list.cpp	/^Node_c_v::Node_c_v(){$/;"	f	class:Node_c_v
+Node_c_v	skip_list.cpp	/^Node_c_v::Node_c_v(int v, int h){$/;"	f	class:Node_c_v
+Node_c_v	skip_list.h	/^class Node_c_v{$/;"	c
+Node_p	skip_list.cpp	/^Node_p::Node_p(){$/;"	f	class:Node_p
+Node_p	skip_list.cpp	/^Node_p::Node_p(int v){$/;"	f	class:Node_p
+Node_p	skip_list.h	/^class Node_p{$/;"	c
+Node_v	skip_list.cpp	/^Node_v::Node_v(){$/;"	f	class:Node_v
+Node_v	skip_list.cpp	/^Node_v::Node_v(int v, int h){$/;"	f	class:Node_v
+Node_v	skip_list.h	/^class Node_v{$/;"	c
+O_DIR	Makefile	/^O_DIR = dir_temp$/;"	m
+POW_N	chart_gen.py	/^POW_N = 23$/;"	v
+POW_N	chart_gen_compare.py	/^POW_N = 20$/;"	v
+POW_N	compare_linked_list.cpp	13;"	d	file:
+POW_N	compare_skip_list.cpp	12;"	d	file:
+POW_N	data_generator.cpp	8;"	d	file:
+POW_N	experiment.cpp	14;"	d	file:
+POW_N	test_range_query.cpp	14;"	d	file:
+REPEATION	compare_linked_list.cpp	14;"	d	file:
+REPEATION	compare_skip_list.cpp	14;"	d	file:
+REPEATION	experiment.cpp	16;"	d	file:
+SKIP_LIST	chart_gen.py	/^SKIP_LIST = 1$/;"	v
+SKIP_LIST	chart_gen_compare.py	/^SKIP_LIST = 0$/;"	v
+SKIP_LIST_C_V	chart_gen_compare.py	/^SKIP_LIST_C_V = 2$/;"	v
+SKIP_LIST_P	chart_gen_compare.py	/^SKIP_LIST_P = 1$/;"	v
+S_ARR	chart_gen.py	/^S_ARR = 2$/;"	v
+Skip_List_c_v	skip_list.cpp	/^Skip_List_c_v::Skip_List_c_v() : probability(0.5) {$/;"	f	class:Skip_List_c_v
+Skip_List_c_v	skip_list.h	/^class Skip_List_c_v{$/;"	c
+Skip_List_p	skip_list.cpp	/^Skip_List_p::Skip_List_p() : probability(0.5) {$/;"	f	class:Skip_List_p
+Skip_List_p	skip_list.h	/^class Skip_List_p{$/;"	c
+Skip_List_v	skip_list.cpp	/^Skip_List_v::Skip_List_v() : probability(0.5) {$/;"	f	class:Skip_List_v
+Skip_List_v	skip_list.h	/^class Skip_List_v{$/;"	c
+Sorted_Array	sorted_arr.cpp	/^Sorted_Array::Sorted_Array(){$/;"	f	class:Sorted_Array
+Sorted_Array	sorted_arr.h	/^class Sorted_Array{$/;"	c
+TEST_OBJS	Makefile	/^TEST_OBJS = $(O_DIR)\/test_range_query.o $(O_DIR)\/sorted_arr.o $(O_DIR)\/arr_of_sorted_arrs.o $(O_DIR)\/skip_list.o $(O_DIR)\/backtrace.o$/;"	m
+_ARR_OF_SORTED_ARRS_H	arr_of_sorted_arrs.h	2;"	d
+_FUNCTIONS_MULTISET_H	functions_multiset.h	2;"	d
+_SKIP_LIST_H	skip_list.h	2;"	d
+_SORTED_ARR_H	sorted_arr.h	2;"	d
+arr	sorted_arr.h	/^		vector<int> arr;$/;"	m	class:Sorted_Array
+arr_arrs	arr_of_sorted_arrs.h	/^		vector< vector<int> > arr_arrs;$/;"	m	class:Array_Sorted_Arrays
+arr_final_merge	arr_of_sorted_arrs.h	/^		vector<int> arr_final_merge;$/;"	m	class:Array_Sorted_Arrays
+arr_next	skip_list.h	/^		vector<Node_c_v*> arr_next;$/;"	m	class:Node_c_v
+arr_next	skip_list.h	/^		vector<Node_v*> arr_next;$/;"	m	class:Node_v
+bottom_head	skip_list.h	/^		Node_p *bottom_head;$/;"	m	class:Skip_List_p
+copy	sorted_arr.cpp	/^void Sorted_Array::copy(vector<int> &in){$/;"	f	class:Sorted_Array
+current_arr_num	arr_of_sorted_arrs.h	/^		int current_arr_num;$/;"	m	class:Array_Sorted_Arrays
+current_height	skip_list.h	/^		int current_height;$/;"	m	class:Skip_List_c_v
+current_height	skip_list.h	/^		int current_height;$/;"	m	class:Skip_List_p
+current_height	skip_list.h	/^		int current_height;$/;"	m	class:Skip_List_v
+display_multiset	functions_multiset.h	/^void display_multiset(const vector<int> &multiset){$/;"	f
+down	skip_list.h	/^		Node_p *down;$/;"	m	class:Node_p
+equivalent	functions_multiset.h	/^bool equivalent(vector<int> multiset_1, vector<int> multiset_2){$/;"	f
+get_Random_height	skip_list.cpp	/^int Skip_List_c_v::get_Random_height() const {$/;"	f	class:Skip_List_c_v
+get_Random_height	skip_list.cpp	/^int Skip_List_p::get_Random_height() const {$/;"	f	class:Skip_List_p
+get_Random_height	skip_list.cpp	/^int Skip_List_v::get_Random_height() const {$/;"	f	class:Skip_List_v
+head	compare_linked_list.cpp	/^		Node *head;$/;"	m	class:My_list	file:
+head	skip_list.h	/^		Node_c_v *head;  \/\/ will point towards a sentinel first$/;"	m	class:Skip_List_c_v
+head	skip_list.h	/^		Node_p *head;$/;"	m	class:Skip_List_p
+head	skip_list.h	/^		Node_v *head;  \/\/ will point towards a sentinel first$/;"	m	class:Skip_List_v
+insert	arr_of_sorted_arrs.cpp	/^void Array_Sorted_Arrays::insert(int target){$/;"	f	class:Array_Sorted_Arrays
+insert	skip_list.cpp	/^void Skip_List_c_v::insert(int target){$/;"	f	class:Skip_List_c_v
+insert	skip_list.cpp	/^void Skip_List_p::insert(int target){$/;"	f	class:Skip_List_p
+insert	skip_list.cpp	/^void Skip_List_v::insert(int target){$/;"	f	class:Skip_List_v
+insert	sorted_arr.cpp	/^void Sorted_Array::insert(int in){$/;"	f	class:Sorted_Array
+main	chart_gen.py	/^def main():$/;"	f
+main	chart_gen_compare.py	/^def main():$/;"	f
+main	compare_linked_list.cpp	/^int main(int argc, char **argv){$/;"	f
+main	compare_skip_list.cpp	/^int main(int argc, char **argv){$/;"	f
+main	data_generator.cpp	/^int main(int argc, char **argv){$/;"	f
+main	experiment.cpp	/^int main(int argc, char **argv){$/;"	f
+main	test_range_query.cpp	/^int main(int argc, char **argv){$/;"	f
+next	compare_linked_list.cpp	/^		Node *next;$/;"	m	class:Node	file:
+next	skip_list.h	/^		Node_p *next;$/;"	m	class:Node_p
+posix_print_stack_trace	backtrace.cpp	/^static void posix_print_stack_trace(void)$/;"	f	file:
+posix_signal_handler	backtrace.cpp	/^static void posix_signal_handler(int signo, siginfo_t *siginfo, void *context)$/;"	f	file:
+posix_signal_num_to_txt	backtrace.cpp	/^static const char *posix_signal_num_to_txt(int signo, siginfo_t *siginfo)$/;"	f	file:
+probability	skip_list.h	/^		const double probability;  \/\/ P of going up$/;"	m	class:Skip_List_c_v
+probability	skip_list.h	/^		const double probability;  \/\/ P of going up$/;"	m	class:Skip_List_v
+probability	skip_list.h	/^		const double probability;$/;"	m	class:Skip_List_p
+push	compare_linked_list.cpp	/^		void push(int in_v){$/;"	f	class:My_list
+range_query	arr_of_sorted_arrs.cpp	/^void Array_Sorted_Arrays::range_query(int small, int big, vector<int> &multiset) const {$/;"	f	class:Array_Sorted_Arrays
+range_query	skip_list.cpp	/^void Skip_List_c_v::range_query(int small, int big, vector<int> &multiset) const {$/;"	f	class:Skip_List_c_v
+range_query	skip_list.cpp	/^void Skip_List_p::range_query(int small, int big, vector<int> &multiset) const {$/;"	f	class:Skip_List_p
+range_query	skip_list.cpp	/^void Skip_List_v::range_query(int small, int big, vector<int> &multiset) const {$/;"	f	class:Skip_List_v
+range_query	sorted_arr.cpp	/^void Sorted_Array::range_query(int small, int big, vector<int> &multiset) const {$/;"	f	class:Sorted_Array
+range_query_std	test_range_query.cpp	/^void range_query_std(const vector<int> &arr_std, int small, int big, vector<int> &multiset_std){$/;"	f
+repeated_num	skip_list.h	/^		int repeated_num;$/;"	m	class:Node_c_v
+set_bottom_head	skip_list.cpp	/^void Skip_List_p::set_bottom_head(){$/;"	f	class:Skip_List_p
+set_signal_handler	backtrace.cpp	/^void set_signal_handler(void)$/;"	f
+size	sorted_arr.h	/^		int size;$/;"	m	class:Sorted_Array
+sum	compare_linked_list.cpp	/^		int sum(){$/;"	f	class:My_list
+tail	compare_linked_list.cpp	/^		Node *tail;$/;"	m	class:My_list	file:
+travel_all	arr_of_sorted_arrs.cpp	/^int Array_Sorted_Arrays::travel_all() const {$/;"	f	class:Array_Sorted_Arrays
+travel_bottom	skip_list.cpp	/^int Skip_List_c_v::travel_bottom(){$/;"	f	class:Skip_List_c_v
+travel_bottom	skip_list.cpp	/^int Skip_List_p::travel_bottom(){$/;"	f	class:Skip_List_p
+travel_bottom	skip_list.cpp	/^int Skip_List_v::travel_bottom(){$/;"	f	class:Skip_List_v
+value	compare_linked_list.cpp	/^		int value;$/;"	m	class:Node	file:
+value	skip_list.h	/^		int value;$/;"	m	class:Node_c_v
+value	skip_list.h	/^		int value;$/;"	m	class:Node_p
+value	skip_list.h	/^		int value;$/;"	m	class:Node_v
+~My_list	compare_linked_list.cpp	/^		~My_list(){$/;"	f	class:My_list
+~Skip_List_c_v	skip_list.cpp	/^Skip_List_c_v::~Skip_List_c_v(){$/;"	f	class:Skip_List_c_v
+~Skip_List_p	skip_list.cpp	/^Skip_List_p::~Skip_List_p(){$/;"	f	class:Skip_List_p
+~Skip_List_v	skip_list.cpp	/^Skip_List_v::~Skip_List_v(){$/;"	f	class:Skip_List_v

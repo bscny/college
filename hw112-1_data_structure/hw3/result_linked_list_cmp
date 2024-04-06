@@ -1,0 +1,19 @@
+when n=2^20, the time to travel all nodes
+
+STL's link list: 0.035097
+My link list: 0.038402
+STL's array: 0.000349
+skip list + vector: 0.108722
+skip list + pointer: 0.097446
+skip list + vector with no repeation: 0.068316
+array of sorted arrays: 0.000351
+-----------------------------------------------------------
+when n=2^23, the time to travel all nodes
+
+STL's link list: 0.261203
+My link list: 0.300024
+STL's array: 0.002443
+skip list + vector: 1.076373
+skip list + pointer: 1.032032
+skip list + vector with no repeation: 0.669631
+array of sorted arrays: 0.002448
