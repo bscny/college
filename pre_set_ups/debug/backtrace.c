@@ -34,6 +34,7 @@ static void posix_print_stack_trace(void)
         free(messages); 
     }
     printf("\n");
+    printf("hint: use following command to find errors\naddr2line -e <exec_file_name> <addr>\n");
 }
 
 static char *posix_signal_num_to_txt(int signo, siginfo_t *siginfo)
