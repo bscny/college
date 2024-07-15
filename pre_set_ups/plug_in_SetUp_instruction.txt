@@ -1,0 +1,9 @@
+ctags:
+	1. sudo apt-get install ctags
+
+cscope:
+	1. sudo apt-get install cscope
+
+NERDTree:
+	1. git clone https://github.com/preservim/nerdtree.git ~/.vim/pack/vendor/start/nerdtree
+	2. vim -u NONE -c "helptags ~/.vim/pack/vendor/start/nerdtree/doc" -c q

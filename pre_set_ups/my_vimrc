@@ -54,6 +54,37 @@ endfunction
 inoremap <TAB> <C-R>=InsertTabWrapper()<CR>
 set dictionary="/usr/dict/words"
 set completeopt=menuone
+
+set cscopetag
+set csto=0
+
+"automatically add cscope env file
+if filereadable("cscope.out")
+   cs add cscope.out
+elseif $CSCOPE_DB != ""
+    cs add $CSCOPE_DB
+endif
+set cscopeverbose
+
+"hit <crtl> + <\> + <...> to use cscope
+nmap <C-\>s :cs find s <C-R>=expand("<cword>")<CR><CR>
+nmap <C-\>a :cs find a <C-R>=expand("<cword>")<CR><CR>
+nmap <C-\>g :cs find g <C-R>=expand("<cword>")<CR><CR>
+nmap <C-\>c :cs find c <C-R>=expand("<cword>")<CR><CR>
+nmap <C-\>t :cs find t <C-R>=expand("<cword>")<CR><CR>
+nmap <C-\>e :cs find e <C-R>=expand("<cword>")<CR><CR>
+nmap <C-\>f :cs find f <C-R>=expand("<cfile>")<CR><CR>
+nmap <C-\>i :cs find i ^<C-R>=expand("<cfile>")<CR>$<CR>
+nmap <C-\>d :cs find d <C-R>=expand("<cword>")<CR><CR>
+
+"NERDTree open mapping
+nmap <F5> :NERDTreeToggle<CR>
+"autocmd VimEnter * NERDTree | wincmd p     " Start NERDTree and leave the cursor in it.
+" Exit Vim if NERDTree is the only window remaining in the only tab.
+autocmd BufEnter * if tabpagenr('$') == 1 && winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() | call feedkeys(":quit\<CR>:\<BS>") | endif
+" Close the tab if NERDTree is the only window remaining in it.
+autocmd BufEnter * if winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() | call feedkeys(":quit\<CR>:\<BS>") | endif
+"let g:NERDTreeFileLines = 1   " show lines and files
 " -----------------------------------------------------------------------------------------------------------------------------------------
 
 "set secure
