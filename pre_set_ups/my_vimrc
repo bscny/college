@@ -11,7 +11,7 @@ set hlsearch    " When there is a previous search pattern
 hi Search cterm=none ctermbg=245 ctermfg=232
 set incsearch   " While typing a search pattern, show the backline immediately
 set cindent    "autolly indent
-set noexpandtab    "dont expand tabs to spaces.
+set expandtab    "expand tabs to spaces.
 set tabstop=4   "tab lenth
 set softtabstop=4   "tab lenth
 set shiftwidth=4   "tab lenth
