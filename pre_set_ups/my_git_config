@@ -1,0 +1,11 @@
+[init]
+    defaultBranch = main
+[user]
+	email = benny999.yu@gmail.com
+	name = benny999
+[pull]
+	rebase = false
+[core]
+	editor = vim
+[fetch]
+	prune = true
