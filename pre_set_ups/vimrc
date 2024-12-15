@@ -66,6 +66,13 @@ elseif $CSCOPE_DB != ""
 endif
 set cscopeverbose
 
+"hit <crtl> + <Backspace> to delete a
+imap <C-BS> <C-W>
+
+"hit <crtl> + <S> to save files
+nnoremap <C-S> :wq<CR>
+inoremap <C-S> <Esc>:wq<CR>
+
 "hit <crtl> + <\> + <...> to use cscope
 nmap <C-\>s :cs find s <C-R>=expand("<cword>")<CR><CR>
 nmap <C-\>a :cs find a <C-R>=expand("<cword>")<CR><CR>
