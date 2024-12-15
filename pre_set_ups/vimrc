@@ -68,6 +68,7 @@ set cscopeverbose
 
 "hit <crtl> + <Backspace> to delete a
 imap <C-BS> <C-W>
+imap <Esc><BS> <C-W>
 
 "hit <crtl> + <S> to save files
 nnoremap <C-S> :wq<CR>
