@@ -24,21 +24,33 @@ float hit_sphere(const Vec3 sphere_center, const float r, const Ray &ray){
 }
 
 Vec3 color(const Ray &r){
+	// predefined objs' posotion
 	Vec3 sphere_center(0, 0, -1);
+	Vec3 light_source(0, 0, 0);
+	Vec3 light_intensity(1, 1, 1);
+
 	float t = hit_sphere(sphere_center, 0.5, r);
 	
 	/*if(t > 0){
 		return Vec3(1, 0, 0);
 	}*/
 
+	/*if(t > 0){
+		Vec3 N(unit_vector(r.point_at_parameter(t) - sphere_center));
+
+		return 0.5 * Vec3(N.x() + 1, N.y() + 1, N.z() + 1);
+	}*/
+
 	if(t > 0){
 		Vec3 N(unit_vector(r.point_at_parameter(t) - sphere_center));
-		return 0.5 * Vec3(N.x() + 1, N.y() + 1, N.z() + 1);
+		Vec3 L(unit_vector(light_source - r.point_at_parameter(t)));
+
+		return dot(N, L) * light_intensity;
 	}
 
 	t = 0.5 * (r.direction().y() + 1);
 
-	return (1.0 - t) * Vec3(1, 1, 1) + t * Vec3(0.5, 0.7, 1);
+	return (1.0 - t) * Vec3(1, 0.2, 0) + t * Vec3(1, 0.8, 0.5);
 }
 
 int main()
@@ -67,8 +79,9 @@ int main()
 
 	fstream file;
 	// file.open("../images/skybox.ppm", ios::out);
-	// file.open("../images/skybox_red_sphere.ppm", ios::out);
-	file.open("../images/skybox_N_sphere.ppm", ios::out);
+	// file.open("../images/red_sphere.ppm", ios::out);
+	// file.open("../images/normal.ppm", ios::out);
+	file.open("../images/shading.ppm", ios::out);
 
 	file << "P3\n" << width << " " << height << "\n255\n";
 	for (int j = height - 1; j >= 0; j--) {
