@@ -1,0 +1,1 @@
+/usr/bin/c++ -rdynamic CMakeFiles/start.dir/start.cpp.o -o start  -lGL -lGLU -lGLEW -lGL -lX11 -lGLU -lglfw 

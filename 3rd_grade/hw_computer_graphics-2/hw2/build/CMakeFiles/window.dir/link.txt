@@ -1,0 +1,1 @@
+/usr/bin/c++ -rdynamic CMakeFiles/window.dir/main.cpp.o -o window  -lGL -lGLU -lglfw 

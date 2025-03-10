@@ -1,0 +1,1 @@
+/usr/bin/c++ -rdynamic CMakeFiles/1-line.dir/1-line.cpp.o -o 1-line  -lGL -lGLU -lGLEW -lGL -lX11 -lGLU -lglfw 

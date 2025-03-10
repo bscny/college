@@ -1,0 +1,1 @@
+/usr/bin/c++ -rdynamic CMakeFiles/gasket2.dir/gasket2.cpp.o -o gasket2  -lGL -lGLU -lGLEW -lGL -lX11 -lGLU -lglfw 

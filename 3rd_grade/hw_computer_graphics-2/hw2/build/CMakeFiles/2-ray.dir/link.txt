@@ -1,0 +1,1 @@
+/usr/bin/c++ -rdynamic CMakeFiles/2-ray.dir/2-ray.cpp.o -o 2-ray  -lGL -lGLU -lGLEW -lGL -lX11 -lGLU -lglfw 

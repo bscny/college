@@ -1,0 +1,9 @@
+/home/benny999/cloud_college/3rd_grade/hw_computer_graphics-2/hw2/build/CMakeFiles/window.dir
+/home/benny999/cloud_college/3rd_grade/hw_computer_graphics-2/hw2/build/CMakeFiles/start.dir
+/home/benny999/cloud_college/3rd_grade/hw_computer_graphics-2/hw2/build/CMakeFiles/1-line.dir
+/home/benny999/cloud_college/3rd_grade/hw_computer_graphics-2/hw2/build/CMakeFiles/2-ray.dir
+/home/benny999/cloud_college/3rd_grade/hw_computer_graphics-2/hw2/build/CMakeFiles/gasket1.dir
+/home/benny999/cloud_college/3rd_grade/hw_computer_graphics-2/hw2/build/CMakeFiles/gasket2.dir
+/home/benny999/cloud_college/3rd_grade/hw_computer_graphics-2/hw2/build/CMakeFiles/gasket3.dir
+/home/benny999/cloud_college/3rd_grade/hw_computer_graphics-2/hw2/build/CMakeFiles/edit_cache.dir
+/home/benny999/cloud_college/3rd_grade/hw_computer_graphics-2/hw2/build/CMakeFiles/rebuild_cache.dir
