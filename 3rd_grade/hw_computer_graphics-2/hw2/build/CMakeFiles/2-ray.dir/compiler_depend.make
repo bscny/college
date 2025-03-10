@@ -118,6 +118,7 @@ CMakeFiles/2-ray.dir/2-ray.cpp.o: ../2-ray.cpp \
   /usr/include/c++/11/tr1/poly_hermite.tcc \
   /usr/include/c++/11/tr1/poly_laguerre.tcc \
   /usr/include/c++/11/tr1/riemann_zeta.tcc \
+  ../ray.h \
   ../vec3.h \
   /usr/include/c++/11/iostream \
   /usr/include/c++/11/ostream \
@@ -326,6 +327,10 @@ CMakeFiles/2-ray.dir/2-ray.cpp.o: ../2-ray.cpp \
 
 /usr/include/x86_64-linux-gnu/bits/types/mbstate_t.h:
 
+/usr/include/c++/11/bits/cxxabi_init_exception.h:
+
+/usr/include/wchar.h:
+
 /usr/include/x86_64-linux-gnu/bits/types/time_t.h:
 
 /usr/include/locale.h:
@@ -371,10 +376,6 @@ CMakeFiles/2-ray.dir/2-ray.cpp.o: ../2-ray.cpp \
 /usr/include/c++/11/string:
 
 /usr/include/x86_64-linux-gnu/bits/types/__fpos_t.h:
-
-/usr/include/c++/11/bits/cxxabi_init_exception.h:
-
-/usr/include/wchar.h:
 
 /usr/include/x86_64-linux-gnu/bits/time64.h:
 
@@ -595,6 +596,8 @@ CMakeFiles/2-ray.dir/2-ray.cpp.o: ../2-ray.cpp \
 /usr/include/c++/11/type_traits:
 
 /usr/include/c++/11/debug/assertions.h:
+
+../ray.h:
 
 /usr/include/c++/11/new:
 

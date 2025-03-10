@@ -193,7 +193,7 @@ inline float dot(const Vec3 &v1, const Vec3 &v2)
 
 inline Vec3 cross(const Vec3 &v1, const Vec3 &v2)
 {
-    return Vec3((v1[2] * v2[3]) - (v1[3] * v2[2]), (v1[3] * v2[1]) - (v1[1] * v2[3]), (v1[1] * v2[2]) - (v1[2] * v2[1]));
+    return Vec3((v1[2 - 1] * v2[3 - 1]) - (v1[3 - 1] * v2[2 - 1]), (v1[3 - 1] * v2[1 - 1]) - (v1[1 - 1] * v2[3 - 1]), (v1[1 - 1] * v2[2 - 1]) - (v1[2 - 1] * v2[1 - 1]));
 }
 
 inline Vec3 unit_vector(Vec3 v)

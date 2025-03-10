@@ -14,7 +14,7 @@ int main(void)
         return -1;
 
     /* Create a windowed mode window and its OpenGL context */
-    window = glfwCreateWindow(640, 480, "Hello World", NULL, NULL);
+    window = glfwCreateWindow(720, 720, "Hello World", NULL, NULL);
     if (!window)
     {
         glfwTerminate();
@@ -32,22 +32,27 @@ int main(void)
 
     }
 
+    glClear(GL_COLOR_BUFFER_BIT);
 
     float index = 0;
     /* Loop until the user closes the window */
     while (!glfwWindowShouldClose(window))
     {
         /* Render here */
-        glClear(GL_COLOR_BUFFER_BIT);
+        // glClear(GL_COLOR_BUFFER_BIT);
 
-        glBegin(GL_LINES);
-            //glColor3f(1, 0, 0);
-            glVertex3f(0, 0, 0);
-            glVertex3f(cos(index), sin(index), 0);
+        // glBegin(GL_LINES);
+        //     //glColor3f(1, 0, 0);
+        //     glVertex3f(0, 0, 0);
+        //     glVertex3f(0.5 * cos(index), 0.5 * sin(index), 0);
 
+        // glEnd();
+
+        glBegin(GL_POINTS);
+            glVertex3f(0.5 * cos(index), 0.5 * sin(index), 5);
         glEnd();
 
-        index += 0.00001f;
+        index += 0.001f;
 
         /* Swap front and back buffers */
         glfwSwapBuffers(window);

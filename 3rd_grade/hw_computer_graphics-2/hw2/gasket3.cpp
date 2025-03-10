@@ -5,11 +5,36 @@
 #include <stdlib.h>
 #include <math.h>
 
+#include "ray.h"
+
 GLFWwindow* window;
 
 /* initial tetrahedron */
 GLfloat v[4][3] = { {0.0, 0.0, 1.0}, {0.0, 0.942809, -0.33333},
       {-0.816497, -0.471405, -0.333333}, {0.816497, -0.471405, -0.333333} };
+
+bool check_plane(int repeat_index, int index_a, int index_b, GLfloat *vertice){
+    // use plane ABC for example:
+    // take vector AB and vector AC
+    // cross the two to get normal vector
+    // use one of the ABC to get the plane
+    // start checking
+    Vec3 vec_a(v[index_a][0] - v[repeat_index][0], v[index_a][1] - v[repeat_index][1], v[index_a][2] - v[repeat_index][2]);
+    Vec3 vec_b(v[index_b][0] - v[repeat_index][0], v[index_b][1] - v[repeat_index][1], v[index_b][2] - v[repeat_index][2]);
+
+    Vec3 N(cross(vec_a, vec_b));
+
+    // after this, assume N is (a, b, c)
+    // we have the equation ax + by + cz = k, where k satisfy A, B, and C
+    float k = v[repeat_index][0] * N[0] + v[repeat_index][1] * N[1] + v[repeat_index][2] * N[2];
+
+    // check if vertice is on the plane
+    if(abs((vertice[0] * N[0] + vertice[1] * N[1] + vertice[2] * N[2]) - k) <= 0.0001){
+        return true;
+    }else{
+        return false;
+    }
+}
 
 GLfloat colors[4][3] = { {1.0, 0.0, 0.0}, {0.0, 1.0, 0.0},
                         {0.0, 0.0, 1.0}, {0.0, 0.0, 0.0} };
@@ -26,14 +51,25 @@ void triangle(GLfloat* va, GLfloat* vb, GLfloat* vc)
 
 void tetra(GLfloat* a, GLfloat* b, GLfloat* c, GLfloat* d)
 {
-    glColor3fv(colors[0]);
-    triangle(a, b, c);
-    glColor3fv(colors[1]);
-    triangle(a, c, d);
-    glColor3fv(colors[2]);
-    triangle(a, d, b);
-    glColor3fv(colors[3]);
-    triangle(b, d, c);
+    if(check_plane(0, 1, 2, a) && check_plane(0, 1, 2, b) && check_plane(0, 1, 2, c)){
+        glColor3fv(colors[0]);
+        triangle(a, b, c);
+    }
+
+    if(check_plane(0, 2, 3, a) && check_plane(0, 2, 3, c) && check_plane(0, 2, 3, d)){
+        glColor3fv(colors[1]);
+        triangle(a, c, d);
+    }
+
+    if(check_plane(0, 1, 3, a) && check_plane(0, 1, 3, b) && check_plane(0, 1, 3, d)){
+        glColor3fv(colors[2]);
+        triangle(a, b, d);
+    }
+
+    if(check_plane(3, 1, 2, d) && check_plane(3, 1, 2, b) && check_plane(3, 1, 2, c)){
+        glColor3fv(colors[3]);
+        triangle(c, b, d);
+    }
 }
 
 void divide_tetra(GLfloat* a, GLfloat* b, GLfloat* c, GLfloat* d, int m)
@@ -55,7 +91,7 @@ void divide_tetra(GLfloat* a, GLfloat* b, GLfloat* c, GLfloat* d, int m)
         divide_tetra(a, mid[0], mid[1], mid[2], m - 1);
         divide_tetra(mid[0], b, mid[3], mid[5], m - 1);
         divide_tetra(mid[1], mid[3], c, mid[4], m - 1);
-        divide_tetra(mid[2], mid[4], d, mid[5], m - 1);
+        divide_tetra(mid[2], mid[5], mid[4], d, m - 1);
 
     }
     else(tetra(a, b, c, d)); /* draw tetrahedron at end of recursion */
@@ -69,7 +105,7 @@ void display()
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
     glRotatef(RotateV, 0, 1, 0);
-    RotateV += 0.01f;
+    RotateV += 0.1f;
 
     glBegin(GL_TRIANGLES);
     divide_tetra(v[0], v[1], v[2], v[3], n);
@@ -129,7 +165,7 @@ int main(int argc, char** argv)
     glfwSetWindowSizeCallback(window, myReshape);
     myReshape(window, 640, 480);
 
-    //glEnable(GL_DEPTH_TEST);
+    glEnable(GL_DEPTH_TEST);
     //glCullFace( GL_BACK );
     //glEnable( GL_CULL_FACE );
     glClearColor(1.0, 1.0, 1.0, 1.0);
