@@ -1,3 +1,6 @@
+import matplotlib
+matplotlib.use('Agg')  # Non-interactive backend suitable for saving plots
+
 import matplotlib.pyplot as plt
 
 MIN_POWER_N = 10
