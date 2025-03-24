@@ -18,7 +18,7 @@ using namespace std;
 using namespace glm;
 
 const bool STEP2 = true;
-const bool STEP3 = false;
+const bool STEP3 = true;
 
 float theta = 3.14159f / 4.0f;
 float tho = 3.14159f / 4.0f;
@@ -227,8 +227,11 @@ void swTriangle(vec3 color, vec3 in_v1, vec3 in_v2, vec3 in_v3, mat4x4 Modelmatr
 
 	// step3: remove glProjection, compute project matrix
 	v1 =  ProjectionMat * ViewMat * Modelmatrix * v1;
+    v1 /= v1[3];
     v2 =  ProjectionMat * ViewMat * Modelmatrix * v2;
+    v2 /= v2[3];
     v3 =  ProjectionMat * ViewMat * Modelmatrix * v3;
+    v3 /= v3[3];
 
 	// prespective division
 	// ...
@@ -261,35 +264,43 @@ void DrawGrid(int size = 10)
         for (int i = 1; i < size; i++) {
             if(STEP2 == true){
                 v = vec4(i, -size, 0, 1);
-                v = ViewMat * v;
+                v = ProjectionMat * ViewMat * v;
+                v /= v[3];
                 glVertex3f(v[0], v[1], v[2]);
 
                 v = vec4(i, size, 0, 1);
-                v = ViewMat * v;
+                v = ProjectionMat * ViewMat * v;
+                v /= v[3];
                 glVertex3f(v[0], v[1], v[2]);
 
                 v = vec4(-i, -size, 0, 1);
-                v = ViewMat * v;
+                v = ProjectionMat * ViewMat * v;
+                v /= v[3];
                 glVertex3f(v[0], v[1], v[2]);
 
                 v = vec4(-i, size, 0, 1);
-                v = ViewMat * v;
+                v = ProjectionMat * ViewMat * v;
+                v /= v[3];
                 glVertex3f(v[0], v[1], v[2]);
 
                 v = vec4(-size, i, 0, 1);
-                v = ViewMat * v;
+                v = ProjectionMat * ViewMat * v;
+                v /= v[3];
                 glVertex3f(v[0], v[1], v[2]);
 
                 v = vec4(size, i, 0, 1);
-                v = ViewMat * v;
+                v = ProjectionMat * ViewMat * v;
+                v /= v[3];
                 glVertex3f(v[0], v[1], v[2]);
 
                 v = vec4(-size, -i, 0, 1);
-                v = ViewMat * v;
+                v = ProjectionMat * ViewMat * v;
+                v /= v[3];
                 glVertex3f(v[0], v[1], v[2]);
 
                 v = vec4(size, -i, 0, 1);
-                v = ViewMat * v;
+                v = ProjectionMat * ViewMat * v;
+                v /= v[3];
                 glVertex3f(v[0], v[1], v[2]);
             }else{
                 glVertex3f(i, -size, 0);
@@ -308,47 +319,57 @@ void DrawGrid(int size = 10)
         if(STEP2 == true){
             glColor3f(1, 0, 0);
             v = vec4(0, 0, 0, 1);
-            v = ViewMat * v;
+            v = ProjectionMat * ViewMat * v;
+            v /= v[3];
             glVertex3f(v[0], v[1], v[2]);
 
             v = vec4(size, 0, 0, 1);
-            v = ViewMat * v;
+            v = ProjectionMat * ViewMat * v;
+            v /= v[3];
             glVertex3f(v[0], v[1], v[2]);
 
             glColor3f(0.4, 0, 0);
             v = vec4(0, 0, 0, 1);
-            v = ViewMat * v;
+            v = ProjectionMat * ViewMat * v;
+            v /= v[3];
             glVertex3f(v[0], v[1], v[2]);
 
             v = vec4(-size, 0, 0, 1);
-            v = ViewMat * v;
+            v = ProjectionMat * ViewMat * v;
+            v /= v[3];
             glVertex3f(v[0], v[1], v[2]);
     
             glColor3f(0, 1, 0);
             v = vec4(0, 0, 0, 1);
-            v = ViewMat * v;
+            v = ProjectionMat * ViewMat * v;
+            v /= v[3];
             glVertex3f(v[0], v[1], v[2]);
 
             v = vec4(0, size, 0, 1);
-            v = ViewMat * v;
+            v = ProjectionMat * ViewMat * v;
+            v /= v[3];
             glVertex3f(v[0], v[1], v[2]);
 
             glColor3f(0, 0.4, 0);
             v = vec4(0, 0, 0, 1);
-            v = ViewMat * v;
+            v = ProjectionMat * ViewMat * v;
+            v /= v[3];
             glVertex3f(v[0], v[1], v[2]);
 
             v = vec4(0, -size, 0, 1);
-            v = ViewMat * v;
+            v = ProjectionMat * ViewMat * v;
+            v /= v[3];
             glVertex3f(v[0], v[1], v[2]);
     
             glColor3f(0, 0, 1);
             v = vec4(0, 0, 0, 1);
-            v = ViewMat * v;
+            v = ProjectionMat * ViewMat * v;
+            v /= v[3];
             glVertex3f(v[0], v[1], v[2]);
 
             v = vec4(0, 0, size, 1);
-            v = ViewMat * v;
+            v = ProjectionMat * ViewMat * v;
+            v /= v[3];
             glVertex3f(v[0], v[1], v[2]);
         }else{
             glColor3f(1, 0, 0);
@@ -376,9 +397,9 @@ void Display(GLFWwindow* window)
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	glMatrixMode(GL_PROJECTION);
-	glLoadIdentity();
-	gluPerspective(60, 1, 0.1, 50);
+	// glMatrixMode(GL_PROJECTION);
+	// glLoadIdentity();
+	// gluPerspective(60, 1, 0.1, 50);
 
 	// glMatrixMode(GL_MODELVIEW);
 	// glLoadIdentity();
