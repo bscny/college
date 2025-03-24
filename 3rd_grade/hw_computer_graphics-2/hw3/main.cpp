@@ -37,6 +37,7 @@ vec3 default_tetrahedron_vertices[4] = {
 
 vec3 tetrahedron_verts[4];
 
+// Model Matrix Related -----------------------------------------------------------------------------
 mat4x4 swTranslate(float x, float y, float z)
 {
 	mat4x4 Translate = mat4x4(1);
@@ -113,6 +114,7 @@ mat4x4 swScale(float x, float y, float z)
 	return Scale;
 }
 
+// View Matrix Related ------------------------------------------------------------------------
 void swLookAt(float eyeX, float eyeY, float eyeZ,
     float centerX, float centerY, float centerZ,
     float upX, float upY, float upZ)
@@ -181,8 +183,31 @@ void swLookAt(float eyeX, float eyeY, float eyeZ,
     ViewMat = M * T;
 }
 
-//step3: implemet 
+// Projection Matrix Related -------------------------------------------------------------------------
+void swPerspective(float fovY, float aspect, float near, float far){
+    // behind the scene, we are mapping https://registry.khronos.org/OpenGL-Refpages/gl2.1/
+    // to this https://registry.khronos.org/OpenGL-Refpages/gl2.1/
+    // in short, we want to find a matrix P that transform the space in the camera to a cube with length of 2
+    // and P is:
+    // f/aspect  0  0                      0
+    // 0         f  0                      0
+    // 0         0  (near+far)/(near-far)  (2*near*far)/(near-far)
+    // 0         0  -1                     0
+    // where f is cot(fovY/2)
 
+    float f = 1 / tan(fovY / 2);
+
+    mat4x4 P(1);
+
+    P[0][0] = f / aspect;
+    P[1][1] = f;
+    P[2][2] = (near + far) / (near - far);
+    P[3][2] = (2 * near * far) / (near - far);
+    P[2][3] = -1;
+    P[3][3] = 0;
+
+    ProjectionMat = P;
+}
 
 void swTriangle(vec3 color, vec3 in_v1, vec3 in_v2, vec3 in_v3, mat4x4 Modelmatrix)
 {
@@ -196,14 +221,15 @@ void swTriangle(vec3 color, vec3 in_v1, vec3 in_v2, vec3 in_v3, mat4x4 Modelmatr
 	// v3 = Modelmatrix * v3;
 
 	// step2: remove glLookAt, compute view matrix
-	v1 = ViewMat * Modelmatrix * v1;
-    v2 = ViewMat * Modelmatrix * v2;
-    v3 = ViewMat * Modelmatrix * v3;
+	// v1 = ViewMat * Modelmatrix * v1;
+    // v2 = ViewMat * Modelmatrix * v2;
+    // v3 = ViewMat * Modelmatrix * v3;
 
 	// step3: remove glProjection, compute project matrix
-	//v1 =  Projection * View * Modelmatrix * v1;
-	//
-	//	
+	v1 =  ProjectionMat * ViewMat * Modelmatrix * v1;
+    v2 =  ProjectionMat * ViewMat * Modelmatrix * v2;
+    v3 =  ProjectionMat * ViewMat * Modelmatrix * v3;
+
 	// prespective division
 	// ...
 
@@ -220,11 +246,8 @@ void Draw_Tetrahedron() {
 	//glColor3f(1, 1, 0);
 	glBegin(GL_TRIANGLES);
 		swTriangle(vec3(1, 0, 0), tetrahedron_verts[0], tetrahedron_verts[1], tetrahedron_verts[2], TransformMat);
-
 		swTriangle(vec3(0, 0, 1), tetrahedron_verts[3], tetrahedron_verts[0], tetrahedron_verts[1], TransformMat);
-
 		swTriangle(vec3(0, 1, 0), tetrahedron_verts[2], tetrahedron_verts[3], tetrahedron_verts[0], TransformMat);
-
 		swTriangle(vec3(1, 1, 0), tetrahedron_verts[1], tetrahedron_verts[2], tetrahedron_verts[3], TransformMat);
 	glEnd();
 }
@@ -367,8 +390,7 @@ void Display(GLFWwindow* window)
 		glLoadIdentity();
 		//glOrtho(0, winWidth, 0, winHeight, -2.0, 2.0);
 		ProjectionMat = mat4x4(1);
-		//todo swPerspective(60, 1, 0.1, 50);
-
+		swPerspective(60, 1, 0.1, 50);
 	} 
 
 	//step 2: viewing 
@@ -455,13 +477,16 @@ void KeyCallback(GLFWwindow* window, int key, int scancode, int action, int mods
 
         // rotate world
         case GLFW_KEY_9:
+            glfwSetWindowTitle(window, "rotate camera +");
             theta += 3.14159f / 90.0f;
             break;
         case GLFW_KEY_0:
+            glfwSetWindowTitle(window, "rotate camera -");
             theta -= 3.14159f / 90.0f;
             break;
         // Reset
         case GLFW_KEY_MINUS:
+            glfwSetWindowTitle(window, "reset position");
             TransformMat = mat4x4(1);
             break;
 
