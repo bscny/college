@@ -2,7 +2,6 @@
 //simple modeling tool
 //Transformation and Projection
 //move from glut to glfw
-
 #include <iostream>
 
 #include <cmath>
@@ -15,11 +14,10 @@
 #include <glm/vec4.hpp>
 #include <glm/mat4x4.hpp>
 
-
 using namespace std;
 using namespace glm;
 
-const bool STEP2 = false;
+const bool STEP2 = true;
 const bool STEP3 = false;
 
 float theta = 3.14159f / 4.0f;
@@ -115,13 +113,72 @@ mat4x4 swScale(float x, float y, float z)
 	return Scale;
 }
 
-//step2: 
-void swLookAt(	float eyeX, float eyeY, float eyeZ,
+void swLookAt(float eyeX, float eyeY, float eyeZ,
     float centerX, float centerY, float centerZ,
     float upX, float upY, float upZ)
 {
+    
+    // firstly, get F which is camera --> at
+    float F[3] = {centerX - eyeX, centerY - eyeY, centerZ - eyeZ};
+    
+    // normalize F
+    float k = pow(F[0], 2) + pow(F[1], 2) + pow(F[2], 2);
+    k = sqrt(k);
+    F[0] /= k;
+    F[1] /= k;
+    F[2] /= k;
 
+    // get F cross up, S
+    float S[3] = {
+        (F[2 - 1] * upZ) - (F[3 - 1] * upY),
+        (F[3 - 1] * upX) - (F[1 - 1] * upZ),
+        (F[1 - 1] * upY) - (F[2 - 1] * upX)
+    };
 
+    // normalize S
+    k = pow(S[0], 2) + pow(S[1], 2) + pow(S[2], 2);
+    k = sqrt(k);
+    S[0] /= k;
+    S[1] /= k;
+    S[2] /= k;
+
+    // get S cross F, U
+    float U[3] = {
+        (S[2 - 1] * F[3 - 1]) - (S[3 - 1] * F[2 - 1]),
+        (S[3 - 1] * F[1 - 1]) - (S[1 - 1] * F[3 - 1]),
+        (S[1 - 1] * F[2 - 1]) - (S[2 - 1] * F[1 - 1])
+    };
+
+    // normalize U
+    k = pow(U[0], 2) + pow(U[1], 2) + pow(U[2], 2);
+    k = sqrt(k);
+    U[0] /= k;
+    U[1] /= k;
+    U[2] /= k;
+
+    // after we have F, S, U, we can get matrix M and T, we do T first
+    // translate vector eye relative to world space
+    mat4x4 T(1);
+    T[3][0] = -eyeX;
+    T[3][1] = -eyeY;
+    T[3][2] = -eyeZ;
+
+    // map the world space to camera space
+    mat4x4 M(1);
+    M[0][0] = S[0];
+    M[1][0] = S[1];
+    M[2][0] = S[2];
+
+    M[0][1] = U[0];
+    M[1][1] = U[1];
+    M[2][1] = U[2];
+
+    M[0][2] = -F[0];
+    M[1][2] = -F[1];
+    M[2][2] = -F[2];
+
+    // finally, we have view matrix = M * T
+    ViewMat = M * T;
 }
 
 //step3: implemet 
@@ -133,24 +190,22 @@ void swTriangle(vec3 color, vec3 in_v1, vec3 in_v2, vec3 in_v3, mat4x4 Modelmatr
 	vec4 v2(in_v2.x, in_v2.y, in_v2.z, 1);
 	vec4 v3(in_v3.x, in_v3.y, in_v3.z, 1);
 
-	//step1
-    v1 = Modelmatrix * v1;
-	v2 = Modelmatrix * v2;
-	v3 = Modelmatrix * v3;
+	// step1: model matrix only
+    // v1 = Modelmatrix * v1;
+	// v2 = Modelmatrix * v2;
+	// v3 = Modelmatrix * v3;
 
-	//step2: remove glLookAt, compute view matrix
-	//v1 = View* Modelmatrix * v1;
-	//
-	//
+	// step2: remove glLookAt, compute view matrix
+	v1 = ViewMat * Modelmatrix * v1;
+    v2 = ViewMat * Modelmatrix * v2;
+    v3 = ViewMat * Modelmatrix * v3;
 
-
-	//step3: remove glProjection, compute project matrix
+	// step3: remove glProjection, compute project matrix
 	//v1 =  Projection * View * Modelmatrix * v1;
 	//
 	//	
 	// prespective division
 	// ...
-
 
 	glColor3f(color.r, color.g, color.b);
 	glVertex3f(v1.x, v1.y, v1.z);
@@ -176,38 +231,121 @@ void Draw_Tetrahedron() {
 
 void DrawGrid(int size = 10)
 {
+    vec4 v;
+
 	glBegin(GL_LINES);
         glColor3f(0.3, 0.3, 0.3);
         for (int i = 1; i < size; i++) {
-            glVertex3f(i, -size, 0);
-            glVertex3f(i, size, 0);
-            glVertex3f(-i, -size, 0);
-            glVertex3f(-i, size, 0);
-            glVertex3f(-size, i, 0);
-            glVertex3f(size, i, 0);
-            glVertex3f(-size, -i, 0);
-            glVertex3f(size, -i, 0);
+            if(STEP2 == true){
+                v = vec4(i, -size, 0, 1);
+                v = ViewMat * v;
+                glVertex3f(v[0], v[1], v[2]);
+
+                v = vec4(i, size, 0, 1);
+                v = ViewMat * v;
+                glVertex3f(v[0], v[1], v[2]);
+
+                v = vec4(-i, -size, 0, 1);
+                v = ViewMat * v;
+                glVertex3f(v[0], v[1], v[2]);
+
+                v = vec4(-i, size, 0, 1);
+                v = ViewMat * v;
+                glVertex3f(v[0], v[1], v[2]);
+
+                v = vec4(-size, i, 0, 1);
+                v = ViewMat * v;
+                glVertex3f(v[0], v[1], v[2]);
+
+                v = vec4(size, i, 0, 1);
+                v = ViewMat * v;
+                glVertex3f(v[0], v[1], v[2]);
+
+                v = vec4(-size, -i, 0, 1);
+                v = ViewMat * v;
+                glVertex3f(v[0], v[1], v[2]);
+
+                v = vec4(size, -i, 0, 1);
+                v = ViewMat * v;
+                glVertex3f(v[0], v[1], v[2]);
+            }else{
+                glVertex3f(i, -size, 0);
+                glVertex3f(i, size, 0);
+                glVertex3f(-i, -size, 0);
+                glVertex3f(-i, size, 0);
+                glVertex3f(-size, i, 0);
+                glVertex3f(size, i, 0);
+                glVertex3f(-size, -i, 0);
+                glVertex3f(size, -i, 0);
+            }
         }
 	glEnd();
 
 	glBegin(GL_LINES);
-		glColor3f(1, 0, 0);
-		glVertex3f(0, 0, 0);
-		glVertex3f(size, 0, 0);
-		glColor3f(0.4, 0, 0);
-		glVertex3f(0, 0, 0);
-		glVertex3f(-size, 0, 0);
+        if(STEP2 == true){
+            glColor3f(1, 0, 0);
+            v = vec4(0, 0, 0, 1);
+            v = ViewMat * v;
+            glVertex3f(v[0], v[1], v[2]);
 
-		glColor3f(0, 1, 0);
-		glVertex3f(0, 0, 0);
-		glVertex3f(0, size, 0);
-		glColor3f(0, 0.4, 0);
-		glVertex3f(0, 0, 0);
-		glVertex3f(0, -size, 0);
+            v = vec4(size, 0, 0, 1);
+            v = ViewMat * v;
+            glVertex3f(v[0], v[1], v[2]);
 
-		glColor3f(0, 0, 1);
-		glVertex3f(0, 0, 0);
-		glVertex3f(0, 0, size);
+            glColor3f(0.4, 0, 0);
+            v = vec4(0, 0, 0, 1);
+            v = ViewMat * v;
+            glVertex3f(v[0], v[1], v[2]);
+
+            v = vec4(-size, 0, 0, 1);
+            v = ViewMat * v;
+            glVertex3f(v[0], v[1], v[2]);
+    
+            glColor3f(0, 1, 0);
+            v = vec4(0, 0, 0, 1);
+            v = ViewMat * v;
+            glVertex3f(v[0], v[1], v[2]);
+
+            v = vec4(0, size, 0, 1);
+            v = ViewMat * v;
+            glVertex3f(v[0], v[1], v[2]);
+
+            glColor3f(0, 0.4, 0);
+            v = vec4(0, 0, 0, 1);
+            v = ViewMat * v;
+            glVertex3f(v[0], v[1], v[2]);
+
+            v = vec4(0, -size, 0, 1);
+            v = ViewMat * v;
+            glVertex3f(v[0], v[1], v[2]);
+    
+            glColor3f(0, 0, 1);
+            v = vec4(0, 0, 0, 1);
+            v = ViewMat * v;
+            glVertex3f(v[0], v[1], v[2]);
+
+            v = vec4(0, 0, size, 1);
+            v = ViewMat * v;
+            glVertex3f(v[0], v[1], v[2]);
+        }else{
+            glColor3f(1, 0, 0);
+            glVertex3f(0, 0, 0);
+            glVertex3f(size, 0, 0);
+            glColor3f(0.4, 0, 0);
+            glVertex3f(0, 0, 0);
+            glVertex3f(-size, 0, 0);
+    
+            glColor3f(0, 1, 0);
+            glVertex3f(0, 0, 0);
+            glVertex3f(0, size, 0);
+            glColor3f(0, 0.4, 0);
+            glVertex3f(0, 0, 0);
+            glVertex3f(0, -size, 0);
+    
+            glColor3f(0, 0, 1);
+            glVertex3f(0, 0, 0);
+            glVertex3f(0, 0, size);
+        }
 	glEnd();
 }
 
@@ -219,11 +357,9 @@ void Display(GLFWwindow* window)
 	glLoadIdentity();
 	gluPerspective(60, 1, 0.1, 50);
 
-	glMatrixMode(GL_MODELVIEW);
-	glLoadIdentity();
-	gluLookAt(10 * cos(theta), -10 * sin(theta), 10, 0, 0, 0, 0, 0, 1);
-
-	DrawGrid();
+	// glMatrixMode(GL_MODELVIEW);
+	// glLoadIdentity();
+	// gluLookAt(10 * cos(theta), -10 * sin(theta), 10, 0, 0, 0, 0, 0, 1);
 
 	//step 3: PROJECTION
 	if (STEP3 == true) {
@@ -240,9 +376,10 @@ void Display(GLFWwindow* window)
 		glMatrixMode(GL_MODELVIEW);
 		glLoadIdentity();
 		ViewMat = mat4x4(1);
-		//todo: swLookAt(10 * cos(theta), -10 * sin(theta), 10, 0, 0, 0, 0, 0, 1);
+		swLookAt(10 * cos(theta), -10 * sin(theta), 10, 0, 0, 0, 0, 0, 1);
+	}
 
-	} 
+    DrawGrid();
 
 	Draw_Tetrahedron();
 
@@ -323,6 +460,7 @@ void KeyCallback(GLFWwindow* window, int key, int scancode, int action, int mods
         case GLFW_KEY_0:
             theta -= 3.14159f / 90.0f;
             break;
+        // Reset
         case GLFW_KEY_MINUS:
             TransformMat = mat4x4(1);
             break;
