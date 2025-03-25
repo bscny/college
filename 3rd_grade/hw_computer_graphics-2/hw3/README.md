@@ -49,24 +49,26 @@ $ sudo apt install libglm-dev
 <details>
 <summary>2025-03-25</summary>
 
-#### status
+### status
 
 - [ ] solved
 - [x] asked
 
-#### detail explanation
+### detail explanation
 
 try the folloeing 3 situation:
 
 1. `STEP2 = true` && `STEP3 = false` && `USE_CUSTOM_MATRIX = true`
 2. `STEP2 = true` && `STEP3 = true` && `USE_CUSTOM_MATRIX = true`
-2. `STEP2 = true` && `STEP3 = true` && `USE_CUSTOM_MATRIX = false`
+3. `STEP2 = true` && `STEP3 = true` && `USE_CUSTOM_MATRIX = false`
 
 From 1. we can see that until step 2, there are no issue, if want to try further, just make `USE_CUSTOM_MATRIX = false`, will be the same
 
 Now **focus on** 2. and 3. We can see all functions are working normally except for the **size**....(建議按 E 12 次，讓四面體往上跑，會大一點方便觀察)
 
-#### log
+**Notice**: 四面體平移時也與 `gluPerspective` 不同，但是透過 3. 可以發現他依然是在正確座標點上(舉例來說，可以透過按 Q, A 來觀察，四面體雖然一直在 X 軸，但大小會變)，嚴格來說，還是 **size** 問題
+
+### log
 
 - 2025-03-25, asked
 
