@@ -5,6 +5,7 @@ Author: 111703040 游宗諺
 ## Table of content
 
 - [Build Instruction](#build-instructions)
+- [Progress](#progress)
 - [Requirements](#requirements)
 - [Summary to the modified code](#summary-to-the-modified-code)
 - [Issue](#issue)
@@ -14,6 +15,18 @@ Author: 111703040 游宗諺
 1. `cd build`
 2. `make`
 3. `./trans`
+
+## Progress
+
+- [x] Step1: model matrix (press `Q` `A` `W` `S` `E` `D` `R` `F` `T` `G` `Y` `H`)
+- [x] Step2: view matrix (press `0` `9`)
+- [x] step3: projection matrix
+- [x] bonus
+    - [x] add a cube (press `F2`)
+    - [ ] push/pop
+    - [ ] load/save (press `F5` `F6`)
+- [x] my bonus
+    - [x] delete object (press `F7`)
 
 ## Requirements
 
@@ -51,7 +64,7 @@ $ sudo apt install libglm-dev
 
 ### status
 
-- [ ] solved
+- [x] solved
 - [x] asked
 
 ### detail explanation
@@ -68,8 +81,13 @@ Now **focus on** 2. and 3. We can see all functions are working normally except 
 
 **Notice**: 四面體平移時也與 `gluPerspective` 不同，但是透過 3. 可以發現他依然是在正確座標點上(舉例來說，可以透過按 Q, A 來觀察，四面體雖然一直在 X 軸，但大小會變)，嚴格來說，還是 **size** 問題
 
+### solution
+
+In `swPerspective`, `fovY = fovY * 3.1415926535f / 180.0f;` ..................
+
 ### log
 
 - 2025-03-25, asked
+- 2025-03-25, classmate gave answer
 
 </details>

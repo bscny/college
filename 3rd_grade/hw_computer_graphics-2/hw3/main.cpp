@@ -18,13 +18,15 @@ using namespace std;
 using namespace glm;
 
 const bool STEP2 = true;
-const bool STEP3 = false;
+const bool STEP3 = true;
 const bool USE_CUSTOM_MATRIX = true && STEP2; // this controlls if to use swView and swProject on the grids
                                                // adding && STEP2 because we can't use our projection matrix after gluLookAt is used
                                                // in other words, we can't "only" apply our projection matrix without our view matrix
 
-float theta = 3.14159f / 4.0f;
-float tho = 3.14159f / 4.0f;
+const float PI = 3.14159265359;
+
+float theta = PI / 4.0f;
+float tho = PI / 4.0f;
 
 int winWidth = 1280;
 int winHeight = 720;
@@ -39,6 +41,34 @@ vec3 default_tetrahedron_vertices[4] = {
 };
 
 vec3 tetrahedron_verts[4];
+
+bool DRAW_CUBE = false;
+
+void Draw_glVertex3f(float x, float y, float z, bool model, bool view, bool project){
+    vec4 v;
+    v = vec4(x, y, z, 1);
+
+    mat4x4 P(1);
+    mat4x4 V(1);
+    mat4x4 M(1);
+
+    if(model){
+        M = TransformMat;
+    }
+
+    if(view){
+        V = ViewMat;
+    }
+
+    if(project){
+        P = ProjectionMat;
+    }
+
+    v = P * V * M * v;
+    v /= v[3];
+
+    glVertex3f(v[0], v[1], v[2]);
+}
 
 // Model Matrix Related -----------------------------------------------------------------------------
 mat4x4 swTranslate(float x, float y, float z)
@@ -198,23 +228,16 @@ void swPerspective(float fovY, float aspect, float near, float far){
     // 0         0  -1                     0
     // where f is cot(fovY/2)
 
-    // however, since we didnt use gluPerspective, we didnt use +z as our default z axis
-    // instead we use -z, just like the one in model and view matrix
-    // Therefore, P is:
-    // f/aspect  0  0                      0
-    // 0         f  0                      0
-    // 0         0  -(near+far)/(near-far) -(2*near*far)/(near-far)
-    // 0         0  1                      0
-
+    fovY = fovY * PI / 180.0f;
     float f = 1 / tan(fovY / 2);
 
     mat4x4 P(1);
 
     P[0][0] = f / aspect;
     P[1][1] = f;
-    P[2][2] = -(near + far) / (near - far);
-    P[3][2] = -(2 * near * far) / (near - far);
-    P[2][3] = 1;
+    P[2][2] = (near + far) / (near - far);
+    P[3][2] = (2 * near * far) / (near - far);
+    P[2][3] = -1;
     P[3][3] = 0;
 
     ProjectionMat = P;
@@ -245,8 +268,7 @@ void swTriangle(vec3 color, vec3 in_v1, vec3 in_v2, vec3 in_v3, mat4x4 Modelmatr
 	glVertex3f(v3.x, v3.y, v3.z);
 }
 
-
-
+// functions to draw-----------------------------------------------------------------------------------------------------
 void Draw_Tetrahedron() {
 	vec3 color(1, 1, 0);
 	//glColor3f(1, 1, 0);
@@ -258,6 +280,106 @@ void Draw_Tetrahedron() {
 	glEnd();
 }
 
+void Draw_cube(float x, float y, float z, float length) {
+    float half = length / 2.0f;
+
+    glBegin(GL_QUADS);
+        // Front face
+        glColor3f(1.0, 0.0, 0.0); // Red
+        Draw_glVertex3f(x - half, y - half, z + half, true, true, true);
+        Draw_glVertex3f(x + half, y - half, z + half, true, true, true);
+        Draw_glVertex3f(x + half, y + half, z + half, true, true, true);
+        Draw_glVertex3f(x - half, y + half, z + half, true, true, true);
+
+        // Back face
+        glColor3f(0.0, 1.0, 0.0); // Green
+        Draw_glVertex3f(x - half, y - half, z - half, true, true, true);
+        Draw_glVertex3f(x + half, y - half, z - half, true, true, true);
+        Draw_glVertex3f(x + half, y + half, z - half, true, true, true);
+        Draw_glVertex3f(x - half, y + half, z - half, true, true, true);
+
+        // Left face
+        glColor3f(0.0, 0.0, 1.0); // Blue
+        Draw_glVertex3f(x - half, y - half, z - half, true, true, true);
+        Draw_glVertex3f(x - half, y - half, z + half, true, true, true);
+        Draw_glVertex3f(x - half, y + half, z + half, true, true, true);
+        Draw_glVertex3f(x - half, y + half, z - half, true, true, true);
+
+        // Right face
+        glColor3f(1.0, 1.0, 0.0); // Yellow
+        Draw_glVertex3f(x + half, y - half, z - half, true, true, true);
+        Draw_glVertex3f(x + half, y - half, z + half, true, true, true);
+        Draw_glVertex3f(x + half, y + half, z + half, true, true, true);
+        Draw_glVertex3f(x + half, y + half, z - half, true, true, true);
+
+        // Top face
+        glColor3f(1.0, 0.0, 1.0); // Magenta
+        Draw_glVertex3f(x - half, y + half, z - half, true, true, true);
+        Draw_glVertex3f(x + half, y + half, z - half, true, true, true);
+        Draw_glVertex3f(x + half, y + half, z + half, true, true, true);
+        Draw_glVertex3f(x - half, y + half, z + half, true, true, true);
+
+        // Bottom face
+        glColor3f(0.0, 1.0, 1.0); // Cyan
+        Draw_glVertex3f(x - half, y - half, z - half, true, true, true);
+        Draw_glVertex3f(x + half, y - half, z - half, true, true, true);
+        Draw_glVertex3f(x + half, y - half, z + half, true, true, true);
+        Draw_glVertex3f(x - half, y - half, z + half, true, true, true);
+    glEnd();
+}
+
+void DrawSphere(float x, float y, float z, float radius, int slices, int stacks) {
+    // for (int i = 0; i <= stacks; ++i) {
+    //     float lat0 = PI * (-0.5 + (float)(i - 1) / stacks);
+    //     float z0 = sin(lat0);
+    //     float zr0 = cos(lat0);
+
+    //     float lat1 = PI * (-0.5 + (float)i / stacks);
+    //     float z1 = sin(lat1);
+    //     float zr1 = cos(lat1);
+
+    //     glBegin(GL_QUAD_STRIP);
+    //         glColor3f(0.0, 0.5, 1.0);
+
+    //         for (int j = 0; j <= slices; ++j) {
+    //             float lng = 2 * PI * (float)(j - 1) / slices;
+    //             float x0 = cos(lng);
+    //             float y0 = sin(lng);
+
+    //             glVertex3f(x + radius * x0 * zr0, 
+    //                     y + radius * y0 * zr0, 
+    //                     z + radius * z0);
+
+    //             glVertex3f(x + radius * x0 * zr1, 
+    //                     y + radius * y0 * zr1, 
+    //                     z + radius * z1);
+    //         }
+    //     glEnd();
+    // }
+
+    for (int i = 0; i <= stacks; ++i) {
+        float phi1 = PI * i / stacks;
+        float phi2 = PI * (i + 1) / stacks;
+
+        glBegin(GL_TRIANGLE_STRIP);
+        for (int j = 0; j <= slices; ++j) {
+            float theta = 2 * PI * j / slices;
+
+            float x1 = sin(phi1) * cos(theta);
+            float y1 = sin(phi1) * sin(theta);
+            float z1 = cos(phi1);
+
+            float x2 = sin(phi2) * cos(theta);
+            float y2 = sin(phi2) * sin(theta);
+            float z2 = cos(phi2);
+
+            glVertex3f(x + radius * x1, y + radius * y1, z + radius * z1);
+            glVertex3f(x + radius * x2, y + radius * y2, z + radius * z2);
+        }
+        glEnd();
+    }
+}
+
 void DrawGrid(int size = 10)
 {
     vec4 v;
@@ -265,103 +387,37 @@ void DrawGrid(int size = 10)
 	glBegin(GL_LINES);
         glColor3f(0.3, 0.3, 0.3);
         for (int i = 1; i < size; i++) {
-            v = vec4(i, -size, 0, 1);
-            v = ProjectionMat * ViewMat * v;
-            v /= v[3];
-            glVertex3f(v[0], v[1], v[2]);
-
-            v = vec4(i, size, 0, 1);
-            v = ProjectionMat * ViewMat * v;
-            v /= v[3];
-            glVertex3f(v[0], v[1], v[2]);
-
-            v = vec4(-i, -size, 0, 1);
-            v = ProjectionMat * ViewMat * v;
-            v /= v[3];
-            glVertex3f(v[0], v[1], v[2]);
-
-            v = vec4(-i, size, 0, 1);
-            v = ProjectionMat * ViewMat * v;
-            v /= v[3];
-            glVertex3f(v[0], v[1], v[2]);
-
-            v = vec4(-size, i, 0, 1);
-            v = ProjectionMat * ViewMat * v;
-            v /= v[3];
-            glVertex3f(v[0], v[1], v[2]);
-
-            v = vec4(size, i, 0, 1);
-            v = ProjectionMat * ViewMat * v;
-            v /= v[3];
-            glVertex3f(v[0], v[1], v[2]);
-
-            v = vec4(-size, -i, 0, 1);
-            v = ProjectionMat * ViewMat * v;
-            v /= v[3];
-            glVertex3f(v[0], v[1], v[2]);
-
-            v = vec4(size, -i, 0, 1);
-            v = ProjectionMat * ViewMat * v;
-            v /= v[3];
-            glVertex3f(v[0], v[1], v[2]);
+            Draw_glVertex3f(i, -size, 0, false, true, true);
+            Draw_glVertex3f(i, size, 0, false, true, true);
+            Draw_glVertex3f(-i, -size, 0, false, true, true);
+            Draw_glVertex3f(-i, size, 0, false, true, true);
+            Draw_glVertex3f(-size, i, 0, false, true, true);
+            Draw_glVertex3f(size, i, 0, false, true, true);
+            Draw_glVertex3f(-size, -i, 0, false, true, true);
+            Draw_glVertex3f(size, -i, 0, false, true, true);
         }
 	glEnd();
 
 	glBegin(GL_LINES);
         glColor3f(1, 0, 0);
-        v = vec4(0, 0, 0, 1);
-        v = ProjectionMat * ViewMat * v;
-        v /= v[3];
-        glVertex3f(v[0], v[1], v[2]);
-
-        v = vec4(size, 0, 0, 1);
-        v = ProjectionMat * ViewMat * v;
-        v /= v[3];
-        glVertex3f(v[0], v[1], v[2]);
+        Draw_glVertex3f(0, 0, 0, false, true, true);
+        Draw_glVertex3f(size, 0, 0, false, true, true);
 
         glColor3f(0.4, 0, 0);
-        v = vec4(0, 0, 0, 1);
-        v = ProjectionMat * ViewMat * v;
-        v /= v[3];
-        glVertex3f(v[0], v[1], v[2]);
-
-        v = vec4(-size, 0, 0, 1);
-        v = ProjectionMat * ViewMat * v;
-        v /= v[3];
-        glVertex3f(v[0], v[1], v[2]);
+        Draw_glVertex3f(0, 0, 0, false, true, true);
+        Draw_glVertex3f(-size, 0, 0, false, true, true);
 
         glColor3f(0, 1, 0);
-        v = vec4(0, 0, 0, 1);
-        v = ProjectionMat * ViewMat * v;
-        v /= v[3];
-        glVertex3f(v[0], v[1], v[2]);
-
-        v = vec4(0, size, 0, 1);
-        v = ProjectionMat * ViewMat * v;
-        v /= v[3];
-        glVertex3f(v[0], v[1], v[2]);
+        Draw_glVertex3f(0, 0, 0, false, true, true);
+        Draw_glVertex3f(0, size, 0, false, true, true);
 
         glColor3f(0, 0.4, 0);
-        v = vec4(0, 0, 0, 1);
-        v = ProjectionMat * ViewMat * v;
-        v /= v[3];
-        glVertex3f(v[0], v[1], v[2]);
-
-        v = vec4(0, -size, 0, 1);
-        v = ProjectionMat * ViewMat * v;
-        v /= v[3];
-        glVertex3f(v[0], v[1], v[2]);
+        Draw_glVertex3f(0, 0, 0, false, true, true);
+        Draw_glVertex3f(0, -size, 0, false, true, true);
 
         glColor3f(0, 0, 1);
-        v = vec4(0, 0, 0, 1);
-        v = ProjectionMat * ViewMat * v;
-        v /= v[3];
-        glVertex3f(v[0], v[1], v[2]);
-
-        v = vec4(0, 0, size, 1);
-        v = ProjectionMat * ViewMat * v;
-        v /= v[3];
-        glVertex3f(v[0], v[1], v[2]);
+        Draw_glVertex3f(0, 0, 0, false, true, true);
+        Draw_glVertex3f(0, 0, size, false, true, true);
 	glEnd();
 }
 
@@ -417,6 +473,9 @@ void Display(GLFWwindow* window)
     }
 
 	Draw_Tetrahedron();
+    if(DRAW_CUBE){
+        Draw_cube(1, 1, 5, 2);
+    }
 
 	glFlush();
 	glfwSwapBuffers(window);
@@ -447,8 +506,8 @@ void SpecialKey(GLFWwindow* window, int key, int scancode, int action, int mods)
             break;
             
         case GLFW_KEY_F2:
-            glfwSetWindowTitle(window, "F2: add a cube or somthing");
-            // Add additional functionality here.
+            glfwSetWindowTitle(window, "F2: add a cube");
+            DRAW_CUBE = true;
             break;
             
         case GLFW_KEY_F5:
@@ -462,6 +521,16 @@ void SpecialKey(GLFWwindow* window, int key, int scancode, int action, int mods)
             // Add load functionality here.
 
             break;
+
+        case GLFW_KEY_F7:
+            glfwSetWindowTitle(window, "F7: delete all object");
+            DRAW_CUBE = false;
+            for (int i = 0; i < 4; i++) {
+                tetrahedron_verts[i][0] = 0;
+                tetrahedron_verts[i][1] = 0;
+                tetrahedron_verts[i][2] = 0;
+            }
+            break;
             
         default:
             break;
@@ -472,10 +541,7 @@ void SpecialKey(GLFWwindow* window, int key, int scancode, int action, int mods)
 void KeyCallback(GLFWwindow* window, int key, int scancode, int action, int mods) {
     // Here you can handle both regular and special keys.
     // Call your special key function for function keys.
-    if (key == GLFW_KEY_F1 || key == GLFW_KEY_F2 ||
-        key == GLFW_KEY_F5 || key == GLFW_KEY_F6) {
-        SpecialKey(window, key, scancode, action, mods);
-    }
+    SpecialKey(window, key, scancode, action, mods);
     
     // Add handling for other keys as needed.
 
@@ -491,11 +557,11 @@ void KeyCallback(GLFWwindow* window, int key, int scancode, int action, int mods
         // rotate world
         case GLFW_KEY_9:
             glfwSetWindowTitle(window, "rotate camera +");
-            theta += 3.14159f / 90.0f;
+            theta += PI / 90.0f;
             break;
         case GLFW_KEY_0:
             glfwSetWindowTitle(window, "rotate camera -");
-            theta -= 3.14159f / 90.0f;
+            theta -= PI / 90.0f;
             break;
         // Reset
         case GLFW_KEY_MINUS:
