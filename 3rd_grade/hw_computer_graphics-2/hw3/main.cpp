@@ -18,7 +18,10 @@ using namespace std;
 using namespace glm;
 
 const bool STEP2 = true;
-const bool STEP3 = true;
+const bool STEP3 = false;
+const bool USE_CUSTOM_MATRIX = true && STEP2; // this controlls if to use swView and swProject on the grids
+                                               // adding && STEP2 because we can't use our projection matrix after gluLookAt is used
+                                               // in other words, we can't "only" apply our projection matrix without our view matrix
 
 float theta = 3.14159f / 4.0f;
 float tho = 3.14159f / 4.0f;
@@ -195,15 +198,23 @@ void swPerspective(float fovY, float aspect, float near, float far){
     // 0         0  -1                     0
     // where f is cot(fovY/2)
 
+    // however, since we didnt use gluPerspective, we didnt use +z as our default z axis
+    // instead we use -z, just like the one in model and view matrix
+    // Therefore, P is:
+    // f/aspect  0  0                      0
+    // 0         f  0                      0
+    // 0         0  -(near+far)/(near-far) -(2*near*far)/(near-far)
+    // 0         0  1                      0
+
     float f = 1 / tan(fovY / 2);
 
     mat4x4 P(1);
 
     P[0][0] = f / aspect;
     P[1][1] = f;
-    P[2][2] = (near + far) / (near - far);
-    P[3][2] = (2 * near * far) / (near - far);
-    P[2][3] = -1;
+    P[2][2] = -(near + far) / (near - far);
+    P[3][2] = -(2 * near * far) / (near - far);
+    P[2][3] = 1;
     P[3][3] = 0;
 
     ProjectionMat = P;
@@ -216,21 +227,13 @@ void swTriangle(vec3 color, vec3 in_v1, vec3 in_v2, vec3 in_v3, mat4x4 Modelmatr
 	vec4 v3(in_v3.x, in_v3.y, in_v3.z, 1);
 
 	// step1: model matrix only
-    // v1 = Modelmatrix * v1;
-	// v2 = Modelmatrix * v2;
-	// v3 = Modelmatrix * v3;
-
 	// step2: remove glLookAt, compute view matrix
-	// v1 = ViewMat * Modelmatrix * v1;
-    // v2 = ViewMat * Modelmatrix * v2;
-    // v3 = ViewMat * Modelmatrix * v3;
-
 	// step3: remove glProjection, compute project matrix
-	v1 =  ProjectionMat * ViewMat * Modelmatrix * v1;
+    v1 = ProjectionMat * ViewMat * Modelmatrix * v1;
     v1 /= v1[3];
-    v2 =  ProjectionMat * ViewMat * Modelmatrix * v2;
+    v2 = ProjectionMat * ViewMat * Modelmatrix * v2;
     v2 /= v2[3];
-    v3 =  ProjectionMat * ViewMat * Modelmatrix * v3;
+    v3 = ProjectionMat * ViewMat * Modelmatrix * v3;
     v3 /= v3[3];
 
 	// prespective division
@@ -262,155 +265,132 @@ void DrawGrid(int size = 10)
 	glBegin(GL_LINES);
         glColor3f(0.3, 0.3, 0.3);
         for (int i = 1; i < size; i++) {
-            if(STEP2 == true){
-                v = vec4(i, -size, 0, 1);
-                v = ProjectionMat * ViewMat * v;
-                v /= v[3];
-                glVertex3f(v[0], v[1], v[2]);
+            v = vec4(i, -size, 0, 1);
+            v = ProjectionMat * ViewMat * v;
+            v /= v[3];
+            glVertex3f(v[0], v[1], v[2]);
 
-                v = vec4(i, size, 0, 1);
-                v = ProjectionMat * ViewMat * v;
-                v /= v[3];
-                glVertex3f(v[0], v[1], v[2]);
+            v = vec4(i, size, 0, 1);
+            v = ProjectionMat * ViewMat * v;
+            v /= v[3];
+            glVertex3f(v[0], v[1], v[2]);
 
-                v = vec4(-i, -size, 0, 1);
-                v = ProjectionMat * ViewMat * v;
-                v /= v[3];
-                glVertex3f(v[0], v[1], v[2]);
+            v = vec4(-i, -size, 0, 1);
+            v = ProjectionMat * ViewMat * v;
+            v /= v[3];
+            glVertex3f(v[0], v[1], v[2]);
 
-                v = vec4(-i, size, 0, 1);
-                v = ProjectionMat * ViewMat * v;
-                v /= v[3];
-                glVertex3f(v[0], v[1], v[2]);
+            v = vec4(-i, size, 0, 1);
+            v = ProjectionMat * ViewMat * v;
+            v /= v[3];
+            glVertex3f(v[0], v[1], v[2]);
 
-                v = vec4(-size, i, 0, 1);
-                v = ProjectionMat * ViewMat * v;
-                v /= v[3];
-                glVertex3f(v[0], v[1], v[2]);
+            v = vec4(-size, i, 0, 1);
+            v = ProjectionMat * ViewMat * v;
+            v /= v[3];
+            glVertex3f(v[0], v[1], v[2]);
 
-                v = vec4(size, i, 0, 1);
-                v = ProjectionMat * ViewMat * v;
-                v /= v[3];
-                glVertex3f(v[0], v[1], v[2]);
+            v = vec4(size, i, 0, 1);
+            v = ProjectionMat * ViewMat * v;
+            v /= v[3];
+            glVertex3f(v[0], v[1], v[2]);
 
-                v = vec4(-size, -i, 0, 1);
-                v = ProjectionMat * ViewMat * v;
-                v /= v[3];
-                glVertex3f(v[0], v[1], v[2]);
+            v = vec4(-size, -i, 0, 1);
+            v = ProjectionMat * ViewMat * v;
+            v /= v[3];
+            glVertex3f(v[0], v[1], v[2]);
 
-                v = vec4(size, -i, 0, 1);
-                v = ProjectionMat * ViewMat * v;
-                v /= v[3];
-                glVertex3f(v[0], v[1], v[2]);
-            }else{
-                glVertex3f(i, -size, 0);
-                glVertex3f(i, size, 0);
-                glVertex3f(-i, -size, 0);
-                glVertex3f(-i, size, 0);
-                glVertex3f(-size, i, 0);
-                glVertex3f(size, i, 0);
-                glVertex3f(-size, -i, 0);
-                glVertex3f(size, -i, 0);
-            }
+            v = vec4(size, -i, 0, 1);
+            v = ProjectionMat * ViewMat * v;
+            v /= v[3];
+            glVertex3f(v[0], v[1], v[2]);
         }
 	glEnd();
 
 	glBegin(GL_LINES);
-        if(STEP2 == true){
-            glColor3f(1, 0, 0);
-            v = vec4(0, 0, 0, 1);
-            v = ProjectionMat * ViewMat * v;
-            v /= v[3];
-            glVertex3f(v[0], v[1], v[2]);
+        glColor3f(1, 0, 0);
+        v = vec4(0, 0, 0, 1);
+        v = ProjectionMat * ViewMat * v;
+        v /= v[3];
+        glVertex3f(v[0], v[1], v[2]);
 
-            v = vec4(size, 0, 0, 1);
-            v = ProjectionMat * ViewMat * v;
-            v /= v[3];
-            glVertex3f(v[0], v[1], v[2]);
+        v = vec4(size, 0, 0, 1);
+        v = ProjectionMat * ViewMat * v;
+        v /= v[3];
+        glVertex3f(v[0], v[1], v[2]);
 
-            glColor3f(0.4, 0, 0);
-            v = vec4(0, 0, 0, 1);
-            v = ProjectionMat * ViewMat * v;
-            v /= v[3];
-            glVertex3f(v[0], v[1], v[2]);
+        glColor3f(0.4, 0, 0);
+        v = vec4(0, 0, 0, 1);
+        v = ProjectionMat * ViewMat * v;
+        v /= v[3];
+        glVertex3f(v[0], v[1], v[2]);
 
-            v = vec4(-size, 0, 0, 1);
-            v = ProjectionMat * ViewMat * v;
-            v /= v[3];
-            glVertex3f(v[0], v[1], v[2]);
-    
-            glColor3f(0, 1, 0);
-            v = vec4(0, 0, 0, 1);
-            v = ProjectionMat * ViewMat * v;
-            v /= v[3];
-            glVertex3f(v[0], v[1], v[2]);
+        v = vec4(-size, 0, 0, 1);
+        v = ProjectionMat * ViewMat * v;
+        v /= v[3];
+        glVertex3f(v[0], v[1], v[2]);
 
-            v = vec4(0, size, 0, 1);
-            v = ProjectionMat * ViewMat * v;
-            v /= v[3];
-            glVertex3f(v[0], v[1], v[2]);
+        glColor3f(0, 1, 0);
+        v = vec4(0, 0, 0, 1);
+        v = ProjectionMat * ViewMat * v;
+        v /= v[3];
+        glVertex3f(v[0], v[1], v[2]);
 
-            glColor3f(0, 0.4, 0);
-            v = vec4(0, 0, 0, 1);
-            v = ProjectionMat * ViewMat * v;
-            v /= v[3];
-            glVertex3f(v[0], v[1], v[2]);
+        v = vec4(0, size, 0, 1);
+        v = ProjectionMat * ViewMat * v;
+        v /= v[3];
+        glVertex3f(v[0], v[1], v[2]);
 
-            v = vec4(0, -size, 0, 1);
-            v = ProjectionMat * ViewMat * v;
-            v /= v[3];
-            glVertex3f(v[0], v[1], v[2]);
-    
-            glColor3f(0, 0, 1);
-            v = vec4(0, 0, 0, 1);
-            v = ProjectionMat * ViewMat * v;
-            v /= v[3];
-            glVertex3f(v[0], v[1], v[2]);
+        glColor3f(0, 0.4, 0);
+        v = vec4(0, 0, 0, 1);
+        v = ProjectionMat * ViewMat * v;
+        v /= v[3];
+        glVertex3f(v[0], v[1], v[2]);
 
-            v = vec4(0, 0, size, 1);
-            v = ProjectionMat * ViewMat * v;
-            v /= v[3];
-            glVertex3f(v[0], v[1], v[2]);
-        }else{
-            glColor3f(1, 0, 0);
-            glVertex3f(0, 0, 0);
-            glVertex3f(size, 0, 0);
-            glColor3f(0.4, 0, 0);
-            glVertex3f(0, 0, 0);
-            glVertex3f(-size, 0, 0);
-    
-            glColor3f(0, 1, 0);
-            glVertex3f(0, 0, 0);
-            glVertex3f(0, size, 0);
-            glColor3f(0, 0.4, 0);
-            glVertex3f(0, 0, 0);
-            glVertex3f(0, -size, 0);
-    
-            glColor3f(0, 0, 1);
-            glVertex3f(0, 0, 0);
-            glVertex3f(0, 0, size);
-        }
+        v = vec4(0, -size, 0, 1);
+        v = ProjectionMat * ViewMat * v;
+        v /= v[3];
+        glVertex3f(v[0], v[1], v[2]);
+
+        glColor3f(0, 0, 1);
+        v = vec4(0, 0, 0, 1);
+        v = ProjectionMat * ViewMat * v;
+        v /= v[3];
+        glVertex3f(v[0], v[1], v[2]);
+
+        v = vec4(0, 0, size, 1);
+        v = ProjectionMat * ViewMat * v;
+        v /= v[3];
+        glVertex3f(v[0], v[1], v[2]);
 	glEnd();
 }
 
 void Display(GLFWwindow* window)
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    
+    if(USE_CUSTOM_MATRIX == false){
+        // reset custom matrixes for DrawGrid function
+        // since I'm lazy to write 2 version of glVertex3f()
+        ViewMat = mat4x4(1);
+        ProjectionMat = mat4x4(1);
 
-	// glMatrixMode(GL_PROJECTION);
-	// glLoadIdentity();
-	// gluPerspective(60, 1, 0.1, 50);
-
-	// glMatrixMode(GL_MODELVIEW);
-	// glLoadIdentity();
-	// gluLookAt(10 * cos(theta), -10 * sin(theta), 10, 0, 0, 0, 0, 0, 1);
+        glMatrixMode(GL_PROJECTION);
+        glLoadIdentity();
+        gluPerspective(60, 1, 0.1, 50);
+    
+        glMatrixMode(GL_MODELVIEW);
+        glLoadIdentity();
+        gluLookAt(10 * cos(theta), -10 * sin(theta), 10, 0, 0, 0, 0, 0, 1);
+    
+        DrawGrid();
+    }
 
 	//step 3: PROJECTION
 	if (STEP3 == true) {
 		glMatrixMode(GL_PROJECTION);
 		glLoadIdentity();
 		//glOrtho(0, winWidth, 0, winHeight, -2.0, 2.0);
-		ProjectionMat = mat4x4(1);
 		swPerspective(60, 1, 0.1, 50);
 	} 
 
@@ -418,11 +398,23 @@ void Display(GLFWwindow* window)
 	if (STEP2 == true) {
 		glMatrixMode(GL_MODELVIEW);
 		glLoadIdentity();
-		ViewMat = mat4x4(1);
+        ViewMat = mat4x4(1);
 		swLookAt(10 * cos(theta), -10 * sin(theta), 10, 0, 0, 0, 0, 0, 1);
 	}
 
-    DrawGrid();
+    if(USE_CUSTOM_MATRIX == true){
+        if(STEP3 == false){
+            // didnt use custom project matrix
+            // reset custom matrixes for DrawGrid function, since I'm lazy to write 2 version of glVertex3f()
+            ProjectionMat = mat4x4(1);
+            
+            glMatrixMode(GL_PROJECTION);
+            glLoadIdentity();
+            gluPerspective(60, 1, 0.1, 50);
+        }
+
+        DrawGrid();
+    }
 
 	Draw_Tetrahedron();
 
