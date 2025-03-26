@@ -5,6 +5,7 @@
 #include <iostream>
 
 #include <cmath>
+#include <vector>
 
 #include <GL/glu.h>
 #include <GLFW/glfw3.h>
@@ -32,17 +33,21 @@ int winWidth = 1280;
 int winHeight = 720;
 
 mat4x4 TransformMat = mat4x4(1);
-
 mat4x4 ViewMat = mat4x4(1);
 mat4x4 ProjectionMat = mat4x4(1);
+
+vector<mat4x4> Matrix_stack(4, mat4x4(1));  // this stack is to store the model matrix
+int Stack_index = 0;
 
 vec3 default_tetrahedron_vertices[4] = {
 	vec3(1,0,0), vec3(0,1,0), vec3(0,0,1), vec3(0,0,0)
 };
 
 vec3 tetrahedron_verts[4];
+float Cube_stat[4] = {3, 0, 0, 1};  // float x, float y, float z, float length
 
 bool DRAW_CUBE = false;
+bool CUBE_SELF_ROTATE = false;
 
 void Draw_glVertex3f(float x, float y, float z, bool model, bool view, bool project){
     vec4 v;
@@ -243,6 +248,30 @@ void swPerspective(float fovY, float aspect, float near, float far){
     ProjectionMat = P;
 }
 
+// bonus part: Matrix Stack -------------------------------------------------------------------------------------------
+void swPushMatrix(){
+    for(int i = Stack_index; i < Matrix_stack.size(); i ++){
+        Matrix_stack[i] = TransformMat * Matrix_stack[i];
+    }
+
+    TransformMat = mat4x4(1);
+    Stack_index ++;
+}
+
+void swPopMatrix(){
+    if(Stack_index == 0){
+        cout << "Trying to pop empty stack!!\n";
+        TransformMat = mat4x4(1);
+
+        return;
+    }
+
+    Stack_index --;
+
+    TransformMat = Matrix_stack[Stack_index];
+}
+
+// functions to draw-----------------------------------------------------------------------------------------------------
 void swTriangle(vec3 color, vec3 in_v1, vec3 in_v2, vec3 in_v3, mat4x4 Modelmatrix)
 {
 	vec4 v1(in_v1.x, in_v1.y, in_v1.z, 1);
@@ -268,7 +297,6 @@ void swTriangle(vec3 color, vec3 in_v1, vec3 in_v2, vec3 in_v3, mat4x4 Modelmatr
 	glVertex3f(v3.x, v3.y, v3.z);
 }
 
-// functions to draw-----------------------------------------------------------------------------------------------------
 void Draw_Tetrahedron() {
 	vec3 color(1, 1, 0);
 	//glColor3f(1, 1, 0);
@@ -328,58 +356,6 @@ void Draw_cube(float x, float y, float z, float length) {
     glEnd();
 }
 
-void DrawSphere(float x, float y, float z, float radius, int slices, int stacks) {
-    // for (int i = 0; i <= stacks; ++i) {
-    //     float lat0 = PI * (-0.5 + (float)(i - 1) / stacks);
-    //     float z0 = sin(lat0);
-    //     float zr0 = cos(lat0);
-
-    //     float lat1 = PI * (-0.5 + (float)i / stacks);
-    //     float z1 = sin(lat1);
-    //     float zr1 = cos(lat1);
-
-    //     glBegin(GL_QUAD_STRIP);
-    //         glColor3f(0.0, 0.5, 1.0);
-
-    //         for (int j = 0; j <= slices; ++j) {
-    //             float lng = 2 * PI * (float)(j - 1) / slices;
-    //             float x0 = cos(lng);
-    //             float y0 = sin(lng);
-
-    //             glVertex3f(x + radius * x0 * zr0, 
-    //                     y + radius * y0 * zr0, 
-    //                     z + radius * z0);
-
-    //             glVertex3f(x + radius * x0 * zr1, 
-    //                     y + radius * y0 * zr1, 
-    //                     z + radius * z1);
-    //         }
-    //     glEnd();
-    // }
-
-    for (int i = 0; i <= stacks; ++i) {
-        float phi1 = PI * i / stacks;
-        float phi2 = PI * (i + 1) / stacks;
-
-        glBegin(GL_TRIANGLE_STRIP);
-        for (int j = 0; j <= slices; ++j) {
-            float theta = 2 * PI * j / slices;
-
-            float x1 = sin(phi1) * cos(theta);
-            float y1 = sin(phi1) * sin(theta);
-            float z1 = cos(phi1);
-
-            float x2 = sin(phi2) * cos(theta);
-            float y2 = sin(phi2) * sin(theta);
-            float z2 = cos(phi2);
-
-            glVertex3f(x + radius * x1, y + radius * y1, z + radius * z1);
-            glVertex3f(x + radius * x2, y + radius * y2, z + radius * z2);
-        }
-        glEnd();
-    }
-}
-
 void DrawGrid(int size = 10)
 {
     vec4 v;
@@ -424,13 +400,9 @@ void DrawGrid(int size = 10)
 void Display(GLFWwindow* window)
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    Stack_index = 2;
     
     if(USE_CUSTOM_MATRIX == false){
-        // reset custom matrixes for DrawGrid function
-        // since I'm lazy to write 2 version of glVertex3f()
-        ViewMat = mat4x4(1);
-        ProjectionMat = mat4x4(1);
-
         glMatrixMode(GL_PROJECTION);
         glLoadIdentity();
         gluPerspective(60, 1, 0.1, 50);
@@ -459,11 +431,7 @@ void Display(GLFWwindow* window)
 	}
 
     if(USE_CUSTOM_MATRIX == true){
-        if(STEP3 == false){
-            // didnt use custom project matrix
-            // reset custom matrixes for DrawGrid function, since I'm lazy to write 2 version of glVertex3f()
-            ProjectionMat = mat4x4(1);
-            
+        if(STEP3 == false){          
             glMatrixMode(GL_PROJECTION);
             glLoadIdentity();
             gluPerspective(60, 1, 0.1, 50);
@@ -472,10 +440,17 @@ void Display(GLFWwindow* window)
         DrawGrid();
     }
 
-	Draw_Tetrahedron();
+    swPopMatrix();
     if(DRAW_CUBE){
-        Draw_cube(1, 1, 5, 2);
+        Draw_cube(Cube_stat[0], Cube_stat[1], Cube_stat[2], Cube_stat[3]);
     }
+
+    swPopMatrix();
+    Draw_Tetrahedron();
+
+    ViewMat = mat4x4(1);
+    ProjectionMat = mat4x4(1);
+    TransformMat = mat4x4(1);
 
 	glFlush();
 	glfwSwapBuffers(window);
@@ -531,12 +506,20 @@ void SpecialKey(GLFWwindow* window, int key, int scancode, int action, int mods)
                 tetrahedron_verts[i][2] = 0;
             }
             break;
+
+        case GLFW_KEY_F8:
+            if(CUBE_SELF_ROTATE == true){
+                glfwSetWindowTitle(window, "F8: Don't self rotate");
+            }else{
+                glfwSetWindowTitle(window, "F8: start self rotate");
+            }
+            CUBE_SELF_ROTATE = !CUBE_SELF_ROTATE;
+            break;
             
         default:
             break;
     }
 }
-
 
 void KeyCallback(GLFWwindow* window, int key, int scancode, int action, int mods) {
     // Here you can handle both regular and special keys.
@@ -549,6 +532,7 @@ void KeyCallback(GLFWwindow* window, int key, int scancode, int action, int mods
     if (action != GLFW_PRESS && action != GLFW_REPEAT)
         return;
 
+    vec4 temp_cube_pos(Cube_stat[0], Cube_stat[1], Cube_stat[2], 1);
     switch (key) {
         case GLFW_KEY_ESCAPE:  // ESC key
             exit(0);
@@ -567,78 +551,141 @@ void KeyCallback(GLFWwindow* window, int key, int scancode, int action, int mods
         case GLFW_KEY_MINUS:
             glfwSetWindowTitle(window, "reset position");
             TransformMat = mat4x4(1);
+            for(int i = 0; i < Matrix_stack.size(); i ++){
+                Matrix_stack[i] = mat4x4(1);
+            }
             break;
 
         // translate +x (handles both 'q' and 'Q')
         case GLFW_KEY_Q:
             glfwSetWindowTitle(window, "translate +x");
             TransformMat = swTranslate(1, 0, 0) * TransformMat;
+
+            // save to stack
+            swPushMatrix();
             break;
 
         // translate -x (handles both 'a' and 'A')
         case GLFW_KEY_A:
             glfwSetWindowTitle(window, "translate -x");
             TransformMat = swTranslate(-1, 0, 0) * TransformMat;
+
+            // save to stack
+            swPushMatrix();
             break;
 
         // translate +y (handles both 'w' and 'W')
         case GLFW_KEY_W:
             glfwSetWindowTitle(window, "translate +y");
             TransformMat = swTranslate(0, 1, 0) * TransformMat;
+
+            // save to stack
+            swPushMatrix();
             break;
 
         // translate -y (handles both 's' and 'S')
         case GLFW_KEY_S:
             glfwSetWindowTitle(window, "translate -y");
             TransformMat = swTranslate(0, -1, 0) * TransformMat;
+
+            // save to stack
+            swPushMatrix();
             break;
 
         // translate +z (handles both 'e' and 'E')
         case GLFW_KEY_E:
             glfwSetWindowTitle(window, "translate +z");
             TransformMat = swTranslate(0, 0, 1) * TransformMat;
+
+            // save to stack
+            swPushMatrix();
             break;
 
         // translate +z (handles both 'd' and 'D')
         case GLFW_KEY_D:
             glfwSetWindowTitle(window, "translate -z");
             TransformMat = swTranslate(0, 0, -1) * TransformMat;
+
+            // save to stack
+            swPushMatrix();
             break;
 
         // rotate +x
         case GLFW_KEY_R:
             glfwSetWindowTitle(window, "rotate +x");
             TransformMat = swRotateX(theta) * TransformMat;
+
+            // save to stack
+            swPushMatrix();
             break;
 
         // rotate -x
         case GLFW_KEY_F:
             glfwSetWindowTitle(window, "rotate -x");
             TransformMat = swRotateX(-theta) * TransformMat;
+
+            // save to stack
+            swPushMatrix();
             break;
 
         // rotate +y
         case GLFW_KEY_T:
             glfwSetWindowTitle(window, "rotate +y");
             TransformMat = swRotateY(theta) * TransformMat;
+
+            // save to stack
+            swPushMatrix();
             break;
 
         // rotate -y
         case GLFW_KEY_G:
             glfwSetWindowTitle(window, "rotate -y");
             TransformMat = swRotateY(-theta) * TransformMat;
+
+            // save to stack
+            swPushMatrix();
             break;
 
         // rotate +z
         case GLFW_KEY_Y:
             glfwSetWindowTitle(window, "rotate +z");
             TransformMat = swRotateZ(theta) * TransformMat;
+
+            // save to stack
+            swPushMatrix();
+
+            // Bonus: rotate cube locally
+            if(CUBE_SELF_ROTATE == true){
+                temp_cube_pos = Matrix_stack[Stack_index - 1] * temp_cube_pos;
+    
+                TransformMat = swTranslate(-temp_cube_pos[0], -temp_cube_pos[1], -temp_cube_pos[2]) * TransformMat;
+                TransformMat = swRotate(theta, 1, 1, 1) * TransformMat;
+                TransformMat = swTranslate(temp_cube_pos[0], temp_cube_pos[1], temp_cube_pos[2]) * TransformMat;
+    
+                // save to stack
+                swPushMatrix();
+            }
             break;
 
         // rotate -z
         case GLFW_KEY_H:
             glfwSetWindowTitle(window, "rotate -z");
             TransformMat = swRotateZ(-theta) * TransformMat;
+
+            // save to stack
+            swPushMatrix();
+
+            // Bonus: rotate cube locally
+            if(CUBE_SELF_ROTATE == true){
+                temp_cube_pos = Matrix_stack[Stack_index - 1] * temp_cube_pos;
+    
+                TransformMat = swTranslate(-temp_cube_pos[0], -temp_cube_pos[1], -temp_cube_pos[2]) * TransformMat;
+                TransformMat = swRotate(-theta, 1, 1, 1) * TransformMat;
+                TransformMat = swTranslate(temp_cube_pos[0], temp_cube_pos[1], temp_cube_pos[2]) * TransformMat;
+    
+                // save to stack
+                swPushMatrix();
+            }
             break;
 
         // Add other keys as needed.
@@ -646,7 +693,6 @@ void KeyCallback(GLFWwindow* window, int key, int scancode, int action, int mods
             break;
     }
 }
-
 
 int main(void)
 {

@@ -23,7 +23,7 @@ Author: 111703040 游宗諺
 - [x] step3: projection matrix
 - [x] bonus
     - [x] add a cube (press `F2`)
-    - [ ] push/pop
+    - [x] push/pop (press `F8`)
     - [ ] load/save (press `F5` `F6`)
 - [x] my bonus
     - [x] delete object (press `F7`)
@@ -40,7 +40,9 @@ $ sudo apt install libglm-dev
 
 ## Summary to the Modified Code
 
-1. model matrix
+### Basic
+
+1. model matrix (line 78 ~ 154)
     - swTranslate
     - swRotate
         - x
@@ -48,14 +50,29 @@ $ sudo apt install libglm-dev
         - z
         - any
     - swScale
-2. view matrix
-3. projection matrix
-4. In swTriangle, 3 steps can be chosen to use
-5. In DrawGrid, modify each vertices so we can use our own custom matrix to draw grids (set boolean variable `USE_CUSTOM_MATRIX` to true)
+2. view matrix (line 154 ~ 223)
+3. projection matrix (line 224 ~ 250)
+4. In swTriangle, finish all 3 steps
+5. In DrawGrid, modify each vertices so we can use our own custom matrix to draw grids (set Global boolean variable `USE_CUSTOM_MATRIX` to `true`)
 6. In display:
     1. add `USE_CUSTOM_MATRIX` usecase to enable custom matrix on grids
     2. finish step 2 and 3
 7. in KeyCallback, finish all key functions
+
+### Bonus
+
+1. draw a cube (line 47, 49, 311 ~ 358)
+    - different color each side
+    - press `F2` to spawn
+    - Draw_cube
+2. matrix stack push/pop (line 39, 40, 50, 251 ~ 273, all model matrix related in `keyCallBack()`)
+    - use cube self rotate but tetrahedron don't self rotate to demonstrate the push/pop effect, **Notice!**, only pressing `Y` and `H` will make the cube self rotate, and the rotate axis is (1, 1, 1)
+    - press `F8` to toggle cube self rotate function on and off
+    - swPushMatrix
+    - swPopMatrix
+    - call `swPushMatrix()` in `keyCallBack()`, call `swPopMatrix()` in `Display()`
+3. delete object in scene (line 501 ~ 507)
+    - press `F7` to delete all object created
 
 ## Issue
 
