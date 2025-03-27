@@ -74,6 +74,14 @@ imap <Esc><BS> <C-W>
 nnoremap <C-S> :wq<CR>
 inoremap <C-S> <Esc>:wq<CR>
 
+"hit <crtl> + <Z> to undo
+nnoremap <C-Z> u
+inoremap <C-Z> <Esc>ui
+
+"hit <crtl> + <Y> to redo
+nnoremap <C-Y> <C-R>
+inoremap <C-Y> <Esc><C-R>i
+
 "hit <crtl> + <\> + <...> to use cscope
 nmap <C-\>s :cs find s <C-R>=expand("<cword>")<CR><CR>
 nmap <C-\>a :cs find a <C-R>=expand("<cword>")<CR><CR>
