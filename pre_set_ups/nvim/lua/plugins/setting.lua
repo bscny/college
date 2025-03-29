@@ -1,0 +1,41 @@
+-- return {
+--   "AstroNvim/astrocore",
+--   -- @type AstroCoreOpts
+--   opts = {
+--     -- Configure core features of AstroNvim
+--     features = {
+--       expandtab = true,
+--       tabstop = 4,
+--       softtabstop = 4,
+--       shiftwidth = 4,
+--     },
+--   },
+-- }
+
+-- return {
+--   opt = {
+--     expandtab = true,
+--     tabstop = 4,
+--     shiftwidth = 4,
+--     softtabstop = 4,
+--   },
+-- }
+
+-- return {
+--   "AstroNvim/astrocore",
+--   options = {
+--     opt = {
+--       relativenumber = true, -- sets vim.opt.relativenumber
+--       number = true, -- sets vim.opt.number
+--       spell = false, -- sets vim.opt.spell
+--       signcolumn = "yes", -- sets vim.opt.signcolumn to yes
+--       wrap = false, -- sets vim.opt.wrap
+--       expandtab = true, -- expand tabs to spaces,
+--       tabstop = 4, -- tab lenth,
+--       shiftwidth = 4, -- tab lenth,
+--       fo = "tcq", -- turn off auto //
+--     },
+--   },
+-- }
+--
+return {}
