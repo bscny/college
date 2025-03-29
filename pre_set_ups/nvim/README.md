@@ -32,3 +32,8 @@ git clone https://github.com/<your_user>/<your_repository> ~/.config/nvim
 ```shell
 nvim
 ```
+
+#### Custom notes
+
+1. goto `~/.local/share/nvim` search for words `<C-y>` and change all them to `<C-q>`
+    - in order to use `<C-y>` to redo
