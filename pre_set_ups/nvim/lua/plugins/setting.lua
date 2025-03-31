@@ -38,4 +38,9 @@
 --   },
 -- }
 --
-return {}
+return {
+    "Darazaki/indent-o-matic",
+    options = {
+        disable = true,
+    }
+}

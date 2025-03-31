@@ -27,13 +27,11 @@ return {
                     ["<A-Left>"] = { "b" },
                     ["<M-Left>"] = { "b" },
 
-                    ["<cr>"] = { ":set tabstop=4<cr>:set shiftwidth=4<cr>:set formatoptions=tcq<cr>" },
-
                     -- hit <shift> + <alt> + <f> to auto indent
                     ["<S-A-f>"] = { "ggVG=" },
-                    -- ["<C-~>"] = { "w" },
-                    -- ["<A-~>"] = { "w" },
-                    -- ["<M-~>"] = { "w" },
+
+                    -- hit <ctrl> + <v> yo paste
+                    ["<C-v>"] = {"p"}
                 },
                 t = {
                     -- setting a mapping to false will disable it
@@ -59,15 +57,20 @@ return {
 
                     -- hit <alt> + arrow key to move between words
                     ["<C-Right>"] = { "w" },
-                    ["<A-Right>"] = { "w" },
-                    ["<M-Right>"] = { "w" },
+                    -- ["<A-Right>"] = { "w" },
+                    -- ["<M-Right>"] = { "w" },
+                    ["<Esc><Right>"] = { "<Esc><Right>wi" },
 
                     -- hit <alt> + arrow key to move between words
                     ["<C-Left>"] = { "<Esc>b" },
-                    ["<A-Left>"] = { "<Esc>b" },
-                    ["<M-Left>"] = { "<Esc>b" },
+                    -- ["<A-Left>"] = { "<Esc>b" },
+                    -- ["<M-Left>"] = { "<Esc>b" },
                     ["<Esc><Left>"] = { "<Esc>bi" },
                 },
+                v = {
+                    -- hit <ctrl> + <c> to copy
+                    ["<C-c>"] = { "y" }
+                }
             },
         },
     },
