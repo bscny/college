@@ -45,3 +45,32 @@ nvim
 3. in order to use `<C-_>` (ctrl + /) to comment/uncomment lines
     1. goto `~/.local/share/nvim` search for word `<Leader>/` (**Notice**, the Leader is in L not l)
     2. change all the `<Leader>/` to `<C-_>`
+4. in order to use language servers (see [AstroNvim Community Pack](https://github.com/AstroNvim/astrocommunity/tree/main/lua/astrocommunity/pack) for more detail)
+    - <details><summary>Toggle to open</summary>
+    - for C / C++ / Objective-C / Objective-C++
+        1. inside nvim type: `:LspInstall clangd`
+    - for cmake
+        1. inside nvim type: `:LspInstall cmake`
+    - for C#
+        1. inside nvim type: `:LspInstall csharp_ls`
+    - for docker
+        1. inside nvim type: `:LspInstall dockerfile-language-server`
+        2. inside nvim type: `:LspInstall docker-compose-language-service`
+    - for html / css
+        1. inside nvim type: `:LspInstall html`
+        2. inside nvim type: `:LspInstall css`
+        3. inside nvim type: `:LspInstall emmet_ls`
+    - for JSON
+        1. inside nvim type: `:LspInstall jsonls`
+    - for Markdown
+        1. inside nvim type: `:LspInstall marksman`
+    - for python
+        1. inside nvim type: `:LspInstall basedpyright` (or `pyright`)
+    - for js / ts
+        1. inside nvim type: `:LspInstall vtsls`
+        2. inside nvim type: `:LspInstall eslint`
+    - for vue
+        1. inside nvim type: `:LspInstall vue`
+    - for yaml
+        1. inside nvim type: `:LspInstall yamlls`
+    </details>
