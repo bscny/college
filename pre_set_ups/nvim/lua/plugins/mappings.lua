@@ -68,8 +68,7 @@ return {
                     ["<Esc><Left>"] = { "<Esc>bi" },
 
                     -- hit <ctrl> + <v> yo paste
-                    ["<C-v>"] = {"<Esc>pi"}
-
+                    ["<C-v>"] = { "<Esc>pi" },
                 },
                 v = {
                     -- hit <ctrl> + <c> to copy

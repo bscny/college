@@ -66,21 +66,72 @@ elseif $CSCOPE_DB != ""
 endif
 set cscopeverbose
 
-"hit <crtl> + <Backspace> to delete a
-imap <C-BS> <C-W>
-imap <Esc><BS> <C-W>
+" ALL Main key mapping starts here -------------------------------------------------------------------------
+" Normal mode mappings
+" Quick save with Ctrl + S
+nnoremap <C-s> :w<CR>
 
-"hit <crtl> + <S> to save files
-nnoremap <C-S> :wq<CR>
-inoremap <C-S> <Esc>:wq<CR>
+" Hit <Ctrl> + <Z> to undo, <Ctrl> + <Y> to redo
+nnoremap <C-z> u
+nnoremap <C-y> <C-R>
 
-"hit <crtl> + <Z> to undo
-nnoremap <C-Z> u
-inoremap <C-Z> <Esc>ui
+" Hit <Alt> + arrow key to move between words
+nnoremap <C-Right> w
+nnoremap <A-Right> w
+nnoremap <M-Right> w
+inoremap <Esc><Right> w
 
-"hit <crtl> + <Y> to redo
-nnoremap <C-Y> <C-R>
-inoremap <C-Y> <Esc><C-R>i
+
+" Hit <Alt> + arrow key to move between words
+nnoremap <C-Left> b
+nnoremap <A-Left> b
+nnoremap <M-Left> b
+nnoremap <Esc><Left> b
+
+" Hit <Shift> + <Alt> + <F> to auto-indent
+nnoremap <S-A-f> ggVG=
+
+" Hit <Ctrl> + <V> to paste
+nnoremap <C-v> p
+
+" Insert mode mappings
+" Quick save with Ctrl + S
+inoremap <C-s> <Esc>:w<CR>
+
+" Hit <Ctrl> + <Backspace> to delete a word
+inoremap <Esc><BS> <C-W>
+inoremap <C-BS> <C-W>
+inoremap <A-BS> <C-W>
+inoremap <M-BS> <C-W>
+
+" Hit <Ctrl> + <Z> to undo, <Ctrl> + <Y> to redo
+inoremap <C-z> <Esc>ui
+inoremap <C-y> <Esc>:redo<CR>i
+
+" Hit <Alt> + arrow key to move between words
+inoremap <C-Right> w
+" inoremap <A-Right> w
+" inoremap <M-Right> w
+inoremap <Esc><Right> <Esc><Right>wi
+
+" Hit <Alt> + arrow key to move between words
+inoremap <C-Left> <Esc>b
+" inoremap <A-Left> <Esc>b
+" inoremap <M-Left> <Esc>b
+inoremap <Esc><Left> <Esc>bi
+
+" Hit <Ctrl> + <V> to paste
+inoremap <C-v> <Esc>pi
+
+" Visual mode mappings
+" Hit <Ctrl> + <C> to copy
+vnoremap <C-c> y
+
+" Terminal mode mappings (commented out)
+" Setting a mapping to false will disable it
+" tnoremap <Esc> <C-\><C-n>
+
+" Mapping ends -----------------------------------------------------------------------------------------------
 
 "hit <crtl> + <\> + <...> to use cscope
 nmap <C-\>s :cs find s <C-R>=expand("<cword>")<CR><CR>
