@@ -1,17 +1,28 @@
 #include "swgl.h"
 #include <iostream>
+#include <vector>
 
 using namespace std;
 
-float *swdepthbuffer = NULL;
+#define   INF   2147483647
+
+// float *Sw_depth_buffer = NULL;
+vector<vector <GLdouble>> Sw_depth_buffer;
+vector<vector <GLdouble>> Init_depth_buffer(800, vector<GLdouble>(400, -INF));
 
 //---------------------------------------------------------------------------
 //cghw-rast
 //---------------------------------------------------------------------------
 
 //You can change it to speed up
-void writepixel(int x, int y, GLdouble r, GLdouble g, GLdouble b)
+void writepixel(int x, int y, GLdouble z, GLdouble r, GLdouble g, GLdouble b)
 {
+    if(z <= Sw_depth_buffer[x][y]){
+        return;
+    }else{
+        Sw_depth_buffer[x][y] = z;
+    }
+
 	GLubyte map[1]={255};
 
 	glColor3d(r, g, b);
@@ -21,9 +32,6 @@ void writepixel(int x, int y, GLdouble r, GLdouble g, GLdouble b)
 
 bool BresenhamLine(GLdouble x1, GLdouble y1, GLdouble z1, GLdouble x2, GLdouble y2, GLdouble z2, GLdouble r, GLdouble g, GLdouble b)
 {
-    writepixel(x1, y1, r, g, b);
-    writepixel(x2, y2, r, g, b);
-
     int x1_ground;
     int y1_ground;
     int x2_ground;
@@ -50,6 +58,7 @@ bool BresenhamLine(GLdouble x1, GLdouble y1, GLdouble z1, GLdouble x2, GLdouble 
         // swap x1 and x2 since we are going right to left
         swap(x1_ground, x2_ground);
         swap(y1_ground, y2_ground);
+        swap(z1, z2);
     }
 
     int dx = x2_ground - x1_ground;
@@ -64,11 +73,14 @@ bool BresenhamLine(GLdouble x1, GLdouble y1, GLdouble z1, GLdouble x2, GLdouble 
     }
     int y = y1_ground;
 
+    GLdouble z_slope = (GLdouble)((int)z2 - (int)z1) / (GLdouble)dx;
+    GLdouble z = z1;
+
     for(int x = x1_ground; x <= x2_ground; x ++){
         if(steep){
-            writepixel(y, x, r, g, b);
+            writepixel(y, x, z, r, g, b);
         }else{
-            writepixel(x, y, r, g, b);
+            writepixel(x, y, z, r, g, b);
         }
 
         err -= dy;
@@ -77,6 +89,8 @@ bool BresenhamLine(GLdouble x1, GLdouble y1, GLdouble z1, GLdouble x2, GLdouble 
             y += ystep;
             err += dx;
         }
+
+        z += z_slope;
     }
 
 	return true;
@@ -97,7 +111,7 @@ void fill_topflat_triangle(GLdouble x1, GLdouble y1, GLdouble z1,
     GLdouble x_3to2 = x3;
     GLdouble z_3to2 = z3;
 
-    for(int y = (int)y3; y <= y2; y ++){
+    for(int y = (int)y3; y < (int)y2; y ++){
         BresenhamLine(x_3to1, y, z_3to1, x_3to2, y, z_3to2, r, g, b);
         x_3to1 += inv_slopeX_3to1;
         z_3to1 += inv_slopeZ_3to1;
@@ -121,7 +135,7 @@ void fill_bottomflat_triangle(GLdouble x1, GLdouble y1, GLdouble z1,
     GLdouble x_1to3 = x1;
     GLdouble z_1to3 = z1;
 
-    for(int y = (int)y1; y >= y2; y --){
+    for(int y = (int)y1; y > (int)y2; y --){
         BresenhamLine(x_1to2, y, z_1to2, x_1to3, y, z_1to3, r, g, b);
         x_1to2 -= inv_slopeX_1to2;
         z_1to2 -= inv_slopeZ_1to2;
@@ -135,14 +149,6 @@ bool swTriangle(GLdouble x1, GLdouble y1, GLdouble z1,
 			 GLdouble x3, GLdouble y3, GLdouble z3,
 			 GLdouble r, GLdouble g, GLdouble b)
 {
-    writepixel(x1, y1, r, g, b);
-    writepixel(x2, y2, r, g, b);
-    writepixel(x3, y3, r, g, b);
-
-    BresenhamLine(x1, y1, z1, x2, y2, z2, r, g, b);
-    BresenhamLine(x2, y2, z2, x3, y3, z3, r, g, b);
-    BresenhamLine(x3, y3, z3, x1, y1, z1, r, g, b);
-
     if((int)y3 == (int)y2 == (int)y1){
         // it's a line...
         return true;
@@ -177,6 +183,7 @@ bool swTriangle(GLdouble x1, GLdouble y1, GLdouble z1,
         GLdouble x4 = x1 + ((y2 - y1) / (y3 - y1)) * (x3 - x1);
         GLdouble y4 = y2;
         GLdouble z4 = z1 + ((y2 - y1) / (y3 - y1)) * (z3 - z1);
+        BresenhamLine(x2, y2, z2, x4, y4, z4, r, g, b);
         fill_bottomflat_triangle(x1, y1, z1, x2, y2, z2, x4, y4, z4, r, g, b);
         fill_topflat_triangle(x4, y4, z4, x2, y2, z2, x3, y3, z3, r, g, b);
     }
@@ -187,15 +194,19 @@ bool swTriangle(GLdouble x1, GLdouble y1, GLdouble z1,
 
 bool swInitZbuffer(int width, int height)
 {
-    //allocate/reallocate swdepthbuffer
+    // width --> x, height --> y
+    Init_depth_buffer.clear();
+    Sw_depth_buffer.clear();
+    Init_depth_buffer.resize(width, vector<GLdouble>(height, -INF));
+    Sw_depth_buffer = Init_depth_buffer;
 
     return true;
 }
 
-
-
 bool swClearZbuffer()
 {
+    Sw_depth_buffer.clear();
+    Sw_depth_buffer = Init_depth_buffer;
 
     return true;
 }

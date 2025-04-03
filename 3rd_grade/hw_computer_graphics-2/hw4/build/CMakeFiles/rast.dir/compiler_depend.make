@@ -468,8 +468,17 @@ CMakeFiles/rast.dir/swgl-rast.cpp.o: ../swgl-rast.cpp \
   /usr/include/c++/11/bits/basic_ios.tcc \
   /usr/include/c++/11/bits/ostream.tcc \
   /usr/include/c++/11/istream \
-  /usr/include/c++/11/bits/istream.tcc
+  /usr/include/c++/11/bits/istream.tcc \
+  /usr/include/c++/11/vector \
+  /usr/include/c++/11/bits/stl_uninitialized.h \
+  /usr/include/c++/11/bits/stl_vector.h \
+  /usr/include/c++/11/bits/stl_bvector.h \
+  /usr/include/c++/11/bits/vector.tcc
 
+
+/usr/include/c++/11/bits/stl_uninitialized.h:
+
+/usr/include/c++/11/vector:
 
 /usr/include/c++/11/bits/istream.tcc:
 
@@ -662,6 +671,8 @@ CMakeFiles/rast.dir/swgl-rast.cpp.o: ../swgl-rast.cpp \
 /usr/include/glm/vec4.hpp:
 
 /usr/include/glm/ext/vector_int2_sized.hpp:
+
+/usr/include/c++/11/bits/vector.tcc:
 
 /usr/include/glm/ext/matrix_double2x3.hpp:
 
@@ -907,6 +918,8 @@ CMakeFiles/rast.dir/swgl-rast.cpp.o: ../swgl-rast.cpp \
 
 /usr/include/glm/ext/vector_uint3_sized.hpp:
 
+/usr/include/c++/11/bits/stl_vector.h:
+
 /usr/include/c++/11/cstddef:
 
 /usr/include/c++/11/tr1/riemann_zeta.tcc:
@@ -1008,6 +1021,8 @@ CMakeFiles/rast.dir/swgl-rast.cpp.o: ../swgl-rast.cpp \
 /usr/include/glm/exponential.hpp:
 
 /usr/include/x86_64-linux-gnu/bits/types/clock_t.h:
+
+/usr/include/c++/11/bits/stl_bvector.h:
 
 /usr/include/x86_64-linux-gnu/bits/types/struct___jmp_buf_tag.h:
 

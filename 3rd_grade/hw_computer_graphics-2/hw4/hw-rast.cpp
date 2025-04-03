@@ -23,7 +23,8 @@
 #define M_PI 3.14159265358979323846
 #endif
 
-
+bool RANDOM_MODE = true;
+int SEED = 5;
 
 int         winWidth=800, winHeight=400;
 
@@ -164,9 +165,20 @@ void openglPath1(void)
 	    float y3 = float(rand())/RAND_MAX*winHeight/2+winHeight/2;
 
 	    //assume the same depth for easy comparison, you may try different z per vertex
-		float z = float(rand())/RAND_MAX;
+		// float z = float(rand())/RAND_MAX;
+		float z = float(i) / float(NUM_TRIS);
 
-        glColor3f(float(rand())/RAND_MAX, float(rand())/RAND_MAX, float(rand())/RAND_MAX);
+		if(RANDOM_MODE){
+			glColor3f(float(rand())/RAND_MAX, float(rand())/RAND_MAX, float(rand())/RAND_MAX);
+		}else{
+			if(i == 0){
+				glColor3f(1, 0, 0);
+			}else if(i == 1){
+				glColor3f(0, 1, 0);
+			}else{
+				glColor3f(0, 0, 1);
+			}
+		}
 
         glVertex3f(x1, y1, z);
         glVertex3f(x2, y2, z);
@@ -197,8 +209,6 @@ void softPath1(void)
 	//gluLookAt(5, 5, 5, 0, 0, 0, 0, 1, 0);
 	//glGetDoublev(GL_MODELVIEW_MATRIX, DEBUG_M);
 
-	
-
     swClearZbuffer();
 
 	//Line
@@ -225,13 +235,24 @@ void softPath1(void)
 	    float y3 = float(rand())/RAND_MAX*winHeight/2+winHeight/2;
 
 	    //assume the same depth for easy comparison, you may try different z per vertex
-		float z = float(rand())/RAND_MAX;
+		// float z = float(rand())/RAND_MAX;
+		float z = float(i) / float(NUM_TRIS);
 
-        glColor3f(float(rand())/RAND_MAX, float(rand())/RAND_MAX, float(rand())/RAND_MAX);
+        if(RANDOM_MODE){
+			glColor3f(float(rand())/RAND_MAX, float(rand())/RAND_MAX, float(rand())/RAND_MAX);
+		}else{
+			if(i == 0){
+				glColor3f(1, 0, 0);
+			}else if(i == 1){
+				glColor3f(0, 1, 0);
+			}else{
+				glColor3f(0, 0, 1);
+			}
+		}
+
 		SwglTri1(x1, y1, z,
                  x2, y2, z,
                  x3, y3, z);
-
 	}
 }
 
@@ -260,22 +281,25 @@ void display(void)
 		glPopMatrix();
 	}
 
-    srand(time1);
-	// srand(1);
+	if(RANDOM_MODE){
+		srand(time1);
+	}else{
+		srand(SEED);
+	}
 	openglPath1();
 
 	//we must disable the opengl's depth test, then the software depth test will work
 	glDisable(GL_DEPTH_TEST);
-	srand(time1);
-	// srand(1);
+	if(RANDOM_MODE){
+		srand(time1);
+	}else{
+		srand(SEED);
+	}
 	softPath1();
 	glEnable(GL_DEPTH_TEST);
 }
 
 /*----------------------------------------------------------------------*/
-
-
-
 void window_size_callback(GLFWwindow* window, int w, int h)
 {
     winWidth = w;
@@ -327,6 +351,10 @@ int main(void)
 	//initGL();
 	glfwSetKeyCallback(window, key_callback);
 	glfwSetWindowSizeCallback(window, window_size_callback);
+
+	if(!RANDOM_MODE){
+		NUM_TRIS = 3;
+	}
 
     /* Loop until the user closes the window */
     while (!glfwWindowShouldClose(window))
