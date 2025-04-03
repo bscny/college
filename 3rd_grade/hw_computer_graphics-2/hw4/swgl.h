@@ -10,6 +10,7 @@
 #endif
 
 #include <cmath>
+// #include <iostream>
 
 //implement the following function call to archive the opengl pipeline
 void swTranslated(GLdouble x, GLdouble y, GLdouble z);
