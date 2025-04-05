@@ -29,7 +29,9 @@ return {
 
                     -- hit <shift> + <alt> + <f> to auto indent
                     ["<S-A-f>"] = { "ggVG=" },
-
+                    
+                    -- hit <ctrl> + <c> to copy a line
+                    ["<C-c>"] = { "yy" },
                     -- hit <ctrl> + <v> yo paste
                     ["<C-v>"] = {"p"}
                 },
@@ -67,6 +69,8 @@ return {
                     -- ["<M-Left>"] = { "<Esc>b" },
                     ["<Esc><Left>"] = { "<Esc>bi" },
 
+                    -- hit <ctrl> + <c> to copy a line
+                    ["<C-c>"] = { "<Esc>yyi" },
                     -- hit <ctrl> + <v> yo paste
                     ["<C-v>"] = { "<Esc>pi" },
                 },
