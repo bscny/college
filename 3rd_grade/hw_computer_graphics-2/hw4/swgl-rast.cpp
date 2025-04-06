@@ -73,7 +73,7 @@ bool BresenhamLine(GLdouble x1, GLdouble y1, GLdouble z1, GLdouble x2, GLdouble 
     }
     int y = y1_ground;
 
-    GLdouble z_slope = (GLdouble)((int)z2 - (int)z1) / (GLdouble)dx;
+    GLdouble z_slope = (z2 - z1) / (GLdouble)dx;
     GLdouble z = z1;
 
     for(int x = x1_ground; x <= x2_ground; x ++){
@@ -111,7 +111,7 @@ void fill_topflat_triangle(GLdouble x1, GLdouble y1, GLdouble z1,
     GLdouble x_3to2 = x3;
     GLdouble z_3to2 = z3;
 
-    for(int y = (int)y3; y < (int)y2; y ++){
+    for(GLdouble y = y3; y <= y2; y ++){
         BresenhamLine(x_3to1, y, z_3to1, x_3to2, y, z_3to2, r, g, b);
         x_3to1 += inv_slopeX_3to1;
         z_3to1 += inv_slopeZ_3to1;
@@ -135,7 +135,7 @@ void fill_bottomflat_triangle(GLdouble x1, GLdouble y1, GLdouble z1,
     GLdouble x_1to3 = x1;
     GLdouble z_1to3 = z1;
 
-    for(int y = (int)y1; y > (int)y2; y --){
+    for(GLdouble y = y1; y >= y2; y --){
         BresenhamLine(x_1to2, y, z_1to2, x_1to3, y, z_1to3, r, g, b);
         x_1to2 -= inv_slopeX_1to2;
         z_1to2 -= inv_slopeZ_1to2;
