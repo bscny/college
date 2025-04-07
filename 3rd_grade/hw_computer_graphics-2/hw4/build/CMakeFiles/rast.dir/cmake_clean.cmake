@@ -3,6 +3,8 @@ file(REMOVE_RECURSE
   "CMakeFiles/rast.dir/hw-rast.cpp.o.d"
   "CMakeFiles/rast.dir/swgl-rast.cpp.o"
   "CMakeFiles/rast.dir/swgl-rast.cpp.o.d"
+  "CMakeFiles/rast.dir/swgl.cpp.o"
+  "CMakeFiles/rast.dir/swgl.cpp.o.d"
   "rast"
   "rast.pdb"
 )

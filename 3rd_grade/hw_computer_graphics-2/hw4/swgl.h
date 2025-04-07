@@ -9,8 +9,13 @@
 #include <GL/glut.h>
 #endif
 
-#include <cmath>
-// #include <iostream>
+#include <glm/mat4x4.hpp>
+
+using namespace glm;
+
+extern mat4x4 TransformMat;
+extern mat4x4 ViewMat;
+extern mat4x4 ProjectionMat;
 
 //implement the following function call to archive the opengl pipeline
 void swTranslated(GLdouble x, GLdouble y, GLdouble z);
@@ -28,7 +33,8 @@ void swuLookAt(GLdouble eyeX, GLdouble eyeY, GLdouble eyeZ,
  	           GLdouble centerX, GLdouble centerY, GLdouble centerZ,
  	           GLdouble upX, GLdouble upY, GLdouble upZ);
 void swFrustum(	GLdouble left, GLdouble right, GLdouble bottom, GLdouble top, GLdouble nearVal, GLdouble farVal);
-void swuPerspective(GLdouble fovy, GLdouble aspect, GLdouble zNear, GLdouble zFar);
+void swuPerspective(GLdouble fovY, GLdouble aspect, GLdouble zNear, GLdouble zFar);
+void swOrtho(GLdouble left, GLdouble right, GLdouble bottom, GLdouble top, GLdouble zNear, GLdouble zFar);
 
 void swViewport(GLint x, GLint y, GLsizei width, GLsizei height);
 
@@ -37,7 +43,7 @@ bool swTransformation(const GLdouble h[4], GLdouble w[4]);
 //---------------------------------------------------------------------------
 //cghw2
 //---------------------------------------------------------------------------
-void writepixel(int x, int y, GLdouble r, GLdouble g, GLdouble b);
+void writepixel(int x, int y, GLdouble z, GLdouble r, GLdouble g, GLdouble b);
 void writepixel(GLdouble x, GLdouble y, GLdouble z, GLdouble r, GLdouble g, GLdouble b);
 
 //Bresenham's algorithm

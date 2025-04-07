@@ -177,6 +177,30 @@ swgl-rast.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/rast.dir/build.make CMakeFiles/rast.dir/swgl-rast.cpp.s
 .PHONY : swgl-rast.cpp.s
 
+swgl.o: swgl.cpp.o
+.PHONY : swgl.o
+
+# target to build an object file
+swgl.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/rast.dir/build.make CMakeFiles/rast.dir/swgl.cpp.o
+.PHONY : swgl.cpp.o
+
+swgl.i: swgl.cpp.i
+.PHONY : swgl.i
+
+# target to preprocess a source file
+swgl.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/rast.dir/build.make CMakeFiles/rast.dir/swgl.cpp.i
+.PHONY : swgl.cpp.i
+
+swgl.s: swgl.cpp.s
+.PHONY : swgl.s
+
+# target to generate assembly for a file
+swgl.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/rast.dir/build.make CMakeFiles/rast.dir/swgl.cpp.s
+.PHONY : swgl.cpp.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -192,6 +216,9 @@ help:
 	@echo "... swgl-rast.o"
 	@echo "... swgl-rast.i"
 	@echo "... swgl-rast.s"
+	@echo "... swgl.o"
+	@echo "... swgl.i"
+	@echo "... swgl.s"
 .PHONY : help
 
 

@@ -81,12 +81,12 @@ clean: CMakeFiles/rast.dir/clean
 CMakeFiles/rast.dir/all:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/rast.dir/build.make CMakeFiles/rast.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/rast.dir/build.make CMakeFiles/rast.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/benny999/cloud_college/3rd_grade/hw_computer_graphics-2/hw4/build/CMakeFiles --progress-num=1,2,3 "Built target rast"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/benny999/cloud_college/3rd_grade/hw_computer_graphics-2/hw4/build/CMakeFiles --progress-num=1,2,3,4 "Built target rast"
 .PHONY : CMakeFiles/rast.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/rast.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/benny999/cloud_college/3rd_grade/hw_computer_graphics-2/hw4/build/CMakeFiles 3
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/benny999/cloud_college/3rd_grade/hw_computer_graphics-2/hw4/build/CMakeFiles 4
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/rast.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/benny999/cloud_college/3rd_grade/hw_computer_graphics-2/hw4/build/CMakeFiles 0
 .PHONY : CMakeFiles/rast.dir/rule

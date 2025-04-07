@@ -17,5 +17,5 @@ include_directories( ${OPENGL_INCLUDE_DIRS}  ${GLFW_INCLUDE_DIRS} ${GLEW_INCLUDE
 
 
 # cghw-rast
-add_executable(rast hw-rast.cpp swgl-rast.cpp)
+add_executable(rast hw-rast.cpp swgl-rast.cpp swgl.cpp)
 target_link_libraries(rast ${OPENGL_LIBRARIES} ${GLEW_LIBRARIES} ${GLFW_LIBRARIES}  )

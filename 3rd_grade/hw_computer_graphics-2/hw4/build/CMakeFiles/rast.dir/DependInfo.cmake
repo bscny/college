@@ -10,6 +10,7 @@ set(CMAKE_DEPENDS_LANGUAGES
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
   "/home/benny999/cloud_college/3rd_grade/hw_computer_graphics-2/hw4/hw-rast.cpp" "CMakeFiles/rast.dir/hw-rast.cpp.o" "gcc" "CMakeFiles/rast.dir/hw-rast.cpp.o.d"
   "/home/benny999/cloud_college/3rd_grade/hw_computer_graphics-2/hw4/swgl-rast.cpp" "CMakeFiles/rast.dir/swgl-rast.cpp.o" "gcc" "CMakeFiles/rast.dir/swgl-rast.cpp.o.d"
+  "/home/benny999/cloud_college/3rd_grade/hw_computer_graphics-2/hw4/swgl.cpp" "CMakeFiles/rast.dir/swgl.cpp.o" "gcc" "CMakeFiles/rast.dir/swgl.cpp.o.d"
   )
 
 # Targets to which this target links.

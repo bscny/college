@@ -18,14 +18,22 @@
 #include <stdio.h>
 
 #include "swgl.h"
+#include <iostream>
+
+using namespace glm;
+using namespace std;
 
 #ifndef M_PI
 #define M_PI 3.14159265358979323846
 #endif
 
-bool RANDOM_MODE = true;
-bool RANDOM_Z = true;
-int SEED = 4;
+bool RANDOM_MODE = false;
+bool RANDOM_Z = false;
+
+bool USE_DEFAULT_LOOK_AT = true;
+GLdouble FLAG = -1;
+
+int SEED = 6;
 
 int         winWidth=800, winHeight=400;
 
@@ -127,19 +135,22 @@ void openglPath1(void)
 
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
-	//glOrtho(-2.0, 2.0, -2.0, 2.0, -3.0, 25.0);
-	//glFrustum(-2.0, 2.0, -2.0, 2.0, -3.0, 3.0);
-	//gluPerspective(60, (GLfloat)(winWidth*0.5)/winHeight, 0.1, 25);
-	gluOrtho2D(0, winWidth/2, 0, winHeight);
-	// glOrtho(0, winWidth/2, 0, winHeight, -100, 100);
+	if(USE_DEFAULT_LOOK_AT){
+		glOrtho(0, winWidth/2, 0, winHeight, -100, 100);
+	}else{
+		glOrtho(-winWidth/2, 0, 0, winHeight, -100, 100);
+	}
 	glGetDoublev(GL_PROJECTION_MATRIX, DEBUG_M);
 
 
     glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
-	//gluLookAt(5, 5, 20, 0, 5, 0, 0, 1, 0);
-	//gluLookAt(5, 5, 5, 0, 0, 0, 0, 1, 0);
-	// gluLookAt(0, 0, 0, 0, 0, 1, 0, 1, 0);
+	if(USE_DEFAULT_LOOK_AT){
+		// gluLookAt(0, 0, 0, 0, 0, -1, 0, 1, 0);
+	}else{
+		// look at +z
+		gluLookAt(0, 0, 0, 0, 0, 1, 0, 1, 0);
+	}
 	glGetDoublev(GL_MODELVIEW_MATRIX, DEBUG_M);
 
 	// Line
@@ -207,24 +218,33 @@ void softPath1(void)
 {
     //view transform
 	glViewport(winWidth/2, 0, winWidth/2, winHeight);
-	//glViewport(0, 0, winWidth, winHeight);
 
-    glMatrixMode(GL_PROJECTION);
+	glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
-	//glOrtho(-2.0, 2.0, -2.0, 2.0, -3.0, 25.0);
-	//glFrustum(-2.0, 2.0, -2.0, 2.0, -3.0, 3.0);
-	//gluPerspective(60, (GLfloat)(winWidth*0.5)/winHeight, 0.1, 25);
-	gluOrtho2D(0, winWidth/2, 0, winHeight);
-	// glOrtho(0, winWidth/2, 0, winHeight, -100, 100);
-	//glGetDoublev(GL_PROJECTION_MATRIX, DEBUG_M);
+	// ProjectionMat = mat4x4(1);
+	if(USE_DEFAULT_LOOK_AT){
+		glOrtho(0, winWidth/2, 0, winHeight, -100, 100);
 
+		// swOrtho(0, winWidth/2, 0, winHeight, -100, 100);
+	}else{
+		glOrtho(-winWidth/2, 0, 0, winHeight, -100, 100);
+
+		// swOrtho(-winWidth/2, 0, 0, winHeight, -100, 100);
+	}
 
     glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
-	//gluLookAt(5, 5, 20, 0, 5, 0, 0, 1, 0);
-	//gluLookAt(5, 5, 5, 0, 0, 0, 0, 1, 0);
-	// gluLookAt(0, 0, 0, 0, 0, 1, 0, 1, 0);
-	//glGetDoublev(GL_MODELVIEW_MATRIX, DEBUG_M);
+	// ViewMat = mat4x4(1);
+	if(USE_DEFAULT_LOOK_AT){
+		// gluLookAt(0, 0, 0, 0, 0, -1, 0, 1, 0);
+
+		// swuLookAt(0, 0, 0, 0, 0, -1, 0, 1, 0);
+	}else{
+		// look at +z
+		gluLookAt(0, 0, 0, 0, 0, 1, 0, 1, 0);
+
+		// swuLookAt(0, 0, 0, 0, 0, 1, 0, 1, 0);
+	}
 
     swClearZbuffer();
 
@@ -237,7 +257,11 @@ void softPath1(void)
 	    float y2 = float(rand())/RAND_MAX*winHeight/2;
 
         glColor3f(float(rand())/RAND_MAX, float(rand())/RAND_MAX, float(rand())/RAND_MAX);
-        SwglLine1(x1, y1, 0, x2, y2, 0);
+		vec4 v1(x1, y1, 0, 1);
+		vec4 v2(x2, y2, 0, 1);
+		v1 = ProjectionMat * ViewMat * TransformMat * v1;
+		v2 = ProjectionMat * ViewMat * TransformMat * v2;
+        SwglLine1(v1[0], v1[1], v1[2], v2[0], v2[1], v2[2]);
 	}
 
 	//Triangle
@@ -274,21 +298,32 @@ void softPath1(void)
 			float z2 = float(rand())/RAND_MAX;
 			float z3 = float(rand())/RAND_MAX;
 
-			SwglTri1(x1, y1, z1,
-					 x2, y2, z2,
-					 x3, y3, z3);
+			vec4 v1(x1, y1, z1, 1);
+			vec4 v2(x2, y2, z2, 1);
+			vec4 v3(x3, y3, z3, 1);
+			v1 = ProjectionMat * ViewMat * TransformMat * v1;
+			v2 = ProjectionMat * ViewMat * TransformMat * v2;
+			v3 = ProjectionMat * ViewMat * TransformMat * v3;
+			
+			SwglTri1(v1[0], v1[1], FLAG * v1[2],
+					 v2[0], v2[1], FLAG * v2[2],
+					 v3[0], v3[1], FLAG * v3[2]);
 		}else{
-			SwglTri1(x1, y1, z,
-					 x2, y2, z,
-					 x3, y3, z);
+			vec4 v1(x1, y1, z, 1);
+			vec4 v2(x2, y2, z, 1);
+			vec4 v3(x3, y3, z, 1);
+			v1 = ProjectionMat * ViewMat * TransformMat * v1;
+			v2 = ProjectionMat * ViewMat * TransformMat * v2;
+			v3 = ProjectionMat * ViewMat * TransformMat * v3;
+
+			SwglTri1(v1[0], v1[1], FLAG * v1[2],
+					 v2[0], v2[1], FLAG * v2[2],
+					 v3[0], v3[1], FLAG * v3[2]);
 		}
 	}
 }
 
-
-
 /*----------------------------------------------------------------------*/
-
 void display(void)
 {
     time_t time1 = time(0);
@@ -298,8 +333,8 @@ void display(void)
 	glViewport(0, 0, winWidth, winHeight);
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
-	gluOrtho2D(0, winWidth, 0, winHeight);
-	// glOrtho(0, winWidth, 0, winHeight, -100, 100);
+	// gluOrtho2D(0, winWidth, 0, winHeight);
+	// glOrtho(0, winWidth, 0, winHeight, 100, -100);
 	glMatrixMode(GL_MODELVIEW);
 
 
@@ -316,6 +351,7 @@ void display(void)
 	}else{
 		srand(SEED);
 	}
+	glEnable(GL_DEPTH_TEST);
 	openglPath1();
 
 	//we must disable the opengl's depth test, then the software depth test will work
@@ -384,6 +420,10 @@ int main(void)
 
 	if(!RANDOM_MODE){
 		NUM_TRIS = 3;
+	}
+
+	if(!USE_DEFAULT_LOOK_AT){
+		FLAG = 1;
 	}
 
     /* Loop until the user closes the window */

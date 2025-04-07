@@ -8,7 +8,7 @@ using namespace std;
 
 // float *Sw_depth_buffer = NULL;
 vector<vector <GLdouble>> Sw_depth_buffer;
-vector<vector <GLdouble>> Init_depth_buffer(800, vector<GLdouble>(400, -INF));
+vector<vector <GLdouble>> Init_depth_buffer(800, vector<GLdouble>(400, INF));
 
 //---------------------------------------------------------------------------
 //cghw-rast
@@ -17,7 +17,7 @@ vector<vector <GLdouble>> Init_depth_buffer(800, vector<GLdouble>(400, -INF));
 //You can change it to speed up
 void writepixel(int x, int y, GLdouble z, GLdouble r, GLdouble g, GLdouble b)
 {
-    if(z <= Sw_depth_buffer[x][y]){
+    if(z >= Sw_depth_buffer[x][y]){
         return;
     }else{
         Sw_depth_buffer[x][y] = z;
@@ -197,7 +197,7 @@ bool swInitZbuffer(int width, int height)
     // width --> x, height --> y
     Init_depth_buffer.clear();
     Sw_depth_buffer.clear();
-    Init_depth_buffer.resize(width, vector<GLdouble>(height, -INF));
+    Init_depth_buffer.resize(width, vector<GLdouble>(height, INF));
     Sw_depth_buffer = Init_depth_buffer;
 
     return true;
