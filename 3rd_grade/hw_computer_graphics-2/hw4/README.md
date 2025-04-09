@@ -107,10 +107,19 @@ Q: How to make the general expression of this?
 
 ### solution
 
-TBD
+**Attempt 1**: according to teacher's advice
+1. at `hw-rast.cpp` line 333 and 334, `glDepthFunc` and `glDepthRange` are set.
+2. `glDepthFunc(GL_LESS)` make sure we update pixels when smaller Z values are encounter
+3. `glDepthRange(-1, 1)` make sure we dont transfer the clip space
+
+result: **FAILED**
+
+no matter what value `glDepthRange` is set (as long as near < far), we still get red under green under blue.
+
 
 ### log
 
-- 2025-04-08, asked
+- 2025-04-08, I asked the issue
+- 2025-04-09, Teacher answered, but I wonder if `glDepthFunc` and `glDepthRange` are the solution, so I asked again
 
 </details>

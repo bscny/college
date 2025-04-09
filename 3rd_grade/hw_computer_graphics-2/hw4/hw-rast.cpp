@@ -330,6 +330,9 @@ void display(void)
 
     glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
 
+	glDepthFunc(GL_LESS);
+	glDepthRange(-1, 1);
+
 	glViewport(0, 0, winWidth, winHeight);
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
