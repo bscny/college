@@ -27,8 +27,8 @@ using namespace std;
 #define M_PI 3.14159265358979323846
 #endif
 
-bool RANDOM_MODE = false;
-bool RANDOM_Z = false;
+bool RANDOM_MODE = true;
+bool RANDOM_Z = true;
 
 bool USE_DEFAULT_LOOK_AT = true;
 GLdouble FLAG = -1;
