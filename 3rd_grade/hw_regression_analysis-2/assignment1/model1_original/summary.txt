@@ -1,0 +1,17 @@
+Call:
+lm(formula = fev ~ age, data = fevdata)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-1.57539 -0.34567 -0.04989  0.32124  2.12786 
+
+Coefficients:
+            Estimate Std. Error t value Pr(>|t|)    
+(Intercept) 0.431648   0.077895   5.541 4.36e-08 ***
+age         0.222041   0.007518  29.533  < 2e-16 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 0.5675 on 652 degrees of freedom
+Multiple R-squared:  0.5722,	Adjusted R-squared:  0.5716 
+F-statistic: 872.2 on 1 and 652 DF,  p-value: < 2.2e-16

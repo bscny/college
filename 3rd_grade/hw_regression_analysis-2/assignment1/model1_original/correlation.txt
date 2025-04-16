@@ -1,0 +1,10 @@
+	Pearson's product-moment correlation
+
+data:  fevdata$age and fevdata$fev
+t = 29.533, df = 652, p-value < 2.2e-16
+alternative hypothesis: true correlation is not equal to 0
+95 percent confidence interval:
+ 0.7216444 0.7874568
+sample estimates:
+     cor 
+0.756459 
