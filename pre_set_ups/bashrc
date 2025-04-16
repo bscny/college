@@ -19,6 +19,7 @@ alias mdviewer='glow'
 alias showkey='showkey -a'
 
 # optional alias
+alias tree='tree --dirsfirst'
 alias vim='nv'
 alias mysql='mysql -u root -p'
 
