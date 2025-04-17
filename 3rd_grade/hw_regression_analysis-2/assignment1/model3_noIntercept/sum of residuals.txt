@@ -1,0 +1,4 @@
+> show(sum_resid_with_intercept)
+[1] 3.444293e-15
+> show(sum_resid_without_intercept)
+[1] 2.685751

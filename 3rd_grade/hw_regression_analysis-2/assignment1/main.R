@@ -33,15 +33,39 @@ model2 <- lm(log(fev) ~ age, data = fevdata)
 summary(model2)
 
 # (k) Repeat the part (b) and part (i) using the transformed data
-# (b):
+# for (b):
 ggplot(fevdata, aes(x = age, y = log(fev))) +
   geom_point() +
   geom_smooth(method = "loess") +
   labs(title = "Log(FEV) vs Age", x = "Age", y = "log(FEV)")
 
-# (i):
+# for (i):
 plot(model2)
 
 # (l) Plot the estimated regression function,
-#     the 95% confidence intervals for the mean response
+#     95% confidence intervals for the mean response
 #     95% prediction intervals for a range of X values that span the data
+age_seq <- data.frame(age = seq(min(fevdata$age), max(fevdata$age), 0.5))
+predictions <- predict(model2, newdata = age_seq, interval = "prediction", level = 0.95)
+conf <- predict(model2, newdata = age_seq, interval = "confidence", level = 0.95)
+
+# scatter point
+plot(fevdata$age, log(fevdata$fev), main = "Log(FEV) with Prediction & Confidence Interval",
+     xlab = "Age", ylab = "log(FEV)",
+     ylim = c(min(log(fevdata$fev)), max(log(fevdata$fev)) + 0.5))
+
+# mean response line
+lines(age_seq$age, predictions[, "fit"], col = "black")
+
+# prediction interval
+lines(age_seq$age, predictions[, "lwr"], col = "blue", lty = 2)
+lines(age_seq$age, predictions[, "upr"], col = "blue", lty = 2)
+
+# confidence interval
+lines(age_seq$age, conf[, "lwr"], col = "red", lty = 2)
+lines(age_seq$age, conf[, "upr"], col = "red", lty = 2)
+
+# (n): Fit the model in part (j) without the intercept
+model_no_intercept <- lm(log(fev) ~ age + 0, data = fevdata)
+sum_resid_with_intercept <- sum(resid(model2))
+sum_resid_without_intercept <- sum(resid(model_no_intercept))
