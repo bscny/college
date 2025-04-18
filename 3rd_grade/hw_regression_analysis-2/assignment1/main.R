@@ -1,7 +1,7 @@
 # (a) Load the data into R
 fevdata <- read.table("./fevdata.txt", header = TRUE)
 
-# str(fevdata)
+str(fevdata)
 
 # (b) Plot the data for the response and independent variables
 #     Include a smoothed function on the plot
@@ -67,5 +67,7 @@ lines(age_seq$age, conf[, "upr"], col = "red", lty = 2)
 
 # (n): Fit the model in part (j) without the intercept
 model_no_intercept <- lm(log(fev) ~ age + 0, data = fevdata)
+
+summary(model_no_intercept)
 sum_resid_with_intercept <- sum(resid(model2))
 sum_resid_without_intercept <- sum(resid(model_no_intercept))
