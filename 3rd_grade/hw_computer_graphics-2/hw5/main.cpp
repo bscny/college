@@ -67,7 +67,7 @@ Vec3 color(const Ray &r, int bounce){
 	// the refraction ray
 	// see detailed in https://en.wikipedia.org/wiki/Snell%27s_law
 	// and https://physics.stackexchange.com/questions/435512/snells-law-in-vector-form
-	float eta = 1.458; // for glass
+	float eta = 1 / 1.458; // for glass
 	float cos2 = sqrt(1 - pow(eta, 2) * (1 - pow(dot(N, r.Dir), 2)) );
 	Ray T(r.point_at_parameter(t), eta * r.Dir + (eta * dot(N, r.Dir) - cos2) * N );
 	// Ray T(r.point_at_parameter(t), eta * (r.Dir - dot(N, r.Dir) * N) - sqrt(1 - eta * (1 - pow(dot(N, r.Dir), 2) ) ) * N);
@@ -118,7 +118,7 @@ int main()
 			Ray r(origin, target_point - origin);
 
 			// for each ray, see the final color it contributes to the screen
-			Vec3 c = color(r, 2);
+			Vec3 c = color(r, 5);
 
 			file << int(c[0] * 255) << " " << int(c[1] * 255) << " " << int(c[2] * 255) << "\n";
 		}
