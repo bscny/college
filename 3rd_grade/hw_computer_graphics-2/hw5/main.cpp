@@ -2,6 +2,7 @@
 #include <fstream>
 #include <vector>
 #include <cmath>
+#include <cstdlib>
 
 // custom
 #include "vec3.h"
@@ -107,7 +108,7 @@ Vec3 color(const Ray &r){
 
 	int record_index = -1;
 	float t = INF;
-	for(int obj_index = 0; obj_index <= (int)obj_list.size(); obj_index ++){
+	for(int obj_index = 0; obj_index < (int)obj_list.size(); obj_index ++){
 		float ans = obj_list[obj_index].hit_sphere(r, 0.01, t);
 
 		if(ans > 0){
@@ -137,8 +138,8 @@ Vec3 color(const Ray &r){
 
 int main()
 {
-	int width = 200;
-	int height = 100;
+	int width = 1000;
+	int height = 500;
 
 	// camera params
 	Vec3 lower_left_corner(-2, -1, -1);
