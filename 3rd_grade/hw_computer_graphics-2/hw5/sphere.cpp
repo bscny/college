@@ -7,18 +7,21 @@ Sphere::Sphere(){
     radius = 1;
 
     w_r = 0;
+    w_t = 0;
 }
 
 Sphere::Sphere(const Sphere &in){
     center = in.center;
     radius = in.radius;
     w_r = in.w_r;
+    w_t = in.w_t;
 }
 
 Sphere Sphere::operator= (const Sphere &in){
     center = in.center;
     radius = in.radius;
     w_r = in.w_r;
+    w_t = in.w_t;
 
     return *this;
 }
@@ -29,6 +32,7 @@ Sphere::Sphere(Vec3 c, float r){
     radius = r;
 
     w_r = 0;
+    w_t = 0;
 }
 
 Sphere::Sphere(Vec3 c, float r, float in_w_r){
@@ -36,6 +40,15 @@ Sphere::Sphere(Vec3 c, float r, float in_w_r){
     radius = r;
 
     w_r = in_w_r;
+    w_t = 0;
+}
+
+Sphere::Sphere(Vec3 c, float r, float in_w_r, float in_w_t){
+    center = c;
+    radius = r;
+
+    w_r = in_w_r;
+    w_t = in_w_t;
 }
 
 // get the t value for the given ray, if t < max_t, return the t
@@ -72,4 +85,8 @@ Vec3 Sphere::get_center() const {
 
 float Sphere::get_w_r() const {
     return w_r;
+}
+
+float Sphere::get_w_t() const {
+    return w_t;
 }

@@ -60,7 +60,17 @@ Vec3 color(const Ray &r, int bounce){
 	Vec3 L(unit_vector(light_pos - r.point_at_parameter(t)));
 	Vec3 In(-r.Dir);
 
+	// the reflection ray
+	// R = In + 2 * cos * N
 	Ray R(r.point_at_parameter(t), (2 * N * dot(N, In)) - In);
+
+	// the refraction ray
+	// see detailed in https://en.wikipedia.org/wiki/Snell%27s_law
+	// and https://physics.stackexchange.com/questions/435512/snells-law-in-vector-form
+	float eta = 1.458; // for glass
+	float cos2 = sqrt(1 - pow(eta, 2) * (1 - pow(dot(N, r.Dir), 2)) );
+	Ray T(r.point_at_parameter(t), eta * r.Dir + (eta * dot(N, r.Dir) - cos2) * N );
+	// Ray T(r.point_at_parameter(t), eta * (r.Dir - dot(N, r.Dir) * N) - sqrt(1 - eta * (1 - pow(dot(N, r.Dir), 2) ) ) * N);
 
 	Vec3 local_color;
 
@@ -71,14 +81,18 @@ Vec3 color(const Ray &r, int bounce){
 	}
 
 	Vec3 reflected_color = color(R, bounce - 1);
+	Vec3 refracted_color = color(T, bounce - 1);
 
-	return (1 - obj_list[record_index].get_w_r()) * local_color + obj_list[record_index].get_w_r() * reflected_color;
+	// return (1 - obj_list[record_index].get_w_r()) * local_color + obj_list[record_index].get_w_r() * reflected_color;
+	return (1 - obj_list[record_index].get_w_t()) * 
+		   ( (1 - obj_list[record_index].get_w_r()) * local_color + obj_list[record_index].get_w_r() * reflected_color) +
+		   obj_list[record_index].get_w_t() * refracted_color;
 }
 
 int main()
 {
 	obj_list.push_back(Sphere(Vec3(0, -100.5, -2), 100));
-	obj_list.push_back(Sphere(Vec3(0, 0, -2), 0.5));
+	obj_list.push_back(Sphere(Vec3(0, 0, -2), 0.5, 0, 0.9));
 	obj_list.push_back(Sphere(Vec3(1, 0, -1.75), 0.5, 1));
 	obj_list.push_back(Sphere(Vec3(-1, 0, -2.25), 0.5));
 
@@ -91,7 +105,8 @@ int main()
 
 	fstream file;
 	// file.open("../images/default.ppm", ios::out);
-	file.open("../images/reflection.ppm", ios::out);
+	// file.open("../images/reflection.ppm", ios::out);
+	file.open("../images/refraction.ppm", ios::out);
 
 	file << "P3\n" << width << " " << height << "\n255\n";
 	for (int j = height - 1; j >= 0; j--) {
@@ -103,7 +118,7 @@ int main()
 			Ray r(origin, target_point - origin);
 
 			// for each ray, see the final color it contributes to the screen
-			Vec3 c = color(r, 5);
+			Vec3 c = color(r, 2);
 
 			file << int(c[0] * 255) << " " << int(c[1] * 255) << " " << int(c[2] * 255) << "\n";
 		}
