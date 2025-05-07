@@ -31,7 +31,11 @@ Vec3 light_intensity(1, 1, 1);
 vector<Sphere> obj_list;
 
 // for each ray, see the interaction with every scene objs
-Vec3 color(const Ray &r){
+Vec3 color(const Ray &r, int bounce){
+	if(bounce < 0){
+		return Vec3(0, 0, 0);
+	}
+
 	int record_index = -1;
 	float t = INF;
 	for(int obj_index = 0; obj_index < (int)obj_list.size(); obj_index ++){
@@ -54,12 +58,21 @@ Vec3 color(const Ray &r){
 	// apply shading result
 	Vec3 N(unit_vector(r.point_at_parameter(t) - obj_list[record_index].get_center()));
 	Vec3 L(unit_vector(light_pos - r.point_at_parameter(t)));
+	Vec3 In(-r.Dir);
+
+	Ray R(r.point_at_parameter(t), (2 * N * dot(N, In)) - In);
+
+	Vec3 local_color;
 
 	if(dot(N, L) < 0){
-		return Vec3(0, 0, 0);
+		local_color = Vec3(0, 0, 0);
+	}else{
+		local_color = dot(N, L) * light_intensity;
 	}
 
-	return dot(N, L) * light_intensity;
+	Vec3 reflected_color = color(R, bounce - 1);
+
+	return (1 - obj_list[record_index].get_w_r()) * local_color + obj_list[record_index].get_w_r() * reflected_color;
 }
 
 int main()
@@ -77,7 +90,8 @@ int main()
 	}
 
 	fstream file;
-	file.open("../images/default.ppm", ios::out);
+	// file.open("../images/default.ppm", ios::out);
+	file.open("../images/reflection.ppm", ios::out);
 
 	file << "P3\n" << width << " " << height << "\n255\n";
 	for (int j = height - 1; j >= 0; j--) {
@@ -89,7 +103,7 @@ int main()
 			Ray r(origin, target_point - origin);
 
 			// for each ray, see the final color it contributes to the screen
-			Vec3 c = color(r);
+			Vec3 c = color(r, 5);
 
 			file << int(c[0] * 255) << " " << int(c[1] * 255) << " " << int(c[2] * 255) << "\n";
 		}

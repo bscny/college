@@ -69,3 +69,7 @@ float Sphere::hit_sphere(const Ray &ray, float min_t, float max_t){
 Vec3 Sphere::get_center() const {
     return center;
 }
+
+float Sphere::get_w_r() const {
+    return w_r;
+}

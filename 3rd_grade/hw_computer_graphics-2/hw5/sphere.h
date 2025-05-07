@@ -19,6 +19,7 @@ class Sphere{
 
         // getters
         Vec3 get_center() const;
+        float get_w_r() const;
     private:
         Vec3 center;
         float radius;
