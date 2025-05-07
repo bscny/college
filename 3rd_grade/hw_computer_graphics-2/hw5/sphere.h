@@ -8,9 +8,12 @@ class Sphere{
     public:
         // big 3
         Sphere();
-        Sphere(Vec3 c, float r);
         Sphere(const Sphere &in);
         Sphere operator= (const Sphere &in);
+
+        // other constructor
+        Sphere(Vec3 c, float r);
+        Sphere(Vec3 c, float r, float in_w_r);
 
         float hit_sphere(const Ray &ray, float min_t, float max_t);
 
@@ -19,6 +22,8 @@ class Sphere{
     private:
         Vec3 center;
         float radius;
+
+        float w_r;
 };
 
 #endif

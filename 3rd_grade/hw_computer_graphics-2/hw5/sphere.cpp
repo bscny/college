@@ -1,26 +1,41 @@
 #include "sphere.h"
 #include <cmath>
 
+// the big 3
 Sphere::Sphere(){
     center = Vec3(0, 0, 0);
     radius = 1;
-}
 
-Sphere::Sphere(Vec3 c, float r){
-    center = c;
-    radius = r;
+    w_r = 0;
 }
 
 Sphere::Sphere(const Sphere &in){
     center = in.center;
     radius = in.radius;
+    w_r = in.w_r;
 }
 
 Sphere Sphere::operator= (const Sphere &in){
     center = in.center;
     radius = in.radius;
+    w_r = in.w_r;
 
     return *this;
+}
+
+// other constructor
+Sphere::Sphere(Vec3 c, float r){
+    center = c;
+    radius = r;
+
+    w_r = 0;
+}
+
+Sphere::Sphere(Vec3 c, float r, float in_w_r){
+    center = c;
+    radius = r;
+
+    w_r = in_w_r;
 }
 
 // get the t value for the given ray, if t < max_t, return the t
