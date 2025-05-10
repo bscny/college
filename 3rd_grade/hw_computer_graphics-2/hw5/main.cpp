@@ -116,11 +116,16 @@ int main()
 	OBJ_LIST.push_back(Sphere(Vec3(1, 0, -1.75), 0.5, 1));
 	OBJ_LIST.push_back(Sphere(Vec3(-1, 0, -2.25), 0.5));
 
-	srand(1234);
+	srand(12345);
 	for (int i = 0; i < 48; i++) {
 		float xr = ((float)rand() / (float)(RAND_MAX)) * 6.0f - 3.0f;
 		float zr = ((float)rand() / (float)(RAND_MAX)) * 3.0f - 1.5f;
-		OBJ_LIST.push_back(Sphere(Vec3(xr, -0.45, zr-2), 0.05));
+		float r1 = ((float)rand() / (float)(RAND_MAX));
+		float r2 = ((float)rand() / (float)(RAND_MAX)) - 0.5;
+		if (r2 < 0){
+			r2 = 0;
+		}
+		OBJ_LIST.push_back(Sphere(Vec3(xr, -0.45, zr-2), 0.05, r1, r2));
 	}
 
 	fstream file;
@@ -129,7 +134,7 @@ int main()
 	// file.open("../images/refraction.ppm", ios::out);
 	// file.open("../images/default_shadow.ppm", ios::out);
 	// file.open("../images/shadow.ppm", ios::out);
-	file.open("../images/plane.ppm", ios::out);
+	file.open("../images/final.ppm", ios::out);
 
 	file << "P3\n" << WIDTH << " " << HEIGHT << "\n255\n";
 	for (int j = HEIGHT - 1; j >= 0; j--) {
@@ -156,7 +161,7 @@ int main()
 				Ray r(ORIGIN, target_point - ORIGIN);
 	
 				// for each ray, see the final color it contributes to the screen
-				Vec3 c = color(r, 5);
+				c = color(r, 5);
 			}
 
 			file << int(c[0] * 255) << " " << int(c[1] * 255) << " " << int(c[2] * 255) << "\n";

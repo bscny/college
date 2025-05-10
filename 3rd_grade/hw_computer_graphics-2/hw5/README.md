@@ -25,7 +25,7 @@ Author: 111703040 游宗諺
     - [x] Recursive Ray Tracer with shadow + reflection + transmission
 - Bonus:
     - [x] anti-aliasing
-
+    - [ ] plane
 
 ## Summary to the Modified Code
 
