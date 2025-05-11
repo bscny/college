@@ -1,58 +1,45 @@
 #include "sphere.h"
 #include <cmath>
+#include <iostream>
 
 // the big 3
-Sphere::Sphere(){
+Sphere::Sphere() : Object() {
     center = Vec3(0, 0, 0);
     radius = 1;
-
-    w_r = 0;
-    w_t = 0;
 }
 
-Sphere::Sphere(const Sphere &in){
+Sphere::Sphere(const Sphere &in) : Object(in) {
     center = in.center;
     radius = in.radius;
-    w_r = in.w_r;
-    w_t = in.w_t;
 }
 
 Sphere Sphere::operator= (const Sphere &in){
+    Object::operator= (in);
+
     center = in.center;
     radius = in.radius;
-    w_r = in.w_r;
-    w_t = in.w_t;
 
     return *this;
 }
 
 // other constructor
-Sphere::Sphere(Vec3 c, float r){
+Sphere::Sphere(Vec3 c, float r) : Object() {
     center = c;
     radius = r;
-
-    w_r = 0;
-    w_t = 0;
 }
 
-Sphere::Sphere(Vec3 c, float r, float in_w_r){
+Sphere::Sphere(Vec3 c, float r, float in_w_r) : Object(in_w_r) {
     center = c;
     radius = r;
-
-    w_r = in_w_r;
-    w_t = 0;
 }
 
-Sphere::Sphere(Vec3 c, float r, float in_w_r, float in_w_t){
+Sphere::Sphere(Vec3 c, float r, float in_w_r, float in_w_t) : Object(in_w_r, in_w_t) {
     center = c;
     radius = r;
-
-    w_r = in_w_r;
-    w_t = in_w_t;
 }
 
 // get the t value for the given ray, if t < max_t, return the t
-float Sphere::hit_sphere(const Ray &ray, float min_t, float max_t){
+float Sphere::hit(const Ray &ray, float min_t, float max_t){
     // O is origin of the ray, D is direction vector, C is sphere center. They are all vectors
     // || O + tD - C || = r
 	// (O dot O) + 2t(O dot D) - 2(O dot C) + t^2(D dot D) - 2t(D dot C) + C dot C = r^2
@@ -78,15 +65,12 @@ float Sphere::hit_sphere(const Ray &ray, float min_t, float max_t){
 	}
 }
 
-// getters
-Vec3 Sphere::get_center() const {
-    return center;
-}
+// get the normal vector (unit) ata given point P
+Vec3 Sphere::get_normal_at(Vec3 P) const {
+    // check if P is on the sphere
+    if(abs(dot(P - center, P - center) - pow(radius, 2)) > 0.001){
+        std::cout << "the given P is not on the sphere!!!!";
+    }
 
-float Sphere::get_w_r() const {
-    return w_r;
-}
-
-float Sphere::get_w_t() const {
-    return w_t;
+    return unit_vector(P - center);
 }

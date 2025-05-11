@@ -3,8 +3,9 @@
 
 #include "vec3.h"
 #include "ray.h"
+#include "object.h"
 
-class Sphere{
+class Sphere : public Object{
     public:
         // big 3
         Sphere();
@@ -16,18 +17,13 @@ class Sphere{
         Sphere(Vec3 c, float r, float in_w_r);
         Sphere(Vec3 c, float r, float in_w_r, float in_w_t);
 
-        float hit_sphere(const Ray &ray, float min_t, float max_t);
+        // virtuals
+        virtual float hit(const Ray &ray, float min_t, float max_t);
+        virtual Vec3 get_normal_at(Vec3 P) const;
 
-        // getters
-        Vec3 get_center() const;
-        float get_w_r() const;
-        float get_w_t() const;
     private:
         Vec3 center;
         float radius;
-
-        float w_r;
-        float w_t;
 };
 
 #endif

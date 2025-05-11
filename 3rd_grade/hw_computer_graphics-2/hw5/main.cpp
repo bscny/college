@@ -8,6 +8,7 @@
 #include "vec3.h"
 #include "ray.h"
 #include "sphere.h"
+#include "object.h"
 
 using namespace std;
 
@@ -30,13 +31,13 @@ Vec3 LIGHT_POS(-10, 10, 0);
 Vec3 LIGHT_INTENSITY(1, 1, 1);
 
 // scene object params
-vector<Sphere> OBJ_LIST;
+vector<Object *> OBJ_LIST;
 
 float trace_shadow_ray(const Ray &r, float distance2light){
 	// since ray.Dir is unit vector, t == distance
 	float t;
 	for(int obj_index = 0; obj_index < (int)OBJ_LIST.size(); obj_index ++){
-		t = OBJ_LIST[obj_index].hit_sphere(r, 0.01, distance2light);
+		t = OBJ_LIST[obj_index]->hit(r, 0.01, distance2light);
 
 		if(t > 0){
 			// find intersact that is close enough!
@@ -57,7 +58,7 @@ Vec3 color(const Ray &r, int bounce){
 	int record_index = -1;
 	float t = INF;
 	for(int obj_index = 0; obj_index < (int)OBJ_LIST.size(); obj_index ++){
-		float ans = OBJ_LIST[obj_index].hit_sphere(r, 0.01, t);
+		float ans = OBJ_LIST[obj_index]->hit(r, 0.01, t);
 
 		if(ans > 0){
 			// find intersact that is close enough!
@@ -75,7 +76,7 @@ Vec3 color(const Ray &r, int bounce){
 
 	// apply shading result
 	Vec3 P(r.point_at_parameter(t));
-	Vec3 N(unit_vector(P - OBJ_LIST[record_index].get_center()));
+	Vec3 N(OBJ_LIST[record_index]->get_normal_at(P));
 	Vec3 L(unit_vector(LIGHT_POS - P));
 	Vec3 In(-r.Dir);
 
@@ -104,17 +105,17 @@ Vec3 color(const Ray &r, int bounce){
 	Vec3 refracted_color = color(T, bounce - 1);
 
 	// return (1 - OBJ_LIST[record_index].get_w_r()) * local_color + OBJ_LIST[record_index].get_w_r() * reflected_color;
-	return (1 - OBJ_LIST[record_index].get_w_t()) * 
-		   ( (1 - OBJ_LIST[record_index].get_w_r()) * local_color + OBJ_LIST[record_index].get_w_r() * reflected_color) +
-		   OBJ_LIST[record_index].get_w_t() * refracted_color;
+	return (1 - OBJ_LIST[record_index]->get_w_t()) * 
+		   ( (1 - OBJ_LIST[record_index]->get_w_r()) * local_color + OBJ_LIST[record_index]->get_w_r() * reflected_color) +
+		   OBJ_LIST[record_index]->get_w_t() * refracted_color;
 }
 
 int main()
 {
-	OBJ_LIST.push_back(Sphere(Vec3(0, -100.5, -2), 100));
-	OBJ_LIST.push_back(Sphere(Vec3(0, 0, -2), 0.5, 0, 0.9));
-	OBJ_LIST.push_back(Sphere(Vec3(1, 0, -1.75), 0.5, 1));
-	OBJ_LIST.push_back(Sphere(Vec3(-1, 0, -2.25), 0.5));
+	OBJ_LIST.push_back(new Sphere(Vec3(0, -100.5, -2), 100));
+	OBJ_LIST.push_back(new Sphere(Vec3(0, 0, -2), 0.5, 0, 0.9));
+	OBJ_LIST.push_back(new Sphere(Vec3(1, 0, -1.75), 0.5, 1));
+	OBJ_LIST.push_back(new Sphere(Vec3(-1, 0, -2.25), 0.5));
 
 	srand(12345);
 	for (int i = 0; i < 48; i++) {
@@ -125,7 +126,7 @@ int main()
 		if (r2 < 0){
 			r2 = 0;
 		}
-		OBJ_LIST.push_back(Sphere(Vec3(xr, -0.45, zr-2), 0.05, r1, r2));
+		OBJ_LIST.push_back(new Sphere(Vec3(xr, -0.45, zr-2), 0.05, r1, r2));
 	}
 
 	fstream file;
@@ -134,7 +135,8 @@ int main()
 	// file.open("../images/refraction.ppm", ios::out);
 	// file.open("../images/default_shadow.ppm", ios::out);
 	// file.open("../images/shadow.ppm", ios::out);
-	file.open("../images/final.ppm", ios::out);
+	// file.open("../images/final.ppm", ios::out);
+	file.open("../images/test.ppm", ios::out);
 
 	file << "P3\n" << WIDTH << " " << HEIGHT << "\n255\n";
 	for (int j = HEIGHT - 1; j >= 0; j--) {
