@@ -10,6 +10,7 @@
 #include "sphere.h"
 #include "triangle.h"
 #include "object.h"
+#include "mesh.h"
 
 using namespace std;
 
@@ -19,7 +20,7 @@ using namespace std;
 int WIDTH = 1000;
 int HEIGHT = 500;
 int SAMPLES_PER_PIXAL = 25;
-bool ANTI_ALIASING = true;
+bool ANTI_ALIASING = false;
 
 // camera params
 Vec3 LOWER_LEFT_CONER(-2, -1, -1);
@@ -125,22 +126,35 @@ int main()
 	//
 
 	// in cam: we have xy coordinates of this
-	//
+	//                  -z
+	//					/
+	//                 /
 	//		 Y
 	//		 |
 	//		 |
 	//		 |_________ X
 	//
 
+	// add floor
 	// OBJ_LIST.push_back(new Sphere(Vec3(0, -100.5, -2), 100));
-	// OBJ_LIST.push_back(new Triangle(Vec3(-100, -1, 100), Vec3(-100, -1, -100), Vec3(100, -1, 100)));
 	OBJ_LIST.push_back(new Triangle(Vec3(-100, -0.55, 100), Vec3(100, -0.55, 100), Vec3(-100, -0.55, -100)));
-	// OBJ_LIST.push_back(new Triangle(Vec3(100, -1, 100), Vec3(-100, -1, -100), Vec3(100, -1, -100)));
 	OBJ_LIST.push_back(new Triangle(Vec3(100, -0.55, 100), Vec3(100, -0.55, -100), Vec3(-100, -0.55, -100)));
+
+	// add main sphere
 	OBJ_LIST.push_back(new Sphere(Vec3(0, 0, -2), 0.5, 0, 0.9));
 	OBJ_LIST.push_back(new Sphere(Vec3(1, 0, -1.75), 0.5, 1));
 	OBJ_LIST.push_back(new Sphere(Vec3(-1, 0, -2.25), 0.5));
 
+	// add tetrahedron
+	/*Vec3 move(0, 0, -3);
+	Vec3 v1 = 1 * Vec3( 1,  1,  1) + move;
+	Vec3 v2 = 1 * Vec3(-1, -1,  1) + move;
+	Vec3 v3 = 1 * Vec3(-1,  1, -1) + move;
+	Vec3 v4 = 1 * Vec3( 1, -1, -1) + move;
+
+	add_tetrahedron(OBJ_LIST, v1, v2, v3, v4, 0, 0);*/
+
+	// add random objs
 	srand(12345);
 	for (int i = 0; i < 48; i++) {
 		float xr = ((float)rand() / (float)(RAND_MAX)) * 6.0f - 3.0f;
@@ -160,7 +174,8 @@ int main()
 	// file.open("../images/default_shadow.ppm", ios::out);
 	// file.open("../images/shadow.ppm", ios::out);
 	// file.open("../images/final.ppm", ios::out);
-	file.open("../images/plane.ppm", ios::out);
+	// file.open("../images/plane.ppm", ios::out);
+	file.open("../images/test.ppm", ios::out);
 
 	file << "P3\n" << WIDTH << " " << HEIGHT << "\n255\n";
 	for (int j = HEIGHT - 1; j >= 0; j--) {

@@ -4,7 +4,7 @@ CFLAGS = -Wall -g -I. -lm
 S_DIR = ..
 O_DIR = obj_dir
 
-OBJS = $(O_DIR)/main.o $(O_DIR)/ray.o $(O_DIR)/vec3.o $(O_DIR)/object.o $(O_DIR)/sphere.o $(O_DIR)/triangle.o
+OBJS = $(O_DIR)/main.o $(O_DIR)/ray.o $(O_DIR)/vec3.o $(O_DIR)/object.o $(O_DIR)/sphere.o $(O_DIR)/triangle.o $(O_DIR)/mesh.o
 
 EXEC = out
 

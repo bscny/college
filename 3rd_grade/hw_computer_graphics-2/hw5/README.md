@@ -26,6 +26,8 @@ Author: 111703040 游宗諺
 - Bonus:
     - [x] anti-aliasing
     - [x] plane
+    - [x] tetrahedron
+    - [ ] multi lights
 
 ## Summary to the Modified Code
 
