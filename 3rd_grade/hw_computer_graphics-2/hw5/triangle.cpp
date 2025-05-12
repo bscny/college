@@ -106,10 +106,5 @@ float Triangle::hit(const Ray &ray, float min_t, float max_t){
 
 // get the normal vector (unit) ata given point P
 Vec3 Triangle::get_normal_at(Vec3 P) const {
-    // check if P is on the sphere
-    // if(abs(dot(P - center, P - center) - pow(radius, 2)) > 0.001){
-    //     std::cout << "the given P is not on the sphere!!!!";
-    // }
-
     return unit_vector(cross(V1, V2));
 }

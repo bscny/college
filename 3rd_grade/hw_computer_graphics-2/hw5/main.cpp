@@ -8,6 +8,7 @@
 #include "vec3.h"
 #include "ray.h"
 #include "sphere.h"
+#include "triangle.h"
 #include "object.h"
 
 using namespace std;
@@ -112,7 +113,30 @@ Vec3 color(const Ray &r, int bounce){
 
 int main()
 {
-	OBJ_LIST.push_back(new Sphere(Vec3(0, -100.5, -2), 100));
+	// current coordinates: cam looking down in -z direction
+	//
+	//       Z
+	//       |            
+	//       |              
+	//       |_________ Y
+	//      /
+	//     /
+	//    X
+	//
+
+	// in cam: we have xy coordinates of this
+	//
+	//		 Y
+	//		 |
+	//		 |
+	//		 |_________ X
+	//
+
+	// OBJ_LIST.push_back(new Sphere(Vec3(0, -100.5, -2), 100));
+	// OBJ_LIST.push_back(new Triangle(Vec3(-100, -1, 100), Vec3(-100, -1, -100), Vec3(100, -1, 100)));
+	OBJ_LIST.push_back(new Triangle(Vec3(-100, -0.55, 100), Vec3(100, -0.55, 100), Vec3(-100, -0.55, -100)));
+	// OBJ_LIST.push_back(new Triangle(Vec3(100, -1, 100), Vec3(-100, -1, -100), Vec3(100, -1, -100)));
+	OBJ_LIST.push_back(new Triangle(Vec3(100, -0.55, 100), Vec3(100, -0.55, -100), Vec3(-100, -0.55, -100)));
 	OBJ_LIST.push_back(new Sphere(Vec3(0, 0, -2), 0.5, 0, 0.9));
 	OBJ_LIST.push_back(new Sphere(Vec3(1, 0, -1.75), 0.5, 1));
 	OBJ_LIST.push_back(new Sphere(Vec3(-1, 0, -2.25), 0.5));
@@ -136,7 +160,7 @@ int main()
 	// file.open("../images/default_shadow.ppm", ios::out);
 	// file.open("../images/shadow.ppm", ios::out);
 	// file.open("../images/final.ppm", ios::out);
-	file.open("../images/test.ppm", ios::out);
+	file.open("../images/plane.ppm", ios::out);
 
 	file << "P3\n" << WIDTH << " " << HEIGHT << "\n255\n";
 	for (int j = HEIGHT - 1; j >= 0; j--) {
