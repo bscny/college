@@ -172,6 +172,7 @@ int main()
 
 	// set up lights
 	LIGHT_SOURCES.push_back(Vec3(-10, 10, 0));
+	// LIGHT_INTENSITYS.push_back(Vec3(1, 1, 1));
 	LIGHT_INTENSITYS.push_back(Vec3(0.25, 0.25, 0.25));
 	LIGHT_SOURCES.push_back(Vec3(10, 10, 0));
 	LIGHT_INTENSITYS.push_back(Vec3(0.25, 0.25, 0.25));
@@ -187,6 +188,7 @@ int main()
 	// file.open("../images/default_shadow.ppm", ios::out);
 	// file.open("../images/shadow.ppm", ios::out);
 	// file.open("../images/final.ppm", ios::out);
+	// file.open("../images/anti_aliasing.ppm", ios::out);
 	// file.open("../images/plane.ppm", ios::out);
 	file.open("../images/muti_light.ppm", ios::out);
 
