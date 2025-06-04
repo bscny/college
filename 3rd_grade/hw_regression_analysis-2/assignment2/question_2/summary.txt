@@ -1,0 +1,20 @@
+Call:
+lm(formula = y ~ x1 + x2 + x3 + x4, data = cement_data)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-3.1750 -1.6709  0.2508  1.3783  3.9254 
+
+Coefficients:
+            Estimate Std. Error t value Pr(>|t|)  
+(Intercept)  62.4054    70.0710   0.891   0.3991  
+x1            1.5511     0.7448   2.083   0.0708 .
+x2            0.5102     0.7238   0.705   0.5009  
+x3            0.1019     0.7547   0.135   0.8959  
+x4           -0.1441     0.7091  -0.203   0.8441  
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 2.446 on 8 degrees of freedom
+Multiple R-squared:  0.9824,	Adjusted R-squared:  0.9736 
+F-statistic: 111.5 on 4 and 8 DF,  p-value: 4.756e-07

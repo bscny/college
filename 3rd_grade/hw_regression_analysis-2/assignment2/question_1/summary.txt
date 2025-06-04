@@ -1,0 +1,19 @@
+Call:
+lm(formula = Strength ~ Diameter + cALLOY, data = weld)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-14.734  -4.013   1.059   4.689  11.200 
+
+Coefficients:
+            Estimate Std. Error t value Pr(>|t|)    
+(Intercept) -45.2566    14.5265  -3.115  0.00760 ** 
+Diameter      6.0425     0.8956   6.747 9.36e-06 ***
+cALLOY2      17.7887     5.4018   3.293  0.00534 ** 
+cALLOY3     -12.0088     4.8655  -2.468  0.02708 *  
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 7.728 on 14 degrees of freedom
+Multiple R-squared:  0.9098,	Adjusted R-squared:  0.8905 
+F-statistic: 47.08 on 3 and 14 DF,  p-value: 1.463e-07

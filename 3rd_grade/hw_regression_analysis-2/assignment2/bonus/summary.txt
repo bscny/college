@@ -1,0 +1,32 @@
+Call:
+lm(formula = DISTRESS.2 ~ DISTRESS.1 + BLACK + NBHISP + GRADE + 
+    SLFHLTH + SLFWGHT + WORKHARD + GOODQUAL + PHYSFIT + PROUD + 
+    LIKESLF + ACCEPTED + FEELLOVD + DIET, data = distress_data)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-1.69102 -0.22781 -0.05734  0.18025  1.81213 
+
+Coefficients:
+              Estimate Std. Error t value Pr(>|t|)    
+(Intercept) -0.0052087  0.0422214  -0.123 0.901821    
+DISTRESS.1   0.5178247  0.0125785  41.168  < 2e-16 ***
+BLACK        0.0745764  0.0120532   6.187 6.53e-10 ***
+NBHISP       0.0289905  0.0141752   2.045 0.040884 *  
+GRADE        0.0019352  0.0035672   0.543 0.587490    
+SLFHLTH      0.0196974  0.0059809   3.293 0.000996 ***
+SLFWGHT      0.0038613  0.0069990   0.552 0.581183    
+WORKHARD    -0.0121711  0.0056656  -2.148 0.031734 *  
+GOODQUAL     0.0209810  0.0098513   2.130 0.033231 *  
+PHYSFIT     -0.0005642  0.0069283  -0.081 0.935099    
+PROUD        0.0376379  0.0101757   3.699 0.000219 ***
+LIKESLF      0.0242944  0.0064040   3.794 0.000150 ***
+ACCEPTED     0.0167152  0.0068032   2.457 0.014040 *  
+FEELLOVD     0.0389178  0.0085254   4.565 5.10e-06 ***
+DIET        -0.0136658  0.0129321  -1.057 0.290675    
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 0.3758 on 5985 degrees of freedom
+Multiple R-squared:  0.3513,	Adjusted R-squared:  0.3498 
+F-statistic: 231.5 on 14 and 5985 DF,  p-value: < 2.2e-16
