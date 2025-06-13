@@ -35,3 +35,26 @@ anova(reduced_model, full_model)
 
 # Check VIF for reduced model
 vif(reduced_model)
+
+# (d)
+# Plot Y vs X1
+plot(cement_data$x1, cement_data$y, 
+     main = "Y vs X1", xlab = "X1", ylab = "Y")
+abline(lm(y ~ x1, cement_data), col = "red")
+
+# Create partial regression plot for X1
+# Regress Y on all other predictors except x1
+y_residuals <- residuals(lm(y ~ x2, data = cement_data))
+
+# Regress X1 on all other predictors
+x1_residuals <- residuals(lm(x1 ~ x2, data = cement_data))
+
+partial_lm <- lm(y_residuals ~ x1_residuals)
+
+# Plot residuals
+plot(x1_residuals, y_residuals,
+     main = "Partial Regression Plot for X1",
+     xlab = "X1 Residuals", ylab = "Y Residuals")
+abline(partial_lm, col = "blue")
+
+summary(partial_lm)
