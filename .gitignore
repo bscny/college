@@ -1,2 +1,12 @@
 # for Windos WSL
 *Zone.Identifier
+
+# for python
+venv
+__pychache__
+
+# for js
+node_modules
+
+# general
+.env
