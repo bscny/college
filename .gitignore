@@ -7,6 +7,7 @@ __pychache__
 
 # for js
 node_modules
+package-lock.json
 
 # general
 .env

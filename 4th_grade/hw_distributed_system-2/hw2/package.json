@@ -1,0 +1,16 @@
+{
+  "name": "hw2",
+  "version": "1.0.0",
+  "description": "",
+  "license": "ISC",
+  "author": "",
+  "type": "commonjs",
+  "main": "restful-server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "fastify": "^3.11.0",
+    "node-fetch": "^2.6.1"
+  }
+}
