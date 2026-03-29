@@ -24,7 +24,4 @@ if __name__ == "__main__":
     # Perform the merge! Map the safe local pixels to the safe global coordinates
     img_left[local_y + offset_y, local_x + offset_x] = img_crop[local_y, local_x]
 
-    # Save the result
-    output_path = 'result/lena_merged.bmp'
-    cv2.imwrite(output_path, img_left)
-    print(f"Success! Images merged and saved to {output_path}")
+    cv2.imwrite("result/q1/lena_merged.bmp", img_left)

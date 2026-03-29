@@ -3,7 +3,7 @@
 
 # for python
 venv
-__pychache__
+__pycache__
 
 # for js
 node_modules
@@ -11,3 +11,4 @@ package-lock.json
 
 # general
 .env
+test.*
