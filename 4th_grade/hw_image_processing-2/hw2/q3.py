@@ -5,8 +5,8 @@ AERIAL_IMG = "aerialview-washedout.tif"
 EINSTEIN_IMG = "einstein-low-contrast.tif"
 
 # Comment This Section to Change the Target Image----------
-# TARGET_IMAGE = AERIAL_IMG
 TARGET_IMAGE = AERIAL_IMG
+# TARGET_IMAGE = EINSTEIN_IMG
 # ------------------------------------------------
 
 if __name__ == "__main__":
@@ -15,7 +15,7 @@ if __name__ == "__main__":
     if image is None:
         print(f"Error: Could not load the image. Please check the file path.")
     else:
-        result_img = histogram_matching(image)
+        result_img = histogram_matching(image, plot_histogram=True)
         
         _, mmin, mmax = generate_histogram(result_img, get_min_max=True, plot_histogram=True)
         print(f"min: {mmin}, max: {mmax}")
