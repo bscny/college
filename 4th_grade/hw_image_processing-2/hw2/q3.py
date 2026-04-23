@@ -25,7 +25,6 @@ if __name__ == "__main__":
         else:
             cv2.imwrite("result/q3/einstein_GHE.tif", result_img)
         
-        # print(f"width: {width}, height: {height}")
         cv2.imshow("Question 3: GHE", result_img)
         cv2.waitKey(0)
         cv2.destroyAllWindows() 

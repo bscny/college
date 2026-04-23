@@ -20,7 +20,7 @@ def contrast_stretch(image: np.ndarray, minG: int = 0, maxG: int = 255) -> np.nd
     # Create an empty black canvas with the same dimensions
     out_img = np.zeros((height, width), dtype=image.dtype)
 
-    # print(f"min: {m}, max: {M}")
+    print(f"Original min: {m}, Original max: {M}\n---Stretch to---\nGlobal min: {minG}, Global max: {maxG}")
     
     # Handle the edge case where the image is a solid, uniform color
     if M == m:
