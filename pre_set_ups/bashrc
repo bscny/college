@@ -13,7 +13,7 @@ alias l1='ls -1'
 alias ll='ls -al'
 alias la='ls -A'
 alias sb='source ~/.bashrc'
-alias tmux="TERM=screen-256color-bce tmux -f ~/.tmux.config"
+alias tmux="TERM=screen-256color-bce tmux -f ~/.tmux.conf"
 alias cd..="cd .."
 alias mdviewer='glow'
 alias showkey='showkey -a'
@@ -161,7 +161,7 @@ else
 fi
 unset color_prompt force_color_prompt
 
-. "$HOME/.cargo/env"
+# . "$HOME/.cargo/env"
 
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
@@ -181,5 +181,3 @@ unset __conda_setup
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"                   # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion" # This loads nvm bash_completion
-
-export PX4_SIM_HOST_ADDR=172.25.192.1
