@@ -113,11 +113,16 @@ def histogram_matching(image: np.ndarray, start_intensity: int = 0, end_intensit
     # notice that only the start ~ end intensity zone will be record
     mapping = [0] * 256
     
+    # We need to make sure the uniform distribution isin the same scope of the input zone
+    intensity_zone = end_intensity - start_intensity
+    
     # Loop through targeted intensities
     for i in range(start_intensity, end_intensity + 1):
-        # To match the 2 CDFs we want: CDF_input(i) = CDF_output(x) = x/255
-        # Therefore, x = 255 * CDF_input(i)
-        mapping[i] = round(255 * (cumulative_pixels[i] / total_pixels))
+        # To match the 2 CDFs we want: CDF_input(i) = CDF_output(x) = (x - offset)/intensity_zone
+        # Note that by default intensity_zone will be 255 and offset will be 0
+        # If we custom the start and end intensity, we need to also custom the start and end of the uniform dist.
+        # Therefore, x = intensity_zone * CDF_input(i) + offset
+        mapping[i] = round(intensity_zone * (cumulative_pixels[i] / total_pixels) + start_intensity)
         
     # Apply the mapping to create the new image
     output_image = np.zeros((height, width), dtype=image.dtype)
