@@ -17,6 +17,7 @@ Completion Date: 2026/04/24
 2. For each question, refer to their corresponding python file. (for example, question 1 --> `q1.py`)
 3. It's easy to see that except question 1 and 6, all logic is implemented in `/src`. Please refer to that together with the comments.
 4. For all the result, refer to the `result` folder. Notice that in q4, there's no specific instruction on the value of `alpha`. Therefore, I tried both (alpha = 0.5 and 2). "boost" means that `alpha` is smaller than 1 (boosts low-probability bins) and vice versa.
+6. Addtionally, in class (4/28), the teacher mentioned that we can choose both the paper's version or the slides version for CVCE (Question 6), I decided to use the paper's implementation.
 
 ## File Structures
 
